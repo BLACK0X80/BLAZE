@@ -1,6 +1,14 @@
 <div align="center">
 
 ```bash
+# Systems Programming Expert
+# Compiler Development • Language Design • Rust Mastery
+# Building the future of programming languages
+```
+
+<br>
+
+```bash
 # BLAZE Programming Language
 # A blazing fast systems programming language with Rust-like safety guarantees
 ```
