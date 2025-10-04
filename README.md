@@ -1,9 +1,9 @@
 <div align="center">
 
 ```bash
-# Systems Programming Expert
-# Compiler Development • Language Design • Rust Mastery
-# Building the future of programming languages
+# CYBERSECURITY EXPERT
+# SYSTEMS PROGRAMMING • COMPILER DEVELOPMENT • RUST MASTERY
+# BUILDING THE FUTURE OF PROGRAMMING LANGUAGES
 ```
 
 <br>
