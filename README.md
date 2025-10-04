@@ -7,16 +7,16 @@
 
 <br>
 
-![LANGUAGE BLAZE](https://img.shields.io/badge/LANGUAGE-BLAZE-FF6B35?style=for-the-badge&logo=fire&logoColor=white&labelColor=1A1A1A)
-![VERSION 1.0.0](https://img.shields.io/badge/VERSION-1.0.0-00D4FF?style=for-the-badge&logo=tag&logoColor=black&labelColor=1A1A1A)
-![LICENSE MIT](https://img.shields.io/badge/LICENSE-MIT-8B5CF6?style=for-the-badge&logo=balance-scale&logoColor=white&labelColor=1A1A1A)
-![PLATFORM Windows | Linux | macOS](https://img.shields.io/badge/PLATFORM-Windows%20%7C%20Linux%20%7C%20macOS-10F5CC?style=for-the-badge&logo=globe&logoColor=black&labelColor=1A1A1A)
-![PERFORMANCE BLAZING FAST](https://img.shields.io/badge/PERFORMANCE-BLAZING%20FAST-FF6B35?style=for-the-badge&logo=rocket&logoColor=white&labelColor=1A1A1A)
-![BACKEND LLVM](https://img.shields.io/badge/BACKEND-LLVM-00D4FF?style=for-the-badge&logo=llvm&logoColor=black&labelColor=1A1A1A)
-![BUILT WITH RUST](https://img.shields.io/badge/BUILT%20WITH-RUST-8B5CF6?style=for-the-badge&logo=rust&logoColor=white&labelColor=1A1A1A)
-![BUILD STABLE](https://img.shields.io/badge/BUILD-STABLE-10F5CC?style=for-the-badge&logo=check-circle&logoColor=black&labelColor=1A1A1A)
-![STARS ⭐ Growing](https://img.shields.io/badge/STARS-%E2%AD%90%20Growing-FF6B35?style=for-the-badge&logo=star&logoColor=white&labelColor=1A1A1A)
-![COVERAGE 100%](https://img.shields.io/badge/COVERAGE-100%25-00D4FF?style=for-the-badge&logo=code&logoColor=black&labelColor=1A1A1A)
+[![BLAZE](https://img.shields.io/badge/BLAZE-Programming%20Language-orange?style=flat-square&logo=fire&logoColor=white)](https://github.com/BLACK0X80/blaze)
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=flat-square&logo=tag&logoColor=white)](https://github.com/BLACK0X80/blaze/releases)
+[![License](https://img.shields.io/badge/License-MIT-purple?style=flat-square&logo=balance-scale&logoColor=white)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-green?style=flat-square&logo=globe&logoColor=white)](https://github.com/BLACK0X80/blaze)
+[![Performance](https://img.shields.io/badge/Performance-BLAZING%20FAST-red?style=flat-square&logo=rocket&logoColor=white)](https://github.com/BLACK0X80/blaze)
+[![Backend](https://img.shields.io/badge/Backend-LLVM-cyan?style=flat-square&logo=llvm&logoColor=white)](https://llvm.org/)
+[![Rust](https://img.shields.io/badge/Built%20with-Rust-orange?style=flat-square&logo=rust&logoColor=white)](https://rust-lang.org/)
+[![Build](https://img.shields.io/badge/Build-Stable-brightgreen?style=flat-square&logo=check-circle&logoColor=white)](https://github.com/BLACK0X80/blaze/actions)
+[![Stars](https://img.shields.io/badge/Stars-Growing-yellow?style=flat-square&logo=star&logoColor=white)](https://github.com/BLACK0X80/blaze/stargazers)
+[![Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen?style=flat-square&logo=code&logoColor=white)](https://github.com/BLACK0X80/blaze)
 
 <br>
 
@@ -28,7 +28,7 @@
 
 <div align="center">
 
-![RUST POWERED](https://img.shields.io/badge/RUST-POWERED-FF6B35?style=for-the-badge&logo=rust&logoColor=white&labelColor=1A1A1A)
+[![Rust Powered](https://img.shields.io/badge/Rust-POWERED-orange?style=flat-square&logo=rust&logoColor=white)](https://rust-lang.org/)
 
 </div>
 
@@ -43,13 +43,11 @@
 
 <div align="center">
 
-[![GitHub BLACK0X80](https://img.shields.io/badge/GitHub-BLACK0X80-9932cc?style=for-the-badge&logo=github&logoColor=white)](https://github.com/BLACK0X80)
+[![GitHub](https://img.shields.io/badge/GitHub-BLACK0X80-purple?style=flat-square&logo=github&logoColor=white)](https://github.com/BLACK0X80)
 
 </div>
 
-```bash
-# ================================================================================
-```
+---
 
 </div>
 
@@ -74,9 +72,7 @@
 
 <div align="center">
 
-```bash
-# ================================================================================
-```
+---
 
 </div>
 
@@ -100,9 +96,7 @@
 
 <div align="center">
 
-```bash
-# ================================================================================
-```
+---
 
 </div>
 
@@ -139,9 +133,7 @@
 
 <div align="center">
 
-```bash
-# ================================================================================
-```
+---
 
 </div>
 
@@ -158,9 +150,7 @@ blaze --help             # Help
 
 <div align="center">
 
-```bash
-# ================================================================================
-```
+---
 
 </div>
 
@@ -287,9 +277,7 @@ fn modify_string(s: &mut String) {
 
 <div align="center">
 
-```bash
-# ================================================================================
-```
+---
 
 </div>
 
@@ -323,9 +311,7 @@ graph TD
 
 <div align="center">
 
-```bash
-# ================================================================================
-```
+---
 
 </div>
 
@@ -353,9 +339,7 @@ cargo test --coverage     # Coverage
 
 <div align="center">
 
-```bash
-# ================================================================================
-```
+---
 
 </div>
 
@@ -376,9 +360,7 @@ cargo test --coverage     # Coverage
 
 <div align="center">
 
-```bash
-# ================================================================================
-```
+---
 
 </div>
 
@@ -404,9 +386,7 @@ blaze/
 
 <div align="center">
 
-```bash
-# ================================================================================
-```
+---
 
 </div>
 
@@ -451,9 +431,7 @@ fn main() {
 
 <div align="center">
 
-```bash
-# ================================================================================
-```
+---
 
 </div>
 
@@ -468,9 +446,7 @@ fn main() {
 
 <div align="center">
 
-```bash
-# ================================================================================
-```
+---
 
 </div>
 
@@ -485,9 +461,7 @@ fn main() {
 
 <div align="center">
 
-```bash
-# ================================================================================
-```
+---
 
 </div>
 
@@ -505,9 +479,7 @@ See CONTRIBUTING.md.
 
 <div align="center">
 
-```bash
-# ================================================================================
-```
+---
 
 </div>
 
@@ -526,9 +498,7 @@ See CONTRIBUTING.md.
 
 <div align="center">
 
-```bash
-# ================================================================================
-```
+---
 
 </div>
 
@@ -540,15 +510,13 @@ See CONTRIBUTING.md.
 
 MIT License - see [LICENSE](LICENSE).
 
-![LICENSE MIT](https://img.shields.io/badge/LICENSE-MIT-8B5CF6?style=for-the-badge&logo=balance-scale&logoColor=white&labelColor=1A1A1A)
+[![License](https://img.shields.io/badge/License-MIT-purple?style=flat-square&logo=balance-scale&logoColor=white)](LICENSE)
 
 </div>
 
 <div align="center">
 
-```bash
-# ================================================================================
-```
+---
 
 </div>
 
@@ -569,9 +537,7 @@ MIT License - see [LICENSE](LICENSE).
 
 <div align="center">
 
-```bash
-# ================================================================================
-```
+---
 
 </div>
 
@@ -581,9 +547,9 @@ MIT License - see [LICENSE](LICENSE).
 
 <div align="center">
 
-![Install BLAZE](https://img.shields.io/badge/Install-BLAZE-FF6B35?style=for-the-badge&logo=download&logoColor=white&labelColor=1A1A1A)
-![Docs](https://img.shields.io/badge/Docs-Read%20Now-00D4FF?style=for-the-badge&logo=book&logoColor=black&labelColor=1A1A1A)
-![Examples](https://img.shields.io/badge/Examples-Try%20Now-10F5CC?style=for-the-badge&logo=code&logoColor=black&labelColor=1A1A1A)
+[![Install](https://img.shields.io/badge/Install-BLAZE-orange?style=flat-square&logo=download&logoColor=white)](https://github.com/BLACK0X80/blaze)
+[![Docs](https://img.shields.io/badge/Docs-Read%20Now-blue?style=flat-square&logo=book&logoColor=white)](https://docs.blaze-lang.dev)
+[![Examples](https://img.shields.io/badge/Examples-Try%20Now-green?style=flat-square&logo=code&logoColor=white)](https://github.com/BLACK0X80/blaze/tree/main/examples)
 
 </div>
 
