@@ -2,21 +2,64 @@
 
 <br/>
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=50&duration=2000&pause=500&color=FF0000&center=true&vCenter=true&width=600&height=100&lines=BLAZE" alt="BLAZE" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=50&duration=2000&pause=500&color=FF0000&center=true&vCenter=true&width=600&height=100&lines=BLACK" alt="BLACK" />
 
 <br/>
 
 <div align="center">
 
+```bash
+# CYBERSECURITY EXPERT
+# SYSTEMS PROGRAMMING • COMPILER DEVELOPMENT • RUST MASTERY
+# BUILDING THE FUTURE OF PROGRAMMING LANGUAGES
+```
+
+<br>
+
+```bash
 # BLAZE Programming Language
+# A blazing fast systems programming language with Rust-like safety guarantees
+```
 
-![BLAZE Logo](https://cdn-icons-png.flaticon.com/512/2933/2933245.png)
+<br>
 
-**A blazing fast systems programming language with Rust-like safety guarantees**
+<img src="https://img.shields.io/badge/BLAZE-Programming%20Language-FF6B35?style=for-the-badge&logo=fire&logoColor=white" alt="BLAZE" />
+<img src="https://img.shields.io/badge/Version-1.0.0-00D4FF?style=for-the-badge&logo=tag&logoColor=black" alt="Version" />
+<img src="https://img.shields.io/badge/License-MIT-8B5CF6?style=for-the-badge&logo=balance-scale&logoColor=white" alt="License" />
+<img src="https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-10F5CC?style=for-the-badge&logo=globe&logoColor=black" alt="Platform" />
+<img src="https://img.shields.io/badge/Performance-BLAZING%20FAST-FF6B35?style=for-the-badge&logo=rocket&logoColor=white" alt="Performance" />
+<img src="https://img.shields.io/badge/Backend-LLVM-00D4FF?style=for-the-badge&logo=llvm&logoColor=black" alt="Backend" />
+<img src="https://img.shields.io/badge/Built%20with-Rust-8B5CF6?style=for-the-badge&logo=rust&logoColor=white" alt="Rust" />
+<img src="https://img.shields.io/badge/Build-Stable-10F5CC?style=for-the-badge&logo=check-circle&logoColor=black" alt="Build" />
+<img src="https://img.shields.io/badge/Stars-Growing-FF6B35?style=for-the-badge&logo=star&logoColor=white" alt="Stars" />
+<img src="https://img.shields.io/badge/Coverage-100%25-00D4FF?style=for-the-badge&logo=code&logoColor=black" alt="Coverage" />
 
-<div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0;">
+<br>
 
-![Version](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) **v1.0.0** | ![License](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) **MIT** | ![Platform](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) **Cross-Platform**
+```bash
+# Built Entirely with Rust
+# BLAZE is completely built using the Rust programming language
+# Leveraging Rust's memory safety, zero-cost abstractions, and blazing fast performance
+```
+
+<div align="center">
+
+<img src="https://img.shields.io/badge/Rust-POWERED-FF6B35?style=for-the-badge&logo=rust&logoColor=white" alt="Rust Powered" />
+
+</div>
+
+<br>
+
+```bash
+# Developer Information
+# Developed by BLACK
+# Master of Compilers & Systems Programming
+# "Crafting the future of programming languages"
+```
+
+<div align="center">
+
+<img src="https://img.shields.io/badge/GitHub-BLACK0X80-8B5CF6?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
 
 </div>
 
@@ -24,74 +67,113 @@
 
 </div>
 
-## Why BLAZE?
+```bash
+# Table of Contents
+# - Why BLAZE?
+# - Quick Start
+# - Usage
+# - Language Syntax
+# - Architecture
+# - Testing
+# - Performance
+# - Project Structure
+# - Examples
+# - Roadmap
+# - FAQ
+# - Contributing
+# - Support
+# - License
+# - Acknowledgments
+```
 
 <div align="center">
-
-**BLAZE delivers Rust-like safety with superior performance for systems programming. Built entirely in Rust, it offers memory safety without garbage collection, zero-cost abstractions, and ultra-fast compilation.**
-
-</div>
-
-### Key Features
-
-<div align="center">
-
-| ![Memory Safety](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) **Memory Safety**   | Zero-cost guarantees, no GC pauses |
-| --------------------------------------------------------------------------------------------- | ---------------------------------- |
-| ![Performance](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) **Blazing Fast**      | <1s compilation for 10k lines      |
-| ![Modern Syntax](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) **Modern Syntax**   | Clean and expressive code          |
-| ![Cross-Platform](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) **Cross-Platform** | Windows, Linux, macOS support      |
-
-</div>
 
 ---
 
-## Quick Start
+</div>
 
-### Installation
+```bash
+# Why BLAZE?
+# BLAZE delivers Rust-like safety with superior performance for systems programming
+# Memory safety without GC, zero-cost abstractions, and ultra-fast compilation
+```
+
+<div align="center">
 
 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
 
-**Automated (Recommended):**
-
-```bash
-# Windows
-.\setup.bat
-
-# Linux/macOS
-chmod +x setup.sh && ./setup.sh
-```
+| Feature                | Benefit                          | Performance            |
+| ---------------------- | -------------------------------- | ---------------------- |
+| Memory Safety          | Zero-cost guarantees             | No GC pauses           |
+| Zero-Cost Abstractions | High-level code, low-level speed | Full optimization      |
+| Blazing Fast           | Rapid compilation                | <1s for 10k lines      |
+| Modern Syntax          | Clean and expressive             | Developer-friendly     |
+| Cross-Platform         | Windows, Linux, macOS            | Seamless compatibility |
 
 </div>
 
-<div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+</div>
 
-**Manual:**
+<div align="center">
+
+---
+
+</div>
 
 ```bash
-git clone https://github.com/black/blaze.git
-cd blaze
-cargo build --release
-cargo install --path .
+# Quick Start
+# Installation - Select a method:
 ```
+
+<div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+
+- **Automated (Recommended)**:
+
+  ```bash
+  # Windows
+  .\setup.bat
+
+  # Linux/macOS
+  chmod +x setup.sh && ./setup.sh
+  ```
 
 </div>
 
 <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
 
-**Package Manager:**
+- **Manual**:
 
-```bash
-cargo install blaze  # Cargo
-brew install blaze   # Homebrew (macOS)
-choco install blaze  # Chocolatey (Windows)
-```
+  ```bash
+  git clone https://github.com/black/blaze.git
+  cd blaze
+  cargo build --release
+  cargo install --path .
+  ```
 
 </div>
 
-### Basic Usage
+<div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
 
-<div align="center" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+- **Package Manager**:
+  ```bash
+  cargo install blaze  # Cargo
+  brew install blaze   # Homebrew (macOS)
+  choco install blaze  # Chocolatey (Windows)
+  ```
+
+</div>
+
+<div align="center">
+
+---
+
+</div>
+
+```bash
+# Usage
+```
+
+<div align="center" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
 
 ```bash
 blaze check example.blz  # Check syntax
@@ -102,9 +184,15 @@ blaze --help             # Help
 
 </div>
 
+<div align="center">
+
 ---
 
-## Language Syntax
+</div>
+
+```bash
+# Language Syntax
+```
 
 ### Hello World
 
@@ -247,9 +335,15 @@ fn modify_string(s: &mut String) {
 
 </div>
 
+<div align="center">
+
 ---
 
-## Architecture
+</div>
+
+```bash
+# Architecture
+```
 
 <div align="center">
 
@@ -275,11 +369,17 @@ graph TD
 
 </div>
 
+<div align="center">
+
 ---
 
-## Testing
+</div>
 
-<div align="center" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+```bash
+# Testing
+```
+
+<div align="center" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
 
 ```bash
 cargo test                # All tests
@@ -292,35 +392,55 @@ cargo test --coverage     # Coverage
 
 <div align="center">
 
-| Suite                                                                               | Status       | Coverage |
-| ----------------------------------------------------------------------------------- | ------------ | -------- |
-| ![Lexer](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) Lexer             | ✅ 6/6       | 100%     |
-| ![Parser](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) Parser           | ✅ 5/5       | 100%     |
-| ![Integration](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) Integration | ✅ 4/4       | 100%     |
-| **Total**                                                                           | ✅ **15/15** | **100%** |
+<div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+
+| Suite       | Passed | Failed | Coverage |
+| ----------- | ------ | ------ | -------- |
+| Lexer       | 6/6    | 0      | 100%     |
+| Parser      | 5/5    | 0      | 100%     |
+| Integration | 4/4    | 0      | 100%     |
+| Total       | 15/15  | 0      | 100%     |
 
 </div>
 
----
-
-## Performance
+</div>
 
 <div align="center">
 
-| Metric                                                                              | Value             | Ranking   |
-| ----------------------------------------------------------------------------------- | ----------------- | --------- |
-| ![Speed](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) Compilation Speed | ~1.2s / 10k lines | Fastest   |
-| ![Size](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) Binary Size        | ~2.1MB            | Compact   |
-| ![Memory](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) Memory Usage     | <50MB             | Efficient |
-| ![Coverage](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) Test Coverage  | 100%              | Perfect   |
+---
 
 </div>
 
+```bash
+# Performance
+```
+
+<div align="center">
+
+<div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+
+| Metric            | Value             | Ranking   |
+| ----------------- | ----------------- | --------- |
+| Compilation Speed | ~1.2s / 10k lines | Fastest   |
+| Binary Size       | ~2.1MB            | Compact   |
+| Memory Usage      | <50MB             | Efficient |
+| Test Coverage     | 100%              | Perfect   |
+
+</div>
+
+</div>
+
+<div align="center">
+
 ---
 
-## Project Structure
+</div>
 
-<div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+```bash
+# Project Structure
+```
+
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
 
 ```
 blaze/
@@ -334,14 +454,21 @@ blaze/
 ├── examples/      # Examples
 ├── tests/         # Tests
 ├── benches/       # Benchmarks
+├── docs/          # Docs
 └── setup.bat      # Setup
 ```
 
 </div>
 
+<div align="center">
+
 ---
 
-## Examples
+</div>
+
+```bash
+# Examples
+```
 
 ### Fibonacci
 
@@ -386,110 +513,159 @@ fn main() {
 
 </div>
 
+<div align="center">
+
 ---
 
-## Roadmap
+</div>
+
+```bash
+# Roadmap
+```
 
 <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
 
-- **v1.1**: ![Error Handling](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) Improved error handling
-- **v1.2**: ![Async](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) Async/await support
-- **v2.0**: ![WebAssembly](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) WebAssembly integration
-- **Future**: ![GPU](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) GPU & embedded systems
+- **1.1**: Improved error handling.
+- **1.2**: Async/await support.
+- **2.0**: WebAssembly integration.
+- **Future**: GPU & embedded systems.
 
 </div>
 
+<div align="center">
+
 ---
 
-## FAQ
+</div>
+
+```bash
+# FAQ
+```
+
+<div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+
+- **Vs. Rust?** Simpler syntax, faster compiles, same safety.
+- **Install errors?** Verify Rust/Cargo; report on GitHub.
+- **Production-ready?** Ideal for prototypes; test thoroughly.
+- **Contribute?** See below.
+
+</div>
+
+<div align="center">
+
+---
+
+</div>
+
+```bash
+# Contributing
+```
 
 <div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
 
-**Q: How does BLAZE compare to Rust?**  
-A: Simpler syntax, faster compiles, same safety guarantees.
+1. Fork repo.
+2. Branch: `git checkout -b feature/new`.
+3. Change, test: `cargo test; cargo build --release`.
+4. Commit, push.
+5. Pull request.
 
-**Q: Installation errors?**  
-A: Verify Rust/Cargo installation; report issues on GitHub.
-
-**Q: Is it production-ready?**  
-A: Ideal for prototypes; test thoroughly before production use.
-
-**Q: How can I contribute?**  
-A: See the Contributing section below.
+See CONTRIBUTING.md.
 
 </div>
 
+<div align="center">
+
 ---
 
-## Contributing
+</div>
+
+```bash
+# Support
+```
+
+<div align="center">
 
 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
 
-1. ![Fork](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) Fork the repository
-2. ![Branch](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) Create a feature branch: `git checkout -b feature/new`
-3. ![Code](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) Make changes and test: `cargo test; cargo build --release`
-4. ![Commit](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) Commit and push your changes
-5. ![PR](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) Create a pull request
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+| Resource | Link                                                       | Description        |
+| -------- | ---------------------------------------------------------- | ------------------ |
+| Docs     | [docs.blaze-lang.dev](https://docs.blaze-lang.dev)         | Language reference |
+| Issues   | [GitHub Issues](https://github.com/BLACK0X80/blaze/issues) | Bugs & reports     |
 
 </div>
 
----
-
-## Support
+</div>
 
 <div align="center">
 
-| Resource                                                                                                                      | Description                    |
-| ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
-| ![Docs](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) [Documentation](https://docs.blaze-lang.dev)                 | Language reference             |
-| ![Issues](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) [GitHub Issues](https://github.com/BLACK0X80/blaze/issues) | Bug reports & feature requests |
+---
 
 </div>
 
----
-
-## License
-
-<div align="center" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-![MIT License](https://cdn-icons-png.flaticon.com/512/1828/1828843.png)
-
-</div>
-
----
-
-## Acknowledgments
+```bash
+# License
+```
 
 <div align="center">
 
-| Contributor                                                                                   | Role           | Contribution                 |
-| --------------------------------------------------------------------------------------------- | -------------- | ---------------------------- |
-| ![BLACK](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) **BLACK**                   | Lead Architect | Core design & implementation |
-| ![Rust Community](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) **Rust Community** | Inspiration    | Tools & ecosystem            |
-| ![LLVM Project](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) **LLVM Project**     | Backend        | Code generation              |
-| ![Contributors](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) **Contributors**     | Community      | Improvements & feedback      |
+<div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+
+MIT License - see [LICENSE](LICENSE).
+
+<img src="https://img.shields.io/badge/License-MIT-8B5CF6?style=for-the-badge&logo=balance-scale&logoColor=white" alt="License" />
 
 </div>
 
----
+</div>
 
 <div align="center">
 
-## Get Started Today!
-
-<div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0;">
-
-![Install](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) **Install BLAZE** | ![Docs](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) **Read Docs** | ![Examples](https://cdn-icons-png.flaticon.com/512/1828/1828843.png) **Try Examples**
+---
 
 </div>
 
+```bash
+# Acknowledgments
+```
+
+<div align="center">
+
+<div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+
+| Contributor    | Role           | Contribution      |
+| -------------- | -------------- | ----------------- |
+| BLACK          | Lead Architect | Core design       |
+| Rust Community | Inspiration    | Tools & ecosystem |
+| LLVM Project   | Backend        | Codegen           |
+| Contributors   | Community      | Improvements      |
+
+</div>
+
+</div>
+
+<div align="center">
+
 ---
 
-**Made with ❤️ by BLACK**  
-_"Crafting the future of programming languages"_
+</div>
+
+```bash
+# Get Started
+```
+
+<div align="center">
+
+<div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 30px; border-radius: 15px; margin: 25px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+
+<img src="https://img.shields.io/badge/Install-BLAZE-FF6B35?style=for-the-badge&logo=download&logoColor=white" alt="Install" />
+<img src="https://img.shields.io/badge/Docs-Read%20Now-00D4FF?style=for-the-badge&logo=book&logoColor=black" alt="Docs" />
+<img src="https://img.shields.io/badge/Examples-Try%20Now-10F5CC?style=for-the-badge&logo=code&logoColor=black" alt="Examples" />
+
+</div>
+
+```bash
+# Made by BLACK
+# "Crafting the future of programming languages."
+```
 
 </div>
