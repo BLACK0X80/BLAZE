@@ -1,0 +1,26 @@
+[package]
+name = "blaze"
+version = "0.1.0"
+edition = "2021"
+authors = ["Blaze Contributors"]
+
+[[bin]]
+name = "blaze"
+path = "src/main.rs"
+
+[lib]
+name = "blaze_compiler"
+path = "src/lib.rs"
+
+[dependencies]
+# Absolutely minimal dependencies - only what we NEED
+
+[dev-dependencies]
+# Testing only
+
+[profile.dev]
+opt-level = 0
+debug = true
+
+[profile.release]
+opt-level = 3

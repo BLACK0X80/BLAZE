@@ -1,0 +1,9 @@
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let count: i32 = 0;
+    let result = count + 1;
+}
