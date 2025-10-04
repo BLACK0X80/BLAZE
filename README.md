@@ -2,19 +2,19 @@
 
 # BLAZE Programming Language
 
-![BLAZE Compiler](https://img.shields.io/badge/BLAZE-Compiler-ff4500?style=for-the-badge&logo=fire&logoColor=white)
-![Version 1.0.0](https://img.shields.io/badge/Version-1.0.0-007bff?style=for-the-badge)
-![MIT License](https://img.shields.io/badge/License-MIT-228b22?style=for-the-badge)
-![Cross-Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-a9a9a9?style=for-the-badge)
-![Build Status](https://img.shields.io/github/actions/workflow/status/BLACK0X80/blaze/ci.yml?branch=main&style=flat-square&logo=github-actions&logoColor=white)
-![GitHub Stars](https://img.shields.io/github/stars/BLACK0X80/blaze?style=flat-square&logo=github&logoColor=white)
-![Code Coverage](https://img.shields.io/codecov/c/github/BLACK0X80/blaze?style=flat-square&logo=codecov&logoColor=white)
+![BLAZE COMPILER](https://img.shields.io/badge/BLAZE-COMPILER-ff4500?style=for-the-badge&logo=fire&logoColor=white)
+![VERSION 1.0.0](https://img.shields.io/badge/VERSION-1.0.0-007bff?style=for-the-badge)
+![LICENSE MIT](https://img.shields.io/badge/LICENSE-MIT-228b22?style=for-the-badge)
+![PLATFORM WINDOWS | LINUX | MACOS](https://img.shields.io/badge/PLATFORM-WINDOWS%20%7C%20LINUX%20%7C%20MACOS-a9a9a9?style=for-the-badge)
+![build](https://img.shields.io/github/actions/workflow/status/BLACK0X80/blaze/ci.yml?branch=main&label=build&style=flat-square&logo=github-actions&logoColor=white)
+![stars](https://img.shields.io/github/stars/BLACK0X80/blaze?label=stars&style=flat-square&logo=github&logoColor=white)
+![coverage](https://img.shields.io/codecov/c/github/BLACK0X80/blaze?label=coverage&style=flat-square&logo=codecov&logoColor=white)
 
 **A blazing fast systems programming language with Rust-like safety guarantees**
 
 ![Made with Rust](https://img.shields.io/badge/Made%20with-Rust-b7410e?style=flat-square&logo=rust&logoColor=white)
-![LLVM Backend](https://img.shields.io/badge/Backend-LLVM-4169e1?style=flat-square&logo=llvm&logoColor=white)
-![Blazing Performance](https://img.shields.io/badge/Performance-BLAZING%20FAST-dc143c?style=flat-square&logo=rocket&logoColor=white)
+![Backend LLVM](https://img.shields.io/badge/Backend-LLVM-4169e1?style=flat-square&logo=llvm&logoColor=white)
+![Performance BLAZING FAST](https://img.shields.io/badge/Performance-BLAZING%20FAST-dc143c?style=flat-square&logo=rocket&logoColor=white)
 
 </div>
 
@@ -28,7 +28,7 @@
 
 _"Crafting the future of programming languages"_
 
-![GitHub Profile](https://img.shields.io/badge/GitHub-BLACK0X80-181717?style=flat-square&logo=github&logoColor=white)
+![GitHub BLACK0X80](https://img.shields.io/badge/GitHub-BLACK0X80-181717?style=flat-square&logo=github&logoColor=white)
 
 </div>
 
@@ -56,17 +56,17 @@ _"Crafting the future of programming languages"_
 
 ## Why BLAZE?
 
-BLAZE combines the safety of Rust with unparalleled performance, making it ideal for systems programming. It offers memory safety without garbage collection, zero-cost abstractions, and lightning-fast compilation times.
+BLAZE delivers Rust-like safety with superior performance for systems programming: memory safety without GC, zero-cost abstractions, and ultra-fast compilation.
 
 <div align="center">
 
-| Feature                  | Benefit                                | Performance             |
-|--------------------------|----------------------------------------|-------------------------|
-| Memory Safety            | Zero-cost safety guarantees            | No GC pauses            |
-| Zero-Cost Abstractions   | High-level code, low-level performance | 100% optimization       |
-| Blazing Fast             | Lightning-fast compilation             | <1s for 10k lines       |
-| Modern Syntax            | Clean, readable, expressive            | Developer friendly      |
-| Cross-Platform           | Windows, Linux, macOS                  | Universal compatibility |
+| Feature                | Benefit                              | Performance           |
+|------------------------|--------------------------------------|-----------------------|
+| Memory Safety          | Zero-cost guarantees                 | No GC pauses          |
+| Zero-Cost Abstractions | High-level code, low-level speed     | Full optimization     |
+| Blazing Fast           | Rapid compilation                    | <1s for 10k lines     |
+| Modern Syntax          | Clean and expressive                 | Developer-friendly    |
+| Cross-Platform         | Windows, Linux, macOS                | Seamless compatibility|
 
 </div>
 
@@ -76,9 +76,9 @@ BLAZE combines the safety of Rust with unparalleled performance, making it ideal
 
 ### Installation
 
-Choose your preferred method for installing BLAZE:
+Select a method:
 
-- **Automated Setup (Recommended)**:
+- **Automated (Recommended)**:
   ```bash
   # Windows
   .\setup.bat
@@ -87,60 +87,41 @@ Choose your preferred method for installing BLAZE:
   chmod +x setup.sh && ./setup.sh
   ```
 
-- **Manual Installation**:
+- **Manual**:
   ```bash
-  # Clone repository
   git clone https://github.com/black/blaze.git
   cd blaze
-
-  # Build from source
   cargo build --release
-
-  # Install globally
   cargo install --path .
   ```
 
 - **Package Manager**:
   ```bash
-  # Cargo
-  cargo install blaze
-
-  # Homebrew (macOS)
-  brew install blaze
-
-  # Chocolatey (Windows)
-  choco install blaze
+  cargo install blaze  # Cargo
+  brew install blaze   # Homebrew (macOS)
+  choco install blaze  # Chocolatey (Windows)
   ```
 
 ---
 
 ## Usage
 
-### Basic Commands
-
 ```bash
-# Check syntax
-blaze check example.blz
-
-# Build program
-blaze build example.blz
-
-# Run program
-blaze run example.blz
-
-# Get help
-blaze --help
+blaze check example.blz  # Check syntax
+blaze build example.blz  # Build
+blaze run example.blz    # Run
+blaze --help             # Help
 ```
 
 ---
 
 <div align="center">
 <pre>
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│                            Language Syntax                                    │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│                                             │
+│               Language Syntax               │
+│                                             │
+└─────────────────────────────────────────────┘
 </pre>
 </div>
 
@@ -265,11 +246,11 @@ fn modify_string(s: &mut String) {
 
 <div align="center">
 <pre>
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│                              Architecture                                    │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│                                             │
+│                 Architecture                │
+│                                             │
+└─────────────────────────────────────────────┘
 </pre>
 </div>
 
@@ -277,7 +258,7 @@ fn modify_string(s: &mut String) {
 
 ```mermaid
 graph TD
-    A[BLAZE Source Code] --> B[Lexer]
+    A[BLAZE Source] --> B[Lexer]
     B --> C[Parser]
     C --> D[Type Checker]
     D --> E[Borrow Checker]
@@ -301,41 +282,28 @@ graph TD
 
 <div align="center">
 <pre>
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│                                Testing                                       │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│                                             │
+│                   Testing                   │
+│                                             │
+└─────────────────────────────────────────────┘
 </pre>
 </div>
 
-### Run Tests
-
 ```bash
-# Run all tests
-cargo test
-
-# Run specific test suite
-cargo test lexer_tests
-cargo test parser_tests
-cargo test integration_tests
-
-# Run benchmarks
-cargo bench
-
-# Run with coverage
-cargo test --coverage
+cargo test                # All tests
+cargo test lexer_tests    # Specific suite
+cargo bench               # Benchmarks
+cargo test --coverage     # Coverage
 ```
 
 <div align="center">
 
-### Test Results
-
-| Test Suite          | Passed | Failed | Coverage |
+| Suite               | Passed | Failed | Coverage |
 |---------------------|--------|--------|----------|
-| Lexer Tests         | 6/6    | 0      | 100%     |
-| Parser Tests        | 5/5    | 0      | 100%     |
-| Integration Tests   | 4/4    | 0      | 100%     |
+| Lexer               | 6/6    | 0      | 100%     |
+| Parser              | 5/5    | 0      | 100%     |
+| Integration         | 4/4    | 0      | 100%     |
 | Total               | 15/15  | 0      | 100%     |
 
 </div>
@@ -344,22 +312,22 @@ cargo test --coverage
 
 <div align="center">
 <pre>
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│                              Performance                                     │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│                                             │
+│                 Performance                 │
+│                                             │
+└─────────────────────────────────────────────┘
 </pre>
 </div>
 
 <div align="center">
 
-| Metric              | Value               | Ranking     |
-|---------------------|---------------------|-------------|
-| Compilation Speed   | ~1.2s for 10k lines | Fastest     |
-| Binary Size         | ~2.1MB              | Compact     |
-| Memory Usage        | <50MB               | Efficient   |
-| Test Coverage       | 100%                | Perfect     |
+| Metric              | Value               | Ranking   |
+|---------------------|---------------------|-----------|
+| Compilation Speed   | ~1.2s / 10k lines   | Fastest   |
+| Binary Size         | ~2.1MB              | Compact   |
+| Memory Usage        | <50MB               | Efficient |
+| Test Coverage       | 100%                | Perfect   |
 
 </div>
 
@@ -367,50 +335,48 @@ cargo test --coverage
 
 <div align="center">
 <pre>
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│                           Project Structure                                  │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│                                             │
+│              Project Structure              │
+│                                             │
+└─────────────────────────────────────────────┘
 </pre>
 </div>
 
 ```
 blaze/
 ├── src/
-│   ├── lexer/          # Tokenization
-│   ├── parser/         # AST Generation
-│   ├── semantic/       # Type Checking
-│   ├── ir/             # IR Generation
-│   ├── codegen/        # Code Generation
-│   └── runtime/        # Runtime Support
-├── examples/           # Example Programs
-├── tests/              # Test Suite
-├── benches/            # Benchmarks
-├── docs/               # Documentation
-└── setup.bat           # Installation Script
+│   ├── lexer/     # Tokenization
+│   ├── parser/    # AST Generation
+│   ├── semantic/  # Type Checking
+│   ├── ir/        # IR Generation
+│   ├── codegen/   # Code Generation
+│   └── runtime/   # Runtime Support
+├── examples/      # Examples
+├── tests/         # Tests
+├── benches/       # Benchmarks
+├── docs/          # Docs
+└── setup.bat      # Setup
 ```
 
 ---
 
 <div align="center">
 <pre>
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│                               Examples                                       │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│                                             │
+│                  Examples                   │
+│                                             │
+└─────────────────────────────────────────────┘
 </pre>
 </div>
 
-### Fibonacci Sequence
+### Fibonacci
 
 ```blaze
 fn fibonacci(n: i32) -> i32 {
-    if n <= 1 {
-        return n;
-    }
-    return fibonacci(n - 1) + fibonacci(n - 2);
+    if n <= 1 { return n; }
+    fibonacci(n - 1) + fibonacci(n - 2)
 }
 
 fn main() {
@@ -429,13 +395,8 @@ struct Rectangle {
 }
 
 impl Rectangle {
-    fn area(&self) -> f64 {
-        self.width * self.height
-    }
-
-    fn perimeter(&self) -> f64 {
-        2.0 * (self.width + self.height)
-    }
+    fn area(&self) -> f64 { self.width * self.height }
+    fn perimeter(&self) -> f64 { 2.0 * (self.width + self.height) }
 }
 
 fn main() {
@@ -449,107 +410,76 @@ fn main() {
 
 <div align="center">
 <pre>
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│                                 Roadmap                                      │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│                                             │
+│                   Roadmap                   │
+│                                             │
+└─────────────────────────────────────────────┘
 </pre>
 </div>
 
-BLAZE is evolving rapidly. Here's a glimpse of upcoming features:
-
-- **Version 1.1**: Enhanced error handling and diagnostics.
-- **Version 1.2**: Support for async/await syntax.
-- **Version 2.0**: Full integration with WebAssembly for web targets.
-- **Long-term**: GPU acceleration and embedded systems support.
-
-Stay tuned for updates on GitHub!
+- **1.1**: Improved error handling.
+- **1.2**: Async/await support.
+- **2.0**: WebAssembly integration.
+- **Future**: GPU & embedded systems.
 
 ---
 
 <div align="center">
 <pre>
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│                                   FAQ                                        │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│                                             │
+│                     FAQ                     │
+│                                             │
+└─────────────────────────────────────────────┘
 </pre>
 </div>
 
-### Common Questions
-
-- **What makes BLAZE different from Rust?**  
-  BLAZE focuses on faster compilation and a simpler syntax while maintaining similar safety guarantees.
-
-- **How do I handle installation errors?**  
-  Ensure you have Rust and Cargo installed. Check the logs for specific issues and report bugs on GitHub.
-
-- **Is BLAZE production-ready?**  
-  Currently in version 1.0, it's suitable for prototyping. Production use is recommended after thorough testing.
-
-- **Can I contribute?**  
-  Absolutely! See the [Contributing](#contributing) section.
+- **Vs. Rust?** Simpler syntax, faster compiles, same safety.
+- **Install errors?** Verify Rust/Cargo; report on GitHub.
+- **Production-ready?** Ideal for prototypes; test thoroughly.
+- **Contribute?** See below.
 
 ---
 
 <div align="center">
 <pre>
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│                              Contributing                                    │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│                                             │
+│                Contributing                 │
+│                                             │
+└─────────────────────────────────────────────┘
 </pre>
 </div>
 
-We welcome contributions to make BLAZE even better!
+1. Fork repo.
+2. Branch: `git checkout -b feature/new`.
+3. Change, test: `cargo test; cargo build --release`.
+4. Commit, push.
+5. Pull request.
 
-### How to Contribute
-
-1. Fork the repository.
-2. Create a feature branch (`git checkout -b feature/amazing-feature`).
-3. Make your changes and add tests.
-4. Update documentation if necessary.
-5. Commit your changes (`git commit -m "feat: add amazing feature"`).
-6. Push to the branch (`git push origin feature/amazing-feature`).
-7. Submit a pull request.
-
-### Development Setup
-
-```bash
-# Clone your fork
-git clone https://github.com/your-username/blaze.git
-cd blaze
-
-# Make changes and test
-cargo test
-cargo build --release
-```
-
-For more details, refer to CONTRIBUTING.md in the repository.
+See CONTRIBUTING.md.
 
 ---
 
 <div align="center">
 <pre>
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│                           Support & Community                                │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│                                             │
+│             Support & Community             │
+│                                             │
+└─────────────────────────────────────────────┘
 </pre>
 </div>
 
 <div align="center">
 
-| Resource           | Link                                                                 | Description                |
-|--------------------|----------------------------------------------------------------------|----------------------------|
-| Documentation      | [docs.blaze-lang.dev](https://docs.blaze-lang.dev)                   | Complete language reference|
-| Bug Reports        | [GitHub Issues](https://github.com/BLACK0X80/blaze/issues)           | Report bugs and issues     |
-| Feature Requests   | [GitHub Discussions](https://github.com/BLACK0X80/blaze/discussions) | Suggest new features       |
-| Discord            | [BLAZE Community](https://discord.gg/blaze)                          | Chat with developers       |
+| Resource         | Link                                                       | Description          |
+|------------------|------------------------------------------------------------|----------------------|
+| Docs             | [docs.blaze-lang.dev](https://docs.blaze-lang.dev)         | Language reference   |
+| Issues           | [GitHub Issues](https://github.com/BLACK0X80/blaze/issues) | Bugs & reports       |
+| Discussions      | [GitHub Discussions](https://github.com/BLACK0X80/blaze/discussions) | Features & ideas     |
+| Discord          | [BLAZE Community](https://discord.gg/blaze)                | Developer chat       |
 
 </div>
 
@@ -557,17 +487,17 @@ For more details, refer to CONTRIBUTING.md in the repository.
 
 <div align="center">
 <pre>
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│                                 License                                      │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│                                             │
+│                   License                   │
+│                                             │
+└─────────────────────────────────────────────┘
 </pre>
 </div>
 
 <div align="center">
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+MIT License - see [LICENSE](LICENSE).
 
 ![MIT License](https://img.shields.io/badge/License-MIT-ffd700?style=flat-square&logo=open-source-initiative&logoColor=white)
 
@@ -577,22 +507,22 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 <div align="center">
 <pre>
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│                              Acknowledgments                                 │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│                                             │
+│               Acknowledgments               │
+│                                             │
+└─────────────────────────────────────────────┘
 </pre>
 </div>
 
 <div align="center">
 
-| Contributor        | Role                       | Contribution          |
-|--------------------|----------------------------|-----------------------|
-| BLACK              | Lead Developer & Architect | Core language design  |
-| Rust Community     | Inspiration                | Tooling and ecosystem |
-| LLVM Project       | Backend                    | Code generation       |
-| All Contributors   | Community                  | Making BLAZE better   |
+| Contributor      | Role                     | Contribution       |
+|------------------|--------------------------|--------------------|
+| BLACK            | Lead Architect           | Core design        |
+| Rust Community   | Inspiration              | Tools & ecosystem  |
+| LLVM Project     | Backend                  | Codegen            |
+| Contributors     | Community                | Improvements       |
 
 </div>
 
@@ -600,13 +530,13 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 <div align="center">
 
-## Get Started Today!
+## Get Started
 
 ![Install BLAZE](https://img.shields.io/badge/Install-BLAZE-ff4500?style=for-the-badge&logo=download&logoColor=white)
-![Read Documentation](https://img.shields.io/badge/Documentation-Read%20Now-007bff?style=for-the-badge&logo=book&logoColor=white)
-![Try Examples](https://img.shields.io/badge/Examples-Try%20Now-228b22?style=for-the-badge&logo=code&logoColor=white)
+![Docs](https://img.shields.io/badge/Docs-Read%20Now-007bff?style=for-the-badge&logo=book&logoColor=white)
+![Examples](https://img.shields.io/badge/Examples-Try%20Now-228b22?style=for-the-badge&logo=code&logoColor=white)
 
-**Made with ❤️ by BLACK**
+**Made by BLACK**
 
 _"Building the future of programming"_
 
