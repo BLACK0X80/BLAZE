@@ -1,79 +1,90 @@
 <div align="center">
 
-# 🔥 BLAZE Programming Language ⚡
-
-_A blazing fast systems programming language with Rust-like safety guarantees._
-
-<br>
-
-![LANGUAGE BLAZE](https://img.shields.io/badge/LANGUAGE-BLAZE-ff4500?style=for-the-badge&logo=fire&logoColor=white)
-![VERSION 1.0.0](https://img.shields.io/badge/VERSION-1.0.0-00ffff?style=for-the-badge&logo=tag&logoColor=black)
-![LICENSE MIT](https://img.shields.io/badge/LICENSE-MIT-9932cc?style=for-the-badge&logo=balance-scale&logoColor=white)
-![PLATFORM Windows | Linux | macOS](https://img.shields.io/badge/PLATFORM-Windows%20%7C%20Linux%20%7C%20macOS-39ff14?style=for-the-badge&logo=globe&logoColor=black)
-![PERFORMANCE BLAZING FAST](https://img.shields.io/badge/PERFORMANCE-BLAZING%20FAST-ff4500?style=for-the-badge&logo=rocket&logoColor=white)
-![BACKEND LLVM](https://img.shields.io/badge/BACKEND-LLVM-00ffff?style=for-the-badge&logo=llvm&logoColor=black)
-![MADE WITH RUST](https://img.shields.io/badge/MADE%20WITH-RUST-9932cc?style=for-the-badge&logo=rust&logoColor=white)
-![BUILD STABLE](https://img.shields.io/badge/BUILD-STABLE-39ff14?style=for-the-badge&logo=check-circle&logoColor=black)
-![STARS ⭐ Growing](https://img.shields.io/badge/STARS-%E2%AD%90%20Growing-ff4500?style=for-the-badge&logo=star&logoColor=white)
-![COVERAGE 100%](https://img.shields.io/badge/COVERAGE-100%25-00ffff?style=for-the-badge&logo=code&logoColor=black)
+```bash
+# BLAZE Programming Language
+# A blazing fast systems programming language with Rust-like safety guarantees
+```
 
 <br>
 
-<p align="center">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" width="40px" alt="Python" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" width="40px" alt="Go" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" width="40px" alt="Shell" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" width="40px" alt="PHP" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" width="40px" alt="Node.js" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" width="40px" alt="JavaScript" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" width="40px" alt="HTML5" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" width="40px" alt="CSS3" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg" width="40px" alt="Ruby" />
-</p>
+![LANGUAGE BLAZE](https://img.shields.io/badge/LANGUAGE-BLAZE-FF6B35?style=for-the-badge&logo=fire&logoColor=white&labelColor=1A1A1A)
+![VERSION 1.0.0](https://img.shields.io/badge/VERSION-1.0.0-00D4FF?style=for-the-badge&logo=tag&logoColor=black&labelColor=1A1A1A)
+![LICENSE MIT](https://img.shields.io/badge/LICENSE-MIT-8B5CF6?style=for-the-badge&logo=balance-scale&logoColor=white&labelColor=1A1A1A)
+![PLATFORM Windows | Linux | macOS](https://img.shields.io/badge/PLATFORM-Windows%20%7C%20Linux%20%7C%20macOS-10F5CC?style=for-the-badge&logo=globe&logoColor=black&labelColor=1A1A1A)
+![PERFORMANCE BLAZING FAST](https://img.shields.io/badge/PERFORMANCE-BLAZING%20FAST-FF6B35?style=for-the-badge&logo=rocket&logoColor=white&labelColor=1A1A1A)
+![BACKEND LLVM](https://img.shields.io/badge/BACKEND-LLVM-00D4FF?style=for-the-badge&logo=llvm&logoColor=black&labelColor=1A1A1A)
+![BUILT WITH RUST](https://img.shields.io/badge/BUILT%20WITH-RUST-8B5CF6?style=for-the-badge&logo=rust&logoColor=white&labelColor=1A1A1A)
+![BUILD STABLE](https://img.shields.io/badge/BUILD-STABLE-10F5CC?style=for-the-badge&logo=check-circle&logoColor=black&labelColor=1A1A1A)
+![STARS ⭐ Growing](https://img.shields.io/badge/STARS-%E2%AD%90%20Growing-FF6B35?style=for-the-badge&logo=star&logoColor=white&labelColor=1A1A1A)
+![COVERAGE 100%](https://img.shields.io/badge/COVERAGE-100%25-00D4FF?style=for-the-badge&logo=code&logoColor=black&labelColor=1A1A1A)
 
 <br>
 
----
-
-## 👨‍💻 Developer
-
-**Developed by BLACK**  
-_Master of Compilers & Systems Programming_  
-_"Crafting the future of programming languages"_
-
-[![GitHub BLACK0X80](https://img.shields.io/badge/GitHub-BLACK0X80-9932cc?style=for-the-badge&logo=github&logoColor=white)](https://github.com/BLACK0X80)
-
----
-
-</div>
-
-## Table of Contents
-
-- [Why BLAZE?](#why-blaze)
-- [Quick Start](#quick-start)
-- [Usage](#usage)
-- [Language Syntax](#language-syntax)
-- [Architecture](#architecture)
-- [Testing](#testing)
-- [Performance](#performance)
-- [Project Structure](#project-structure)
-- [Examples](#examples)
-- [Roadmap](#roadmap)
-- [FAQ](#faq)
-- [Contributing](#contributing)
-- [Support](#support)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
+```bash
+# Built Entirely with Rust
+# BLAZE is completely built using the Rust programming language
+# Leveraging Rust's memory safety, zero-cost abstractions, and blazing fast performance
+```
 
 <div align="center">
 
----
+![RUST POWERED](https://img.shields.io/badge/RUST-POWERED-FF6B35?style=for-the-badge&logo=rust&logoColor=white&labelColor=1A1A1A)
 
 </div>
 
-## Why BLAZE?
+<br>
 
-BLAZE delivers Rust-like safety with superior performance for systems programming: memory safety without GC, zero-cost abstractions, and ultra-fast compilation.
+```bash
+# Developer Information
+# Developed by BLACK
+# Master of Compilers & Systems Programming
+# "Crafting the future of programming languages"
+```
+
+<div align="center">
+
+[![GitHub BLACK0X80](https://img.shields.io/badge/GitHub-BLACK0X80-9932cc?style=for-the-badge&logo=github&logoColor=white)](https://github.com/BLACK0X80)
+
+</div>
+
+```bash
+# ================================================================================
+```
+
+</div>
+
+```bash
+# Table of Contents
+# - Why BLAZE?
+# - Quick Start
+# - Usage
+# - Language Syntax
+# - Architecture
+# - Testing
+# - Performance
+# - Project Structure
+# - Examples
+# - Roadmap
+# - FAQ
+# - Contributing
+# - Support
+# - License
+# - Acknowledgments
+```
+
+<div align="center">
+
+```bash
+# ================================================================================
+```
+
+</div>
+
+```bash
+# Why BLAZE?
+# BLAZE delivers Rust-like safety with superior performance for systems programming
+# Memory safety without GC, zero-cost abstractions, and ultra-fast compilation
+```
 
 <div align="center">
 
@@ -89,15 +100,16 @@ BLAZE delivers Rust-like safety with superior performance for systems programmin
 
 <div align="center">
 
----
+```bash
+# ================================================================================
+```
 
 </div>
 
-## Quick Start
-
-### Installation
-
-Select a method:
+```bash
+# Quick Start
+# Installation - Select a method:
+```
 
 - **Automated (Recommended)**:
 
@@ -127,11 +139,15 @@ Select a method:
 
 <div align="center">
 
----
+```bash
+# ================================================================================
+```
 
 </div>
 
-## Usage
+```bash
+# Usage
+```
 
 ```bash
 blaze check example.blz  # Check syntax
@@ -142,15 +158,15 @@ blaze --help             # Help
 
 <div align="center">
 
----
+```bash
+# ================================================================================
+```
 
 </div>
 
-<div align="center">
-
-## 🔥 Language Syntax
-
-</div>
+```bash
+# Language Syntax
+```
 
 ### Hello World
 
@@ -271,15 +287,15 @@ fn modify_string(s: &mut String) {
 
 <div align="center">
 
----
+```bash
+# ================================================================================
+```
 
 </div>
 
-<div align="center">
-
-## ⚡ Architecture
-
-</div>
+```bash
+# Architecture
+```
 
 <div align="center">
 
@@ -307,15 +323,15 @@ graph TD
 
 <div align="center">
 
----
+```bash
+# ================================================================================
+```
 
 </div>
 
-<div align="center">
-
-## 🧪 Testing
-
-</div>
+```bash
+# Testing
+```
 
 ```bash
 cargo test                # All tests
@@ -337,15 +353,15 @@ cargo test --coverage     # Coverage
 
 <div align="center">
 
----
+```bash
+# ================================================================================
+```
 
 </div>
 
-<div align="center">
-
-## 🚀 Performance
-
-</div>
+```bash
+# Performance
+```
 
 <div align="center">
 
@@ -360,15 +376,15 @@ cargo test --coverage     # Coverage
 
 <div align="center">
 
----
+```bash
+# ================================================================================
+```
 
 </div>
 
-<div align="center">
-
-## 📁 Project Structure
-
-</div>
+```bash
+# Project Structure
+```
 
 ```
 blaze/
@@ -388,15 +404,15 @@ blaze/
 
 <div align="center">
 
----
+```bash
+# ================================================================================
+```
 
 </div>
 
-<div align="center">
-
-## 💡 Examples
-
-</div>
+```bash
+# Examples
+```
 
 ### Fibonacci
 
@@ -435,15 +451,15 @@ fn main() {
 
 <div align="center">
 
----
+```bash
+# ================================================================================
+```
 
 </div>
 
-<div align="center">
-
-## 🗺️ Roadmap
-
-</div>
+```bash
+# Roadmap
+```
 
 - **1.1**: Improved error handling.
 - **1.2**: Async/await support.
@@ -452,15 +468,15 @@ fn main() {
 
 <div align="center">
 
----
+```bash
+# ================================================================================
+```
 
 </div>
 
-<div align="center">
-
-## ❓ FAQ
-
-</div>
+```bash
+# FAQ
+```
 
 - **Vs. Rust?** Simpler syntax, faster compiles, same safety.
 - **Install errors?** Verify Rust/Cargo; report on GitHub.
@@ -469,15 +485,15 @@ fn main() {
 
 <div align="center">
 
----
+```bash
+# ================================================================================
+```
 
 </div>
 
-<div align="center">
-
-## 🤝 Contributing
-
-</div>
+```bash
+# Contributing
+```
 
 1. Fork repo.
 2. Branch: `git checkout -b feature/new`.
@@ -489,15 +505,15 @@ See CONTRIBUTING.md.
 
 <div align="center">
 
----
+```bash
+# ================================================================================
+```
 
 </div>
 
-<div align="center">
-
-## 🆘 Support
-
-</div>
+```bash
+# Support
+```
 
 <div align="center">
 
@@ -510,35 +526,35 @@ See CONTRIBUTING.md.
 
 <div align="center">
 
----
+```bash
+# ================================================================================
+```
 
 </div>
 
-<div align="center">
-
-## 📄 License
-
-</div>
+```bash
+# License
+```
 
 <div align="center">
 
 MIT License - see [LICENSE](LICENSE).
 
-![LICENSE MIT](https://img.shields.io/badge/LICENSE-MIT-9932cc?style=for-the-badge&logo=balance-scale&logoColor=white)
+![LICENSE MIT](https://img.shields.io/badge/LICENSE-MIT-8B5CF6?style=for-the-badge&logo=balance-scale&logoColor=white&labelColor=1A1A1A)
 
 </div>
 
 <div align="center">
 
----
+```bash
+# ================================================================================
+```
 
 </div>
 
-<div align="center">
-
-## 🙏 Acknowledgments
-
-</div>
+```bash
+# Acknowledgments
+```
 
 <div align="center">
 
@@ -553,20 +569,27 @@ MIT License - see [LICENSE](LICENSE).
 
 <div align="center">
 
----
+```bash
+# ================================================================================
+```
 
 </div>
 
+```bash
+# Get Started
+```
+
 <div align="center">
 
-## 🚀 Get Started
+![Install BLAZE](https://img.shields.io/badge/Install-BLAZE-FF6B35?style=for-the-badge&logo=download&logoColor=white&labelColor=1A1A1A)
+![Docs](https://img.shields.io/badge/Docs-Read%20Now-00D4FF?style=for-the-badge&logo=book&logoColor=black&labelColor=1A1A1A)
+![Examples](https://img.shields.io/badge/Examples-Try%20Now-10F5CC?style=for-the-badge&logo=code&logoColor=black&labelColor=1A1A1A)
 
-![Install BLAZE](https://img.shields.io/badge/Install-BLAZE-ff4500?style=for-the-badge&logo=download&logoColor=white)
-![Docs](https://img.shields.io/badge/Docs-Read%20Now-00ffff?style=for-the-badge&logo=book&logoColor=black)
-![Examples](https://img.shields.io/badge/Examples-Try%20Now-39ff14?style=for-the-badge&logo=code&logoColor=black)
+</div>
 
-**Made by BLACK**
-
-_"Crafting the future of programming languages."_
+```bash
+# Made by BLACK
+# "Crafting the future of programming languages."
+```
 
 </div>
