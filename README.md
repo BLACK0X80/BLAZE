@@ -1,3 +1,11 @@
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=WELCOME%20TO%20THE%20CODE%20REALM&fontSize=35&fontColor=fff&animation=twinkling&fontAlignY=32" width="100%"/>
+
+<br/>
+
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=50&duration=2000&pause=500&color=FF0000&center=true&vCenter=true&width=600&height=100&lines=BLACK" alt="BLACK" />
+
+<br/>
+
 <div align="center">
 
 ```bash
@@ -15,16 +23,16 @@
 
 <br>
 
-[![BLAZE](https://img.shields.io/badge/BLAZE-Programming%20Language-orange?style=flat-square&logo=fire&logoColor=white)](https://github.com/BLACK0X80/blaze)
-[![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=flat-square&logo=tag&logoColor=white)](https://github.com/BLACK0X80/blaze/releases)
-[![License](https://img.shields.io/badge/License-MIT-purple?style=flat-square&logo=balance-scale&logoColor=white)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-green?style=flat-square&logo=globe&logoColor=white)](https://github.com/BLACK0X80/blaze)
-[![Performance](https://img.shields.io/badge/Performance-BLAZING%20FAST-red?style=flat-square&logo=rocket&logoColor=white)](https://github.com/BLACK0X80/blaze)
-[![Backend](https://img.shields.io/badge/Backend-LLVM-cyan?style=flat-square&logo=llvm&logoColor=white)](https://llvm.org/)
-[![Rust](https://img.shields.io/badge/Built%20with-Rust-orange?style=flat-square&logo=rust&logoColor=white)](https://rust-lang.org/)
-[![Build](https://img.shields.io/badge/Build-Stable-brightgreen?style=flat-square&logo=check-circle&logoColor=white)](https://github.com/BLACK0X80/blaze/actions)
-[![Stars](https://img.shields.io/badge/Stars-Growing-yellow?style=flat-square&logo=star&logoColor=white)](https://github.com/BLACK0X80/blaze/stargazers)
-[![Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen?style=flat-square&logo=code&logoColor=white)](https://github.com/BLACK0X80/blaze)
+<img src="https://img.shields.io/badge/BLAZE-Programming%20Language-FF6B35?style=for-the-badge&logo=fire&logoColor=white" alt="BLAZE" />
+<img src="https://img.shields.io/badge/Version-1.0.0-00D4FF?style=for-the-badge&logo=tag&logoColor=black" alt="Version" />
+<img src="https://img.shields.io/badge/License-MIT-8B5CF6?style=for-the-badge&logo=balance-scale&logoColor=white" alt="License" />
+<img src="https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-10F5CC?style=for-the-badge&logo=globe&logoColor=black" alt="Platform" />
+<img src="https://img.shields.io/badge/Performance-BLAZING%20FAST-FF6B35?style=for-the-badge&logo=rocket&logoColor=white" alt="Performance" />
+<img src="https://img.shields.io/badge/Backend-LLVM-00D4FF?style=for-the-badge&logo=llvm&logoColor=black" alt="Backend" />
+<img src="https://img.shields.io/badge/Built%20with-Rust-8B5CF6?style=for-the-badge&logo=rust&logoColor=white" alt="Rust" />
+<img src="https://img.shields.io/badge/Build-Stable-10F5CC?style=for-the-badge&logo=check-circle&logoColor=black" alt="Build" />
+<img src="https://img.shields.io/badge/Stars-Growing-FF6B35?style=for-the-badge&logo=star&logoColor=white" alt="Stars" />
+<img src="https://img.shields.io/badge/Coverage-100%25-00D4FF?style=for-the-badge&logo=code&logoColor=black" alt="Coverage" />
 
 <br>
 
@@ -36,7 +44,7 @@
 
 <div align="center">
 
-[![Rust Powered](https://img.shields.io/badge/Rust-POWERED-orange?style=flat-square&logo=rust&logoColor=white)](https://rust-lang.org/)
+<img src="https://img.shields.io/badge/Rust-POWERED-FF6B35?style=for-the-badge&logo=rust&logoColor=white" alt="Rust Powered" />
 
 </div>
 
@@ -51,7 +59,7 @@
 
 <div align="center">
 
-[![GitHub](https://img.shields.io/badge/GitHub-BLACK0X80-purple?style=flat-square&logo=github&logoColor=white)](https://github.com/BLACK0X80)
+<img src="https://img.shields.io/badge/GitHub-BLACK0X80-8B5CF6?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
 
 </div>
 
@@ -518,7 +526,7 @@ See CONTRIBUTING.md.
 
 MIT License - see [LICENSE](LICENSE).
 
-[![License](https://img.shields.io/badge/License-MIT-purple?style=flat-square&logo=balance-scale&logoColor=white)](LICENSE)
+<img src="https://img.shields.io/badge/License-MIT-8B5CF6?style=for-the-badge&logo=balance-scale&logoColor=white" alt="License" />
 
 </div>
 
@@ -555,9 +563,9 @@ MIT License - see [LICENSE](LICENSE).
 
 <div align="center">
 
-[![Install](https://img.shields.io/badge/Install-BLAZE-orange?style=flat-square&logo=download&logoColor=white)](https://github.com/BLACK0X80/blaze)
-[![Docs](https://img.shields.io/badge/Docs-Read%20Now-blue?style=flat-square&logo=book&logoColor=white)](https://docs.blaze-lang.dev)
-[![Examples](https://img.shields.io/badge/Examples-Try%20Now-green?style=flat-square&logo=code&logoColor=white)](https://github.com/BLACK0X80/blaze/tree/main/examples)
+<img src="https://img.shields.io/badge/Install-BLAZE-FF6B35?style=for-the-badge&logo=download&logoColor=white" alt="Install" />
+<img src="https://img.shields.io/badge/Docs-Read%20Now-00D4FF?style=for-the-badge&logo=book&logoColor=black" alt="Docs" />
+<img src="https://img.shields.io/badge/Examples-Try%20Now-10F5CC?style=for-the-badge&logo=code&logoColor=black" alt="Examples" />
 
 </div>
 
