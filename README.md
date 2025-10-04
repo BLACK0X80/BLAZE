@@ -1,24 +1,10 @@
 <div align="center">
 
-<svg width="800" height="120" viewBox="0 0 800 120" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <filter id="neon-glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="glow1"/>
-      <feGaussianBlur stdDeviation="5" result="glow2"/>
-      <feMerge>
-        <feMergeNode in="glow1"/>
-        <feMergeNode in="glow2"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-    <linearGradient id="text-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#ff4500"/>
-      <stop offset="50%" stop-color="#00ffff"/>
-      <stop offset="100%" stop-color="#9932cc"/>
-    </linearGradient>
-  </defs>
-  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="60" font-weight="bold" fill="url(#text-grad)" filter="url(#neon-glow)" font-family="monospace">BLAZE Programming Language</text>
-</svg>
+# 🔥 BLAZE Programming Language ⚡
+
+_A blazing fast systems programming language with Rust-like safety guarantees._
+
+<br>
 
 ![LANGUAGE BLAZE](https://img.shields.io/badge/LANGUAGE-BLAZE-ff4500?style=for-the-badge&logo=fire&logoColor=white)
 ![VERSION 1.0.0](https://img.shields.io/badge/VERSION-1.0.0-00ffff?style=for-the-badge&logo=tag&logoColor=black)
@@ -31,47 +17,35 @@
 ![STARS ⭐ Growing](https://img.shields.io/badge/STARS-%E2%AD%90%20Growing-ff4500?style=for-the-badge&logo=star&logoColor=white)
 ![COVERAGE 100%](https://img.shields.io/badge/COVERAGE-100%25-00ffff?style=for-the-badge&logo=code&logoColor=black)
 
-> "A blazing fast systems programming language with Rust-like safety guarantees."
+<br>
 
-</div>
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" width="40px" alt="Python" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" width="40px" alt="Go" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" width="40px" alt="Shell" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" width="40px" alt="PHP" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" width="40px" alt="Node.js" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" width="40px" alt="JavaScript" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" width="40px" alt="HTML5" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" width="40px" alt="CSS3" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg" width="40px" alt="Ruby" />
+</p>
 
-<svg width="100%" height="5" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="divider-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="transparent" />
-      <stop offset="50%" stop-color="#ff4500" />
-      <stop offset="100%" stop-color="transparent" />
-    </linearGradient>
-  </defs>
-  <line x1="0" y1="2.5" x2="100%" y2="2.5" stroke="url(#divider-grad)" stroke-width="3"/>
-</svg>
+<br>
 
-<div align="center">
+---
 
-<svg width="600" height="80" viewBox="0 0 600 80" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <filter id="author-glow">
-      <feGaussianBlur stdDeviation="2" result="glow"/>
-      <feMerge>
-        <feMergeNode in="glow"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-  </defs>
-  <text x="50%" y="40" dominant-baseline="middle" text-anchor="middle" font-size="30" fill="#00ffff" filter="url(#author-glow)">Developed by BLACK</text>
-</svg>
+## 👨‍💻 Developer
 
-*Master of Compilers & Systems Programming*
-
-"Crafting the future of programming languages"
+**Developed by BLACK**  
+_Master of Compilers & Systems Programming_  
+_"Crafting the future of programming languages"_
 
 [![GitHub BLACK0X80](https://img.shields.io/badge/GitHub-BLACK0X80-9932cc?style=for-the-badge&logo=github&logoColor=white)](https://github.com/BLACK0X80)
 
-</div>
+---
 
-<svg width="100%" height="5" xmlns="http://www.w3.org/2000/svg">
-  <line x1="0" y1="2.5" x2="100%" y2="2.5" stroke="url(#divider-grad)" stroke-width="3"/>
-</svg>
+</div>
 
 ## Table of Contents
 
@@ -91,9 +65,11 @@
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
 
-<svg width="100%" height="5" xmlns="http://www.w3.org/2000/svg">
-  <line x1="0" y1="2.5" x2="100%" y2="2.5" stroke="url(#divider-grad)" stroke-width="3"/>
-</svg>
+<div align="center">
+
+---
+
+</div>
 
 ## Why BLAZE?
 
@@ -101,19 +77,21 @@ BLAZE delivers Rust-like safety with superior performance for systems programmin
 
 <div align="center">
 
-| Feature                | Benefit                              | Performance           |
-|------------------------|--------------------------------------|-----------------------|
-| Memory Safety          | Zero-cost guarantees                 | No GC pauses          |
-| Zero-Cost Abstractions | High-level code, low-level speed     | Full optimization     |
-| Blazing Fast           | Rapid compilation                    | <1s for 10k lines     |
-| Modern Syntax          | Clean and expressive                 | Developer-friendly    |
-| Cross-Platform         | Windows, Linux, macOS                | Seamless compatibility|
+| Feature                | Benefit                          | Performance            |
+| ---------------------- | -------------------------------- | ---------------------- |
+| Memory Safety          | Zero-cost guarantees             | No GC pauses           |
+| Zero-Cost Abstractions | High-level code, low-level speed | Full optimization      |
+| Blazing Fast           | Rapid compilation                | <1s for 10k lines      |
+| Modern Syntax          | Clean and expressive             | Developer-friendly     |
+| Cross-Platform         | Windows, Linux, macOS            | Seamless compatibility |
 
 </div>
 
-<svg width="100%" height="5" xmlns="http://www.w3.org/2000/svg">
-  <line x1="0" y1="2.5" x2="100%" y2="2.5" stroke="url(#divider-grad)" stroke-width="3"/>
-</svg>
+<div align="center">
+
+---
+
+</div>
 
 ## Quick Start
 
@@ -122,6 +100,7 @@ BLAZE delivers Rust-like safety with superior performance for systems programmin
 Select a method:
 
 - **Automated (Recommended)**:
+
   ```bash
   # Windows
   .\setup.bat
@@ -131,6 +110,7 @@ Select a method:
   ```
 
 - **Manual**:
+
   ```bash
   git clone https://github.com/black/blaze.git
   cd blaze
@@ -145,9 +125,11 @@ Select a method:
   choco install blaze  # Chocolatey (Windows)
   ```
 
-<svg width="100%" height="5" xmlns="http://www.w3.org/2000/svg">
-  <line x1="0" y1="2.5" x2="100%" y2="2.5" stroke="url(#divider-grad)" stroke-width="3"/>
-</svg>
+<div align="center">
+
+---
+
+</div>
 
 ## Usage
 
@@ -158,16 +140,16 @@ blaze run example.blz    # Run
 blaze --help             # Help
 ```
 
-<svg width="100%" height="5" xmlns="http://www.w3.org/2000/svg">
-  <line x1="0" y1="2.5" x2="100%" y2="2.5" stroke="url(#divider-grad)" stroke-width="3"/>
-</svg>
+<div align="center">
+
+---
+
+</div>
 
 <div align="center">
-<pre>
-╔══════════════════════════╗
-║     Language Syntax      ║
-╚══════════════════════════╝
-</pre>
+
+## 🔥 Language Syntax
+
 </div>
 
 ### Hello World
@@ -287,16 +269,16 @@ fn modify_string(s: &mut String) {
 }
 ```
 
-<svg width="100%" height="5" xmlns="http://www.w3.org/2000/svg">
-  <line x1="0" y1="2.5" x2="100%" y2="2.5" stroke="url(#divider-grad)" stroke-width="3"/>
-</svg>
+<div align="center">
+
+---
+
+</div>
 
 <div align="center">
-<pre>
-╔══════════════════════════╗
-║       Architecture       ║
-╚══════════════════════════╝
-</pre>
+
+## ⚡ Architecture
+
 </div>
 
 <div align="center">
@@ -323,16 +305,16 @@ graph TD
 
 </div>
 
-<svg width="100%" height="5" xmlns="http://www.w3.org/2000/svg">
-  <line x1="0" y1="2.5" x2="100%" y2="2.5" stroke="url(#divider-grad)" stroke-width="3"/>
-</svg>
+<div align="center">
+
+---
+
+</div>
 
 <div align="center">
-<pre>
-╔══════════════════════════╗
-║          Testing         ║
-╚══════════════════════════╝
-</pre>
+
+## 🧪 Testing
+
 </div>
 
 ```bash
@@ -344,48 +326,48 @@ cargo test --coverage     # Coverage
 
 <div align="center">
 
-| Suite               | Passed | Failed | Coverage |
-|---------------------|--------|--------|----------|
-| Lexer               | 6/6    | 0      | 100%     |
-| Parser              | 5/5    | 0      | 100%     |
-| Integration         | 4/4    | 0      | 100%     |
-| Total               | 15/15  | 0      | 100%     |
+| Suite       | Passed | Failed | Coverage |
+| ----------- | ------ | ------ | -------- |
+| Lexer       | 6/6    | 0      | 100%     |
+| Parser      | 5/5    | 0      | 100%     |
+| Integration | 4/4    | 0      | 100%     |
+| Total       | 15/15  | 0      | 100%     |
 
-</div>
-
-<svg width="100%" height="5" xmlns="http://www.w3.org/2000/svg">
-  <line x1="0" y1="2.5" x2="100%" y2="2.5" stroke="url(#divider-grad)" stroke-width="3"/>
-</svg>
-
-<div align="center">
-<pre>
-╔══════════════════════════╗
-║        Performance       ║
-╚══════════════════════════╝
-</pre>
 </div>
 
 <div align="center">
 
-| Metric              | Value               | Ranking   |
-|---------------------|---------------------|-----------|
-| Compilation Speed   | ~1.2s / 10k lines   | Fastest   |
-| Binary Size         | ~2.1MB              | Compact   |
-| Memory Usage        | <50MB               | Efficient |
-| Test Coverage       | 100%                | Perfect   |
+---
 
 </div>
 
-<svg width="100%" height="5" xmlns="http://www.w3.org/2000/svg">
-  <line x1="0" y1="2.5" x2="100%" y2="2.5" stroke="url(#divider-grad)" stroke-width="3"/>
-</svg>
+<div align="center">
+
+## 🚀 Performance
+
+</div>
 
 <div align="center">
-<pre>
-╔══════════════════════════╗
-║     Project Structure    ║
-╚══════════════════════════╝
-</pre>
+
+| Metric            | Value             | Ranking   |
+| ----------------- | ----------------- | --------- |
+| Compilation Speed | ~1.2s / 10k lines | Fastest   |
+| Binary Size       | ~2.1MB            | Compact   |
+| Memory Usage      | <50MB             | Efficient |
+| Test Coverage     | 100%              | Perfect   |
+
+</div>
+
+<div align="center">
+
+---
+
+</div>
+
+<div align="center">
+
+## 📁 Project Structure
+
 </div>
 
 ```
@@ -404,16 +386,16 @@ blaze/
 └── setup.bat      # Setup
 ```
 
-<svg width="100%" height="5" xmlns="http://www.w3.org/2000/svg">
-  <line x1="0" y1="2.5" x2="100%" y2="2.5" stroke="url(#divider-grad)" stroke-width="3"/>
-</svg>
+<div align="center">
+
+---
+
+</div>
 
 <div align="center">
-<pre>
-╔══════════════════════════╗
-║         Examples         ║
-╚══════════════════════════╝
-</pre>
+
+## 💡 Examples
+
 </div>
 
 ### Fibonacci
@@ -451,16 +433,16 @@ fn main() {
 }
 ```
 
-<svg width="100%" height="5" xmlns="http://www.w3.org/2000/svg">
-  <line x1="0" y1="2.5" x2="100%" y2="2.5" stroke="url(#divider-grad)" stroke-width="3"/>
-</svg>
+<div align="center">
+
+---
+
+</div>
 
 <div align="center">
-<pre>
-╔══════════════════════════╗
-║          Roadmap         ║
-╚══════════════════════════╝
-</pre>
+
+## 🗺️ Roadmap
+
 </div>
 
 - **1.1**: Improved error handling.
@@ -468,16 +450,16 @@ fn main() {
 - **2.0**: WebAssembly integration.
 - **Future**: GPU & embedded systems.
 
-<svg width="100%" height="5" xmlns="http://www.w3.org/2000/svg">
-  <line x1="0" y1="2.5" x2="100%" y2="2.5" stroke="url(#divider-grad)" stroke-width="3"/>
-</svg>
+<div align="center">
+
+---
+
+</div>
 
 <div align="center">
-<pre>
-╔══════════════════════════╗
-║            FAQ           ║
-╚══════════════════════════╝
-</pre>
+
+## ❓ FAQ
+
 </div>
 
 - **Vs. Rust?** Simpler syntax, faster compiles, same safety.
@@ -485,16 +467,16 @@ fn main() {
 - **Production-ready?** Ideal for prototypes; test thoroughly.
 - **Contribute?** See below.
 
-<svg width="100%" height="5" xmlns="http://www.w3.org/2000/svg">
-  <line x1="0" y1="2.5" x2="100%" y2="2.5" stroke="url(#divider-grad)" stroke-width="3"/>
-</svg>
+<div align="center">
+
+---
+
+</div>
 
 <div align="center">
-<pre>
-╔══════════════════════════╗
-║       Contributing       ║
-╚══════════════════════════╝
-</pre>
+
+## 🤝 Contributing
+
 </div>
 
 1. Fork repo.
@@ -505,37 +487,37 @@ fn main() {
 
 See CONTRIBUTING.md.
 
-<svg width="100%" height="5" xmlns="http://www.w3.org/2000/svg">
-  <line x1="0" y1="2.5" x2="100%" y2="2.5" stroke="url(#divider-grad)" stroke-width="3"/>
-</svg>
-
 <div align="center">
-<pre>
-╔══════════════════════════╗
-║          Support         ║
-╚══════════════════════════╝
-</pre>
+
+---
+
 </div>
 
 <div align="center">
 
-| Resource         | Link                                                       | Description          |
-|------------------|------------------------------------------------------------|----------------------|
-| Docs             | [docs.blaze-lang.dev](https://docs.blaze-lang.dev)         | Language reference   |
-| Issues           | [GitHub Issues](https://github.com/BLACK0X80/blaze/issues) | Bugs & reports       |
+## 🆘 Support
 
 </div>
 
-<svg width="100%" height="5" xmlns="http://www.w3.org/2000/svg">
-  <line x1="0" y1="2.5" x2="100%" y2="2.5" stroke="url(#divider-grad)" stroke-width="3"/>
-</svg>
+<div align="center">
+
+| Resource | Link                                                       | Description        |
+| -------- | ---------------------------------------------------------- | ------------------ |
+| Docs     | [docs.blaze-lang.dev](https://docs.blaze-lang.dev)         | Language reference |
+| Issues   | [GitHub Issues](https://github.com/BLACK0X80/blaze/issues) | Bugs & reports     |
+
+</div>
 
 <div align="center">
-<pre>
-╔══════════════════════════╗
-║          License         ║
-╚══════════════════════════╝
-</pre>
+
+---
+
+</div>
+
+<div align="center">
+
+## 📄 License
+
 </div>
 
 <div align="center">
@@ -546,36 +528,38 @@ MIT License - see [LICENSE](LICENSE).
 
 </div>
 
-<svg width="100%" height="5" xmlns="http://www.w3.org/2000/svg">
-  <line x1="0" y1="2.5" x2="100%" y2="2.5" stroke="url(#divider-grad)" stroke-width="3"/>
-</svg>
-
 <div align="center">
-<pre>
-╔══════════════════════════╗
-║     Acknowledgments      ║
-╚══════════════════════════╝
-</pre>
+
+---
+
 </div>
 
 <div align="center">
 
-| Contributor      | Role                     | Contribution       |
-|------------------|--------------------------|--------------------|
-| BLACK            | Lead Architect           | Core design        |
-| Rust Community   | Inspiration              | Tools & ecosystem  |
-| LLVM Project     | Backend                  | Codegen            |
-| Contributors     | Community                | Improvements       |
+## 🙏 Acknowledgments
 
 </div>
 
-<svg width="100%" height="5" xmlns="http://www.w3.org/2000/svg">
-  <line x1="0" y1="2.5" x2="100%" y2="2.5" stroke="url(#divider-grad)" stroke-width="3"/>
-</svg>
+<div align="center">
+
+| Contributor    | Role           | Contribution      |
+| -------------- | -------------- | ----------------- |
+| BLACK          | Lead Architect | Core design       |
+| Rust Community | Inspiration    | Tools & ecosystem |
+| LLVM Project   | Backend        | Codegen           |
+| Contributors   | Community      | Improvements      |
+
+</div>
 
 <div align="center">
 
-## Get Started
+---
+
+</div>
+
+<div align="center">
+
+## 🚀 Get Started
 
 ![Install BLAZE](https://img.shields.io/badge/Install-BLAZE-ff4500?style=for-the-badge&logo=download&logoColor=white)
 ![Docs](https://img.shields.io/badge/Docs-Read%20Now-00ffff?style=for-the-badge&logo=book&logoColor=black)
@@ -583,9 +567,6 @@ MIT License - see [LICENSE](LICENSE).
 
 **Made by BLACK**
 
-<svg width="600" height="60" viewBox="0 0 600 60" xmlns="http://www.w3.org/2000/svg">
-  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="24" fill="#ffd700" filter="url(#author-glow)">"Crafting the future of programming languages."</text>
-</svg>
+_"Crafting the future of programming languages."_
 
 </div>
-
