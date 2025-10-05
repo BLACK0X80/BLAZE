@@ -1341,7 +1341,6 @@ blaze run hello.blz
 [![Install Now](https://img.shields.io/badge/Install%20Now-FF6B35?style=for-the-badge&logo=download&logoColor=white)](https://github.com/BLACK0X80/blaze/releases)
 [![View Examples](https://img.shields.io/badge/View%20Examples-10F5CC?style=for-the-badge&logo=code&logoColor=black)](https://github.com/BLACK0X80/blaze/tree/main/examples)
 [![Read Docs](https://img.shields.io/badge/Read%20Docs-00D4FF?style=for-the-badge&logo=book&logoColor=black)](https://docs.blaze-lang.org)
-[![Join Discord](https://img.shields.io/badge/Join%20Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/blaze)
 
 <br/><br/>
 
