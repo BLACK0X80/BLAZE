@@ -26,7 +26,7 @@
 
 **BLAZE** combines **Rust's safety guarantees** with **C++'s raw performance** and **Go's elegant simplicity**. A modern systems programming language engineered for developers who demand excellence.
 
-[**Documentation**](https://docs.blaze-lang.org) • [**Quick Start**](#quick-start) • [**Examples**](#examples) • [**Contributing**](#contributing)
+[**Documentation**](https://docs.blaze-lang.org) • [**Quick Start**](#quick-start) • [**Examples**](#examples)
 
 </div>
 
@@ -59,7 +59,6 @@
 ### Develop
 - [Architecture](#architecture)
 - [Testing](#testing)
-- [Contributing](#contributing)
 - [Roadmap](#roadmap)
 
 </td>
