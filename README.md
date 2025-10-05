@@ -1236,22 +1236,7 @@ BLAZE follows Rust code style guidelines:
 
 ---
 
-## Community
 
-<div align="center">
-
-### Join the BLAZE Community
-
-[![Discord](https://img.shields.io/badge/Discord-Join%20Server-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/blaze)
-[![Twitter](https://img.shields.io/badge/Twitter-Follow-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/blaze_lang)
-[![Reddit](https://img.shields.io/badge/Reddit-Join-FF4500?style=for-the-badge&logo=reddit&logoColor=white)](https://reddit.com/r/blazelang)
-[![Stack Overflow](https://img.shields.io/badge/Stack_Overflow-Ask-F58025?style=for-the-badge&logo=stackoverflow&logoColor=white)](https://stackoverflow.com/questions/tagged/blaze)
-
-</div>
-
-### Communication Channels
-
-- **Discord**: Real-time chat and community support
 - **GitHub Discussions**: Feature requests and long-form discussions
 
 ### Code of Conduct
