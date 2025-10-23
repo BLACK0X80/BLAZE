@@ -1,0 +1,131 @@
+fn stack_push(stack: i32, top: i32, value: i32) -> i32 {
+    let new_top = top + 1;
+    stack + new_top = value;
+    return new_top;
+}
+
+fn stack_pop(stack: i32, top: i32) -> i32 {
+    if top < 0 {
+        return -1;
+    }
+    
+    let value = stack + top;
+    return top - 1;
+}
+
+fn stack_peek(stack: i32, top: i32) -> i32 {
+    if top < 0 {
+        return -1;
+    }
+    
+    return stack + top;
+}
+
+fn queue_enqueue(queue: i32, rear: i32, value: i32) -> i32 {
+    let new_rear = rear + 1;
+    queue + new_rear = value;
+    return new_rear;
+}
+
+fn queue_dequeue(queue: i32, front: i32, rear: i32) -> i32 {
+    if front > rear {
+        return -1;
+    }
+    
+    let value = queue + front;
+    return front + 1;
+}
+
+fn linked_list_insert(head: i32, value: i32) -> i32 {
+    let new_node = 1000;
+    new_node = value;
+    new_node + 1 = head;
+    return new_node;
+}
+
+fn linked_list_search(head: i32, target: i32) -> bool {
+    let mut current = head;
+    
+    while current != 0 {
+        if current == target {
+            return true;
+        }
+        current = current + 1;
+    }
+    
+    return false;
+}
+
+fn linked_list_delete(head: i32, target: i32) -> i32 {
+    if head == 0 {
+        return 0;
+    }
+    
+    if head == target {
+        return head + 1;
+    }
+    
+    let mut current = head;
+    let mut previous = 0;
+    
+    while current != 0 {
+        if current == target {
+            if previous != 0 {
+                previous + 1 = current + 1;
+            }
+            return head;
+        }
+        
+        previous = current;
+        current = current + 1;
+    }
+    
+    return head;
+}
+
+fn binary_tree_insert(root: i32, value: i32) -> i32 {
+    if root == 0 {
+        let new_node = 2000;
+        new_node = value;
+        new_node + 1 = 0;
+        new_node + 2 = 0;
+        return new_node;
+    }
+    
+    if value < root {
+        root + 1 = binary_tree_insert(root + 1, value);
+    } else {
+        root + 2 = binary_tree_insert(root + 2, value);
+    }
+    
+    return root;
+}
+
+fn binary_tree_search(root: i32, target: i32) -> bool {
+    if root == 0 {
+        return false;
+    }
+    
+    if root == target {
+        return true;
+    }
+    
+    if target < root {
+        return binary_tree_search(root + 1, target);
+    }
+    
+    return binary_tree_search(root + 2, target);
+}
+
+fn main() {
+    let stack_top = -1;
+    let queue_front = 0;
+    let queue_rear = -1;
+    let list_head = 0;
+    let tree_root = 0;
+    
+    stack_top = stack_push(5000, stack_top, 42);
+    queue_rear = queue_enqueue(6000, queue_rear, 100);
+    list_head = linked_list_insert(list_head, 25);
+    tree_root = binary_tree_insert(tree_root, 50);
+}

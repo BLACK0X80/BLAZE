@@ -1,67 +1,81 @@
-use std::collections::HashMap;
 use crate::parser::{Program, Item, Function, Statement, Expression, Type};
-
-#[derive(Debug, Clone)]
-pub struct ResolvedSymbol {
-    pub name: String,
-    pub ty: Type,
-    pub mutable: bool,
-    pub scope_depth: usize,
-    pub is_imported: bool,
-}
+use anyhow::{Result, bail};
+use std::collections::HashMap;
 
 pub struct ScopeResolver {
-    scopes: Vec<HashMap<String, ResolvedSymbol>>,
-    imports: HashMap<String, String>,
-    current_depth: usize,
+    scopes: Vec<Scope>,
+    function_signatures: HashMap<String, FunctionSignature>,
+    type_definitions: HashMap<String, Type>,
+}
+
+#[derive(Debug, Clone)]
+struct Scope {
+    bindings: HashMap<String, Binding>,
+}
+
+#[derive(Debug, Clone)]
+struct Binding {
+    name: String,
+    ty: Type,
+    mutable: bool,
+    resolved: bool,
+}
+
+#[derive(Debug, Clone)]
+struct FunctionSignature {
+    name: String,
+    params: Vec<Type>,
+    return_type: Option<Type>,
 }
 
 impl ScopeResolver {
     pub fn new() -> Self {
         Self {
-            scopes: vec![HashMap::new()],
-            imports: HashMap::new(),
-            current_depth: 0,
+            scopes: vec![Scope { bindings: HashMap::new() }],
+            function_signatures: HashMap::new(),
+            type_definitions: HashMap::new(),
         }
     }
 
-    pub fn resolve(&mut self, program: &Program) -> anyhow::Result<()> {
+    pub fn resolve(&mut self, program: &Program) -> Result<()> {
+        self.collect_declarations(program)?;
+        
         for item in &program.items {
-            self.resolve_item(item)?;
+            match item {
+                Item::Function(func) => {
+                    self.resolve_function(func)?;
+                }
+                Item::Struct(_) => {}
+            }
+        }
+        
+        Ok(())
+    }
+
+    fn collect_declarations(&mut self, program: &Program) -> Result<()> {
+        for item in &program.items {
+            match item {
+                Item::Function(func) => {
+                    let signature = FunctionSignature {
+                        name: func.name.clone(),
+                        params: func.params.iter().map(|p| p.ty.clone()).collect(),
+                        return_type: func.return_type.clone(),
+                    };
+                    self.function_signatures.insert(func.name.clone(), signature);
+                }
+                Item::Struct(s) => {
+                    self.type_definitions.insert(s.name.clone(), Type::Custom(s.name.clone()));
+                }
+            }
         }
         Ok(())
     }
 
-    fn resolve_item(&mut self, item: &Item) -> anyhow::Result<()> {
-        match item {
-            Item::Function(func) => {
-                self.resolve_function(func)?;
-            }
-            Item::Const(const_def) => {
-                self.add_symbol(const_def.name.clone(), const_def.ty.clone(), false, false)?;
-            }
-            Item::Static(static_def) => {
-                self.add_symbol(static_def.name.clone(), static_def.ty.clone(), false, false)?;
-            }
-            Item::Struct(struct_def) => {
-                self.add_symbol(struct_def.name.clone(), Type::Identifier(struct_def.name.clone()), false, false)?;
-            }
-            Item::Enum(enum_def) => {
-                self.add_symbol(enum_def.name.clone(), Type::Identifier(enum_def.name.clone()), false, false)?;
-            }
-            Item::Use(use_stmt) => {
-                self.resolve_use(use_stmt)?;
-            }
-            _ => {}
-        }
-        Ok(())
-    }
-
-    fn resolve_function(&mut self, func: &Function) -> anyhow::Result<()> {
+    fn resolve_function(&mut self, func: &Function) -> Result<()> {
         self.enter_scope();
         
         for param in &func.params {
-            self.add_symbol(param.name.clone(), param.ty.clone(), false, false)?;
+            self.add_binding(param.name.clone(), param.ty.clone(), false)?;
         }
         
         for stmt in &func.body {
@@ -72,19 +86,46 @@ impl ScopeResolver {
         Ok(())
     }
 
-    fn resolve_statement(&mut self, stmt: &Statement) -> anyhow::Result<()> {
+    fn resolve_statement(&mut self, stmt: &Statement) -> Result<()> {
         match stmt {
-            Statement::Let { name, ty, mutable, .. } => {
+            Statement::Let { name, ty, value, mutable } => {
+                if let Some(expr) = value {
+                    self.resolve_expression(expr)?;
+                }
+                
                 if let Some(ty) = ty {
-                    self.add_symbol(name.clone(), ty.clone(), *mutable, false)?;
+                    self.resolve_type(ty)?;
+                    self.add_binding(name.clone(), ty.clone(), *mutable)?;
                 }
             }
-            Statement::Block(stmts) => {
+            Statement::If { condition, then_block, else_block } => {
+                self.resolve_expression(condition)?;
+                
                 self.enter_scope();
-                for stmt in stmts {
+                for stmt in then_block {
                     self.resolve_statement(stmt)?;
                 }
                 self.exit_scope();
+                
+                if let Some(else_stmts) = else_block {
+                    self.enter_scope();
+                    for stmt in else_stmts {
+                        self.resolve_statement(stmt)?;
+                    }
+                    self.exit_scope();
+                }
+            }
+            Statement::While { condition, body } => {
+                self.resolve_expression(condition)?;
+                
+                self.enter_scope();
+                for stmt in body {
+                    self.resolve_statement(stmt)?;
+                }
+                self.exit_scope();
+            }
+            Statement::Return(Some(expr)) => {
+                self.resolve_expression(expr)?;
             }
             Statement::Expression(expr) => {
                 self.resolve_expression(expr)?;
@@ -94,15 +135,11 @@ impl ScopeResolver {
         Ok(())
     }
 
-    fn resolve_expression(&mut self, expr: &Expression) -> anyhow::Result<()> {
+    fn resolve_expression(&mut self, expr: &Expression) -> Result<()> {
         match expr {
-            Expression::Identifier(name) => {
-                self.resolve_identifier(name)?;
-            }
-            Expression::Call { callee, args } => {
-                self.resolve_expression(callee)?;
-                for arg in args {
-                    self.resolve_expression(arg)?;
+            Expression::Ident(name) => {
+                if !self.lookup(name) {
+                    bail!("Undefined variable '{}'", name);
                 }
             }
             Expression::Binary { left, right, .. } => {
@@ -112,128 +149,72 @@ impl ScopeResolver {
             Expression::Unary { operand, .. } => {
                 self.resolve_expression(operand)?;
             }
-            Expression::Index { object, index } => {
-                self.resolve_expression(object)?;
-                self.resolve_expression(index)?;
+            Expression::Call { func, args } => {
+                if let Expression::Ident(func_name) = &**func {
+                    if !self.function_signatures.contains_key(func_name) {
+                        bail!("Undefined function '{}'", func_name);
+                    }
+                }
+                
+                for arg in args {
+                    self.resolve_expression(arg)?;
+                }
             }
             Expression::FieldAccess { object, .. } => {
                 self.resolve_expression(object)?;
             }
-            Expression::MethodCall { object, .. } => {
-                self.resolve_expression(object)?;
-            }
-            Expression::If { condition, then_branch, else_branch } => {
-                self.resolve_expression(condition)?;
-                self.resolve_expression(then_branch)?;
-                if let Some(else_expr) = else_branch {
-                    self.resolve_expression(else_expr)?;
-                }
-            }
-            Expression::Match { expression, arms } => {
-                self.resolve_expression(expression)?;
-                for arm in arms {
-                    self.resolve_expression(&arm.body)?;
-                }
-            }
-            Expression::Block(stmts) => {
-                self.enter_scope();
-                for stmt in stmts {
-                    self.resolve_statement(stmt)?;
-                }
-                self.exit_scope();
-            }
-            Expression::Assignment { target, value } => {
-                self.resolve_expression(target)?;
-                self.resolve_expression(value)?;
-            }
-            Expression::StructLiteral { fields, .. } => {
-                for field in fields {
-                    self.resolve_expression(&field.value)?;
-                }
-            }
-            Expression::ArrayLiteral(elements) => {
-                for element in elements {
-                    self.resolve_expression(element)?;
-                }
-            }
-            Expression::TupleLiteral(elements) => {
-                for element in elements {
-                    self.resolve_expression(element)?;
-                }
-            }
-            Expression::Closure { body, .. } => {
-                self.resolve_expression(body)?;
-            }
-            Expression::Reference { expression, .. } => {
-                self.resolve_expression(expression)?;
-            }
-            Expression::Dereference(expr) => {
-                self.resolve_expression(expr)?;
+            Expression::Index { array, index } => {
+                self.resolve_expression(array)?;
+                self.resolve_expression(index)?;
             }
             _ => {}
         }
         Ok(())
     }
 
-    fn resolve_identifier(&self, name: &str) -> anyhow::Result<()> {
-        if self.lookup_symbol(name).is_none() {
-            return Err(anyhow::anyhow!("Undefined symbol: {}", name));
+    fn resolve_type(&self, ty: &Type) -> Result<()> {
+        match ty {
+            Type::Custom(name) => {
+                if !self.type_definitions.contains_key(name) {
+                    bail!("Undefined type '{}'", name);
+                }
+            }
+            _ => {}
         }
-        Ok(())
-    }
-
-    fn resolve_use(&mut self, use_stmt: &crate::parser::Use) -> anyhow::Result<()> {
-        let path = use_stmt.path.join("::");
-        let last_component = use_stmt.path.last()
-            .ok_or_else(|| anyhow::anyhow!("Empty use path"))?;
-        
-        self.imports.insert(last_component.clone(), path);
         Ok(())
     }
 
     fn enter_scope(&mut self) {
-        self.current_depth += 1;
-        self.scopes.push(HashMap::new());
+        self.scopes.push(Scope { bindings: HashMap::new() });
     }
 
     fn exit_scope(&mut self) {
-        if self.current_depth > 0 {
+        if self.scopes.len() > 1 {
             self.scopes.pop();
-            self.current_depth -= 1;
         }
     }
 
-    fn add_symbol(&mut self, name: String, ty: Type, mutable: bool, is_imported: bool) -> anyhow::Result<()> {
-        let symbol = ResolvedSymbol {
-            name: name.clone(),
-            ty,
-            mutable,
-            scope_depth: self.current_depth,
-            is_imported,
-        };
-        
-        if self.scopes[self.current_depth].contains_key(&name) {
-            return Err(anyhow::anyhow!("Symbol '{}' already defined in this scope", name));
+    fn add_binding(&mut self, name: String, ty: Type, mutable: bool) -> Result<()> {
+        if let Some(scope) = self.scopes.last_mut() {
+            if scope.bindings.contains_key(&name) {
+                bail!("Variable '{}' already defined in current scope", name);
+            }
+            scope.bindings.insert(name.clone(), Binding {
+                name,
+                ty,
+                mutable,
+                resolved: true,
+            });
         }
-        
-        self.scopes[self.current_depth].insert(name, symbol);
         Ok(())
     }
 
-    pub fn lookup_symbol(&self, name: &str) -> Option<&ResolvedSymbol> {
+    fn lookup(&self, name: &str) -> bool {
         for scope in self.scopes.iter().rev() {
-            if let Some(symbol) = scope.get(name) {
-                return Some(symbol);
+            if scope.bindings.contains_key(name) {
+                return true;
             }
         }
-        None
-    }
-
-    pub fn is_imported(&self, name: &str) -> bool {
-        self.imports.contains_key(name)
-    }
-
-    pub fn get_import_path(&self, name: &str) -> Option<&String> {
-        self.imports.get(name)
+        self.function_signatures.contains_key(name)
     }
 }

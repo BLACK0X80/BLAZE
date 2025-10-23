@@ -1,74 +1,58 @@
-use std::collections::{HashMap, HashSet, BTreeSet};
-use crate::ir::{IRFunction, BasicBlock, Instruction};
+use crate::ir::IRFunction;
+use anyhow::{Result, bail};
+use std::collections::HashMap;
 
-#[derive(Debug, Clone)]
+const MAX_PHYSICAL_REGISTERS: usize = 16;
+
 pub struct RegisterAllocator {
-    physical_registers: Vec<String>,
-    register_map: HashMap<String, String>,
-    spilled_variables: HashSet<String>,
+    register_assignments: HashMap<String, usize>,
+    spilled_variables: Vec<String>,
 }
 
 #[derive(Debug, Clone)]
-struct LiveInterval {
-    variable: String,
-    start: usize,
-    end: usize,
-    uses: Vec<usize>,
-}
-
-#[derive(Debug, Clone)]
-struct InterferenceGraph {
-    nodes: HashSet<String>,
-    edges: HashSet<(String, String)>,
+pub struct LiveInterval {
+    pub variable: String,
+    pub start: usize,
+    pub end: usize,
+    pub uses: Vec<usize>,
+    pub register: Option<usize>,
+    pub spilled: bool,
 }
 
 impl RegisterAllocator {
     pub fn new() -> Self {
-        let physical_registers = vec![
-            "rax".to_string(),
-            "rbx".to_string(),
-            "rcx".to_string(),
-            "rdx".to_string(),
-            "rsi".to_string(),
-            "rdi".to_string(),
-            "r8".to_string(),
-            "r9".to_string(),
-            "r10".to_string(),
-            "r11".to_string(),
-            "r12".to_string(),
-            "r13".to_string(),
-            "r14".to_string(),
-            "r15".to_string(),
-        ];
-
         Self {
-            physical_registers,
-            register_map: HashMap::new(),
-            spilled_variables: HashSet::new(),
+            register_assignments: HashMap::new(),
+            spilled_variables: Vec::new(),
         }
     }
 
-    pub fn allocate(&mut self, function: &mut IRFunction) -> Result<(), String> {
-        let live_intervals = self.compute_live_intervals(function);
-        let interference_graph = self.build_interference_graph(&live_intervals);
+    pub fn allocate(&mut self, function: &IRFunction) -> Result<()> {
+        let mut intervals = self.compute_live_intervals(function)?;
+        self.linear_scan_allocation(&mut intervals)?;
         
-        self.color_graph(&interference_graph)?;
-        self.apply_allocation(function);
+        for interval in &intervals {
+            if let Some(reg) = interval.register {
+                self.register_assignments.insert(interval.variable.clone(), reg);
+            } else if interval.spilled {
+                self.spilled_variables.push(interval.variable.clone());
+            }
+        }
         
         Ok(())
     }
 
-    fn compute_live_intervals(&self, function: &IRFunction) -> Vec<LiveInterval> {
+    fn compute_live_intervals(&self, function: &IRFunction) -> Result<Vec<LiveInterval>> {
         let mut intervals = Vec::new();
-        let mut variable_positions = HashMap::new();
-        let mut position = 0;
+        let mut variable_positions: HashMap<String, usize> = HashMap::new();
+        let mut position: usize = 0;
 
         for block in &function.blocks {
             for instruction in &block.instructions {
                 if let Some(result) = instruction.get_result() {
                     variable_positions.insert(result.to_string(), position);
                 }
-                
+
                 for operand in instruction.get_operands() {
                     if let Some(&start_pos) = variable_positions.get(operand) {
                         if let Some(interval) = intervals.iter_mut().find(|i| i.variable == operand) {
@@ -80,203 +64,98 @@ impl RegisterAllocator {
                                 start: start_pos,
                                 end: position,
                                 uses: vec![position],
+                                register: None,
+                                spilled: false,
                             });
                         }
                     }
                 }
-                
-                position += 1;
+
+                position = position.checked_add(1)
+                    .ok_or_else(|| anyhow::anyhow!("Position overflow in register allocation"))?;
             }
         }
 
         intervals.sort_by_key(|interval| interval.start);
-        intervals
+        Ok(intervals)
     }
 
-    fn build_interference_graph(&self, intervals: &[LiveInterval]) -> InterferenceGraph {
-        let mut graph = InterferenceGraph {
-            nodes: HashSet::new(),
-            edges: HashSet::new(),
-        };
-
-        for interval in intervals {
-            graph.nodes.insert(interval.variable.clone());
-        }
+    fn linear_scan_allocation(&mut self, intervals: &mut [LiveInterval]) -> Result<()> {
+        let mut active: Vec<usize> = Vec::new();
+        let mut free_registers: Vec<usize> = (0..MAX_PHYSICAL_REGISTERS).collect();
 
         for i in 0..intervals.len() {
-            for j in (i + 1)..intervals.len() {
-                let interval1 = &intervals[i];
-                let interval2 = &intervals[j];
-                
-                if self.intervals_interfere(interval1, interval2) {
-                    let edge1 = (interval1.variable.clone(), interval2.variable.clone());
-                    let edge2 = (interval2.variable.clone(), interval1.variable.clone());
-                    graph.edges.insert(edge1);
-                    graph.edges.insert(edge2);
-                }
-            }
-        }
+            self.expire_old_intervals(i, intervals, &mut active, &mut free_registers);
 
-        graph
-    }
-
-    fn intervals_interfere(&self, interval1: &LiveInterval, interval2: &LiveInterval) -> bool {
-        !(interval1.end < interval2.start || interval2.end < interval1.start)
-    }
-
-    fn color_graph(&mut self, graph: &InterferenceGraph) -> Result<(), String> {
-        let mut coloring = HashMap::new();
-        let mut nodes: Vec<_> = graph.nodes.iter().collect();
-        
-        nodes.sort_by_key(|node| {
-            graph.edges.iter()
-                .filter(|(a, _)| a == *node)
-                .count()
-        });
-
-        for node in nodes {
-            let mut available_colors: BTreeSet<usize> = (0..self.physical_registers.len()).collect();
-            
-            for (neighbor, _) in graph.edges.iter().filter(|(a, _)| a == node) {
-                if let Some(&color) = coloring.get(neighbor) {
-                    available_colors.remove(&color);
-                }
-            }
-            
-            if let Some(&color) = available_colors.iter().next() {
-                coloring.insert(node.clone(), color);
-                self.register_map.insert(
-                    node.clone(), 
-                    self.physical_registers[color].clone()
-                );
+            if free_registers.is_empty() {
+                self.spill_at_interval(i, intervals, &mut active)?;
             } else {
-                self.spilled_variables.insert(node.clone());
-                return Err(format!("Failed to allocate register for variable: {}", node));
+                let reg = free_registers.pop().unwrap();
+                intervals[i].register = Some(reg);
+                active.push(i);
+                active.sort_by_key(|&idx| intervals[idx].end);
             }
         }
 
         Ok(())
     }
 
-    fn apply_allocation(&self, function: &mut IRFunction) {
-        for block in &mut function.blocks {
-            for instruction in &mut block.instructions {
-                self.replace_operands_in_instruction(instruction);
+    fn expire_old_intervals(
+        &self,
+        current: usize,
+        intervals: &mut [LiveInterval],
+        active: &mut Vec<usize>,
+        free_registers: &mut Vec<usize>,
+    ) {
+        let current_start = intervals[current].start;
+        
+        active.retain(|&idx| {
+            if intervals[idx].end <= current_start {
+                if let Some(reg) = intervals[idx].register {
+                    free_registers.push(reg);
+                    free_registers.sort();
+                }
+                false
+            } else {
+                true
             }
-        }
+        });
     }
 
-    fn replace_operands_in_instruction(&self, instruction: &mut Instruction) {
-        match instruction {
-            Instruction::Add { result, left, right, .. } => {
-                if let Some(reg) = self.register_map.get(result) {
-                    *result = reg.clone();
-                }
-                if let Some(reg) = self.register_map.get(left) {
-                    *left = reg.clone();
-                }
-                if let Some(reg) = self.register_map.get(right) {
-                    *right = reg.clone();
-                }
+    fn spill_at_interval(
+        &mut self,
+        current: usize,
+        intervals: &mut [LiveInterval],
+        active: &mut Vec<usize>,
+    ) -> Result<()> {
+        if let Some(&last_active) = active.last() {
+            if intervals[last_active].end > intervals[current].end {
+                intervals[current].register = intervals[last_active].register;
+                intervals[last_active].register = None;
+                intervals[last_active].spilled = true;
+                
+                active.pop();
+                active.push(current);
+                active.sort_by_key(|&idx| intervals[idx].end);
+            } else {
+                intervals[current].spilled = true;
             }
-            Instruction::Sub { result, left, right, .. } => {
-                if let Some(reg) = self.register_map.get(result) {
-                    *result = reg.clone();
-                }
-                if let Some(reg) = self.register_map.get(left) {
-                    *left = reg.clone();
-                }
-                if let Some(reg) = self.register_map.get(right) {
-                    *right = reg.clone();
-                }
-            }
-            Instruction::Mul { result, left, right, .. } => {
-                if let Some(reg) = self.register_map.get(result) {
-                    *result = reg.clone();
-                }
-                if let Some(reg) = self.register_map.get(left) {
-                    *left = reg.clone();
-                }
-                if let Some(reg) = self.register_map.get(right) {
-                    *right = reg.clone();
-                }
-            }
-            Instruction::Load { result, ptr, .. } => {
-                if let Some(reg) = self.register_map.get(result) {
-                    *result = reg.clone();
-                }
-                if let Some(reg) = self.register_map.get(ptr) {
-                    *ptr = reg.clone();
-                }
-            }
-            Instruction::Store { value, ptr, .. } => {
-                if let Some(reg) = self.register_map.get(value) {
-                    *value = reg.clone();
-                }
-                if let Some(reg) = self.register_map.get(ptr) {
-                    *ptr = reg.clone();
-                }
-            }
-            _ => {}
+        } else {
+            intervals[current].spilled = true;
         }
+        
+        Ok(())
     }
 
-    pub fn get_register_assignment(&self, variable: &str) -> Option<&str> {
-        self.register_map.get(variable).map(|s| s.as_str())
+    pub fn get_register(&self, variable: &str) -> Option<usize> {
+        self.register_assignments.get(variable).copied()
     }
 
     pub fn is_spilled(&self, variable: &str) -> bool {
-        self.spilled_variables.contains(variable)
+        self.spilled_variables.contains(&variable.to_string())
     }
 
-    pub fn get_spilled_variables(&self) -> &HashSet<String> {
+    pub fn get_spilled_variables(&self) -> &[String] {
         &self.spilled_variables
     }
-
-    fn linear_scan_allocation(&mut self, intervals: &[LiveInterval]) -> Result<(), String> {
-        let mut active = Vec::new();
-        let mut sorted_intervals = intervals.to_vec();
-        sorted_intervals.sort_by_key(|interval| interval.start);
-
-        for current in sorted_intervals {
-            self.expire_old_intervals(&mut active, current.start);
-            
-            if active.len() >= self.physical_registers.len() {
-                self.spill_at_interval(&mut active, &current)?;
-            } else {
-                let register_index = active.len();
-                self.register_map.insert(
-                    current.variable.clone(),
-                    self.physical_registers[register_index].clone(),
-                );
-                active.push(current);
-                active.sort_by_key(|interval| interval.end);
-            }
-        }
-
-        Ok(())
-    }
-
-    fn expire_old_intervals(&self, active: &mut Vec<LiveInterval>, current_start: usize) {
-        active.retain(|interval| interval.end >= current_start);
-    }
-
-    fn spill_at_interval(&mut self, active: &mut Vec<LiveInterval>, current: &LiveInterval) -> Result<(), String> {
-        let spill_candidate = active.last().unwrap();
-        
-        if spill_candidate.end > current.end {
-            let register = self.register_map.remove(&spill_candidate.variable).unwrap();
-            self.register_map.insert(current.variable.clone(), register);
-            self.spilled_variables.insert(spill_candidate.variable.clone());
-            
-            active.pop();
-            active.push(current.clone());
-            active.sort_by_key(|interval| interval.end);
-        } else {
-            self.spilled_variables.insert(current.variable.clone());
-        }
-
-        Ok(())
-    }
 }
-

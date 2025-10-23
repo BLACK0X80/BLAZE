@@ -1,0 +1,116 @@
+fn bubble_sort(arr: i32, size: i32) -> i32 {
+    let mut outer = 0;
+    
+    while outer < size - 1 {
+        let mut inner = 0;
+        
+        while inner < size - outer - 1 {
+            let current = arr + inner;
+            let next = arr + inner + 1;
+            
+            if current > next {
+                let temp = current;
+                current = next;
+                next = temp;
+            }
+            
+            inner = inner + 1;
+        }
+        
+        outer = outer + 1;
+    }
+    
+    return arr;
+}
+
+fn selection_sort(arr: i32, size: i32) -> i32 {
+    let mut outer = 0;
+    
+    while outer < size - 1 {
+        let mut min_index = outer;
+        let mut inner = outer + 1;
+        
+        while inner < size {
+            if arr + inner < arr + min_index {
+                min_index = inner;
+            }
+            inner = inner + 1;
+        }
+        
+        if min_index != outer {
+            let temp = arr + outer;
+            arr + outer = arr + min_index;
+            arr + min_index = temp;
+        }
+        
+        outer = outer + 1;
+    }
+    
+    return arr;
+}
+
+fn insertion_sort(arr: i32, size: i32) -> i32 {
+    let mut outer = 1;
+    
+    while outer < size {
+        let key = arr + outer;
+        let mut inner = outer - 1;
+        
+        while inner >= 0 {
+            if arr + inner <= key {
+                break;
+            }
+            
+            arr + inner + 1 = arr + inner;
+            inner = inner - 1;
+        }
+        
+        arr + inner + 1 = key;
+        outer = outer + 1;
+    }
+    
+    return arr;
+}
+
+fn binary_search(arr: i32, size: i32, target: i32) -> i32 {
+    let mut left = 0;
+    let mut right = size - 1;
+    
+    while left <= right {
+        let mid = left + (right - left) / 2;
+        let mid_value = arr + mid;
+        
+        if mid_value == target {
+            return mid;
+        }
+        
+        if mid_value < target {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    
+    return -1;
+}
+
+fn linear_search(arr: i32, size: i32, target: i32) -> i32 {
+    let mut index = 0;
+    
+    while index < size {
+        if arr + index == target {
+            return index;
+        }
+        index = index + 1;
+    }
+    
+    return -1;
+}
+
+fn main() {
+    let array_size = 10;
+    let search_target = 42;
+    
+    let sorted_array = bubble_sort(100, array_size);
+    let found_index = binary_search(sorted_array, array_size, search_target);
+}

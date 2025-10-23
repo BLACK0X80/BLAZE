@@ -1,12 +1,15 @@
-use crate::stdlib::prelude::*;
-use crate::stdlib::collections::vec::Vec;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::{Hash, Hasher};
 
 const INITIAL_CAPACITY: usize = 16;
-const LOAD_FACTOR: f64 = 0.75;
+const LOAD_FACTOR_THRESHOLD: f64 = 0.75;
 
-pub struct HashMap<K, V> {
+pub struct HashMap<K, V> 
+where
+    K: Hash + Eq,
+{
     buckets: Vec<Vec<Entry<K, V>>>,
-    len: usize,
+    element_count: usize,
 }
 
 struct Entry<K, V> {
@@ -14,9 +17,12 @@ struct Entry<K, V> {
     value: V,
 }
 
-impl<K: Hash + Eq, V> HashMap<K, V> {
+impl<K, V> HashMap<K, V>
+where
+    K: Hash + Eq,
+{
     pub fn new() -> Self {
-        HashMap::with_capacity(INITIAL_CAPACITY)
+        Self::with_capacity(INITIAL_CAPACITY)
     }
 
     pub fn with_capacity(capacity: usize) -> Self {
@@ -24,33 +30,33 @@ impl<K: Hash + Eq, V> HashMap<K, V> {
         for _ in 0..capacity {
             buckets.push(Vec::new());
         }
-        HashMap { buckets, len: 0 }
+        Self {
+            buckets,
+            element_count: 0,
+        }
     }
 
     pub fn insert(&mut self, key: K, value: V) -> Option<V> {
-        if self.len >= (self.buckets.len() as f64 * LOAD_FACTOR) as usize {
+        if self.should_resize() {
             self.resize();
         }
 
-        let hash = self.hash(&key);
-        let bucket_index = hash % self.buckets.len();
-        let bucket = &mut self.buckets.get_mut(bucket_index).unwrap();
+        let bucket_index = self.calculate_bucket_index(&key);
+        let bucket = self.buckets.get_mut(bucket_index).unwrap();
 
         for entry in bucket.iter_mut() {
             if entry.key == key {
-                let old_value = std::mem::replace(&mut entry.value, value);
-                return Some(old_value);
+                return Some(std::mem::replace(&mut entry.value, value));
             }
         }
 
         bucket.push(Entry { key, value });
-        self.len += 1;
+        self.element_count += 1;
         None
     }
 
     pub fn get(&self, key: &K) -> Option<&V> {
-        let hash = self.hash(key);
-        let bucket_index = hash % self.buckets.len();
+        let bucket_index = self.calculate_bucket_index(key);
         let bucket = self.buckets.get(bucket_index)?;
 
         for entry in bucket.iter() {
@@ -62,8 +68,7 @@ impl<K: Hash + Eq, V> HashMap<K, V> {
     }
 
     pub fn get_mut(&mut self, key: &K) -> Option<&mut V> {
-        let hash = self.hash(key);
-        let bucket_index = hash % self.buckets.len();
+        let bucket_index = self.calculate_bucket_index(key);
         let bucket = self.buckets.get_mut(bucket_index)?;
 
         for entry in bucket.iter_mut() {
@@ -75,14 +80,13 @@ impl<K: Hash + Eq, V> HashMap<K, V> {
     }
 
     pub fn remove(&mut self, key: &K) -> Option<V> {
-        let hash = self.hash(key);
-        let bucket_index = hash % self.buckets.len();
+        let bucket_index = self.calculate_bucket_index(key);
         let bucket = self.buckets.get_mut(bucket_index)?;
 
-        for (i, entry) in bucket.iter().enumerate() {
+        for (index, entry) in bucket.iter().enumerate() {
             if entry.key == *key {
-                let removed_entry = bucket.swap_remove(i);
-                self.len -= 1;
+                let removed_entry = bucket.remove(index);
+                self.element_count -= 1;
                 return Some(removed_entry.value);
             }
         }
@@ -94,52 +98,29 @@ impl<K: Hash + Eq, V> HashMap<K, V> {
     }
 
     pub fn len(&self) -> usize {
-        self.len
+        self.element_count
     }
 
     pub fn is_empty(&self) -> bool {
-        self.len == 0
+        self.element_count == 0
     }
 
     pub fn clear(&mut self) {
         for bucket in &mut self.buckets {
             bucket.clear();
         }
-        self.len = 0;
+        self.element_count = 0;
     }
 
-    pub fn keys(&self) -> Keys<K, V> {
-        Keys {
-            iter: self.iter(),
-        }
-    }
-
-    pub fn values(&self) -> Values<K, V> {
-        Values {
-            iter: self.iter(),
-        }
-    }
-
-    pub fn iter(&self) -> Iter<K, V> {
-        Iter {
-            buckets: &self.buckets,
-            bucket_index: 0,
-            entry_index: 0,
-        }
-    }
-
-    pub fn iter_mut(&mut self) -> IterMut<K, V> {
-        IterMut {
-            buckets: &mut self.buckets,
-            bucket_index: 0,
-            entry_index: 0,
-        }
-    }
-
-    fn hash(&self, key: &K) -> usize {
+    fn calculate_bucket_index(&self, key: &K) -> usize {
         let mut hasher = DefaultHasher::new();
         key.hash(&mut hasher);
-        hasher.finish() as usize
+        (hasher.finish() as usize) % self.buckets.len()
+    }
+
+    fn should_resize(&self) -> bool {
+        let current_load = self.element_count as f64 / self.buckets.len() as f64;
+        current_load >= LOAD_FACTOR_THRESHOLD
     }
 
     fn resize(&mut self) {
@@ -150,7 +131,7 @@ impl<K: Hash + Eq, V> HashMap<K, V> {
         for _ in 0..new_capacity {
             self.buckets.push(Vec::new());
         }
-        self.len = 0;
+        self.element_count = 0;
 
         for bucket in old_buckets {
             for entry in bucket {
@@ -166,143 +147,6 @@ where
 {
     fn default() -> Self {
         Self::new()
-    }
-}
-
-pub struct Iter<'a, K, V> {
-    buckets: &'a Vec<Vec<Entry<K, V>>>,
-    bucket_index: usize,
-    entry_index: usize,
-}
-
-impl<'a, K, V> Iterator for Iter<'a, K, V> {
-    type Item = (&'a K, &'a V);
-
-    fn next(&mut self) -> Option<Self::Item> {
-        loop {
-            if self.bucket_index >= self.buckets.len() {
-                return None;
-            }
-
-            let bucket = &self.buckets[self.bucket_index];
-            if self.entry_index < bucket.len() {
-                let entry = &bucket[self.entry_index];
-                self.entry_index += 1;
-                return Some((&entry.key, &entry.value));
-            }
-
-            self.bucket_index += 1;
-            self.entry_index = 0;
-        }
-    }
-}
-
-pub struct IterMut<'a, K, V> {
-    buckets: &'a mut Vec<Vec<Entry<K, V>>>,
-    bucket_index: usize,
-    entry_index: usize,
-}
-
-impl<'a, K, V> Iterator for IterMut<'a, K, V> {
-    type Item = (&'a K, &'a mut V);
-
-    fn next(&mut self) -> Option<Self::Item> {
-        loop {
-            if self.bucket_index >= self.buckets.len() {
-                return None;
-            }
-
-            if self.entry_index < self.buckets[self.bucket_index].len() {
-                let entry = &mut self.buckets[self.bucket_index][self.entry_index];
-                self.entry_index += 1;
-                return Some((&entry.key, &mut entry.value));
-            }
-
-            self.bucket_index += 1;
-            self.entry_index = 0;
-        }
-    }
-}
-
-pub struct Keys<K, V> {
-    iter: Iter<'static, K, V>,
-}
-
-impl<K, V> Iterator for Keys<K, V> {
-    type Item = &'static K;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        self.iter.next().map(|(k, _)| k)
-    }
-}
-
-pub struct Values<K, V> {
-    iter: Iter<'static, K, V>,
-}
-
-impl<K, V> Iterator for Values<K, V> {
-    type Item = &'static V;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        self.iter.next().map(|(_, v)| v)
-    }
-}
-
-pub struct DefaultHasher {
-    state: u64,
-}
-
-impl DefaultHasher {
-    pub fn new() -> Self {
-        DefaultHasher { state: 0 }
-    }
-}
-
-impl Hasher for DefaultHasher {
-    fn finish(&self) -> u64 {
-        self.state
-    }
-
-    fn write(&mut self, bytes: &[u8]) {
-        for &byte in bytes {
-            self.state = self.state.wrapping_mul(31).wrapping_add(byte as u64);
-        }
-    }
-}
-
-impl Hash for i32 {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        state.write_i32(*self);
-    }
-}
-
-impl Hash for u32 {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        state.write_u32(*self);
-    }
-}
-
-impl Hash for i64 {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        state.write_i64(*self);
-    }
-}
-
-impl Hash for u64 {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        state.write_u64(*self);
-    }
-}
-
-impl Hash for String {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        state.write(self.as_bytes());
-    }
-}
-
-impl Hash for str {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        state.write(self.as_bytes());
     }
 }
 

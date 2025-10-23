@@ -67,6 +67,55 @@ pub enum Expression {
     Binary { op: BinaryOp, left: Box<Expression>, right: Box<Expression> },
     Unary { op: UnaryOp, expr: Box<Expression> },
     Call { func: Box<Expression>, args: Vec<Expression> },
+    Assignment { target: Box<Expression>, value: Box<Expression> },
+    FieldAccess { object: Box<Expression>, field: String },
+    MethodCall { object: Box<Expression>, method: String, args: Vec<Expression> },
+    Index { object: Box<Expression>, index: Box<Expression> },
+    TupleLiteral(Vec<Expression>),
+    ArrayLiteral(Vec<Expression>),
+    StructLiteral { name: String, fields: Vec<FieldInit> },
+    Block(Vec<Statement>),
+    If { condition: Box<Expression>, then_branch: Box<Expression>, else_branch: Option<Box<Expression>> },
+    Match { expression: Box<Expression>, arms: Vec<MatchArm> },
+    Closure { params: Vec<ClosureParam>, body: Box<Expression> },
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct FieldInit {
+    pub name: String,
+    pub value: Expression,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct MatchArm {
+    pub pattern: Pattern,
+    pub guard: Option<Expression>,
+    pub body: Expression,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum Pattern {
+    Literal(Literal),
+    Identifier(String),
+    Wildcard,
+    Tuple(Vec<Pattern>),
+    Struct { name: String, fields: Vec<(String, Pattern)> },
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum Literal {
+    Integer(i64),
+    Float(f64),
+    String(String),
+    Char(char),
+    Boolean(bool),
+    Unit,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct ClosureParam {
+    pub name: String,
+    pub ty: Option<Type>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -80,3 +129,7 @@ pub enum BinaryOp {
 pub enum UnaryOp {
     Neg, Not,
 }
+
+// Type aliases for compatibility
+pub type BinaryOperator = BinaryOp;
+pub type UnaryOperator = UnaryOp;

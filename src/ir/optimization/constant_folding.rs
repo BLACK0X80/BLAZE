@@ -18,11 +18,11 @@ impl ConstantFolder {
                 right,
             } => {
                 if let (Ok(left_val), Ok(right_val)) = (left.parse::<i64>(), right.parse::<i64>()) {
-                    Some(Instruction::Add {
+                    let computed = left_val + right_val;
+                    Some(Instruction::Const {
                         result: result.clone(),
                         ty: ty.clone(),
-                        left: (left_val + right_val).to_string(),
-                        right: "0".to_string(),
+                        value: computed.to_string(),
                     })
                 } else {
                     None
@@ -35,11 +35,11 @@ impl ConstantFolder {
                 right,
             } => {
                 if let (Ok(left_val), Ok(right_val)) = (left.parse::<i64>(), right.parse::<i64>()) {
-                    Some(Instruction::Add {
+                    let computed = left_val - right_val;
+                    Some(Instruction::Const {
                         result: result.clone(),
                         ty: ty.clone(),
-                        left: (left_val - right_val).to_string(),
-                        right: "0".to_string(),
+                        value: computed.to_string(),
                     })
                 } else {
                     None
@@ -52,11 +52,11 @@ impl ConstantFolder {
                 right,
             } => {
                 if let (Ok(left_val), Ok(right_val)) = (left.parse::<i64>(), right.parse::<i64>()) {
-                    Some(Instruction::Add {
+                    let computed = left_val * right_val;
+                    Some(Instruction::Const {
                         result: result.clone(),
                         ty: ty.clone(),
-                        left: (left_val * right_val).to_string(),
-                        right: "0".to_string(),
+                        value: computed.to_string(),
                     })
                 } else {
                     None
@@ -70,14 +70,14 @@ impl ConstantFolder {
             } => {
                 if let (Ok(left_val), Ok(right_val)) = (left.parse::<i64>(), right.parse::<i64>()) {
                     if right_val != 0 {
-                        Some(Instruction::Add {
+                        let computed = left_val / right_val;
+                        Some(Instruction::Const {
                             result: result.clone(),
                             ty: ty.clone(),
-                            left: (left_val / right_val).to_string(),
-                            right: "0".to_string(),
+                            value: computed.to_string(),
                         })
                     } else {
-                        None
+                        None  // Don't fold division by zero
                     }
                 } else {
                     None

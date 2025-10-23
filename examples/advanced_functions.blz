@@ -1,0 +1,113 @@
+fn factorial(n: i32) -> i32 {
+    if n <= 1 {
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+
+fn fibonacci_iterative(n: i32) -> i32 {
+    if n <= 1 {
+        return n;
+    }
+    
+    let mut previous = 0;
+    let mut current = 1;
+    let mut counter = 2;
+    
+    while counter <= n {
+        let next = previous + current;
+        previous = current;
+        current = next;
+        counter = counter + 1;
+    }
+    
+    return current;
+}
+
+fn sum_array(arr: i32, size: i32) -> i32 {
+    let mut total = 0;
+    let mut index = 0;
+    
+    while index < size {
+        total = total + arr;
+        index = index + 1;
+    }
+    
+    return total;
+}
+
+fn max_of_three(a: i32, b: i32, c: i32) -> i32 {
+    let mut maximum = a;
+    
+    if b > maximum {
+        maximum = b;
+    }
+    
+    if c > maximum {
+        maximum = c;
+    }
+    
+    return maximum;
+}
+
+fn is_prime(n: i32) -> bool {
+    if n <= 1 {
+        return false;
+    }
+    
+    if n <= 3 {
+        return true;
+    }
+    
+    if n % 2 == 0 {
+        return false;
+    }
+    
+    let mut divisor = 3;
+    while divisor * divisor <= n {
+        if n % divisor == 0 {
+            return false;
+        }
+        divisor = divisor + 2;
+    }
+    
+    return true;
+}
+
+fn power(base: i32, exponent: i32) -> i32 {
+    if exponent == 0 {
+        return 1;
+    }
+    
+    let mut result = 1;
+    let mut counter = 0;
+    
+    while counter < exponent {
+        result = result * base;
+        counter = counter + 1;
+    }
+    
+    return result;
+}
+
+fn gcd(a: i32, b: i32) -> i32 {
+    let mut x = a;
+    let mut y = b;
+    
+    while y != 0 {
+        let temp = y;
+        y = x % y;
+        x = temp;
+    }
+    
+    return x;
+}
+
+fn main() {
+    let fact_result = factorial(5);
+    let fib_result = fibonacci_iterative(10);
+    let max_result = max_of_three(15, 42, 23);
+    let prime_check = is_prime(17);
+    let power_result = power(2, 10);
+    let gcd_result = gcd(48, 18);
+}

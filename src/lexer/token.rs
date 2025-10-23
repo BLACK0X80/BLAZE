@@ -15,7 +15,7 @@ pub enum TokenType {
     Equal, EqualEqual, BangEqual,
     Less, LessEqual, Greater, GreaterEqual,
     And, Or, Bang,
-    Ampersand,
+    Ampersand, Pipe,
     
     LeftParen, RightParen,
     LeftBrace, RightBrace,

@@ -1,0 +1,176 @@
+fn matrix_add(result: i32, a: i32, b: i32, rows: i32, cols: i32) -> i32 {
+    let mut row = 0;
+    
+    while row < rows {
+        let mut col = 0;
+        
+        while col < cols {
+            let index = row * cols + col;
+            result + index = (a + index) + (b + index);
+            col = col + 1;
+        }
+        
+        row = row + 1;
+    }
+    
+    return result;
+}
+
+fn matrix_subtract(result: i32, a: i32, b: i32, rows: i32, cols: i32) -> i32 {
+    let mut row = 0;
+    
+    while row < rows {
+        let mut col = 0;
+        
+        while col < cols {
+            let index = row * cols + col;
+            result + index = (a + index) - (b + index);
+            col = col + 1;
+        }
+        
+        row = row + 1;
+    }
+    
+    return result;
+}
+
+fn matrix_multiply(result: i32, a: i32, b: i32, rows_a: i32, cols_a: i32, cols_b: i32) -> i32 {
+    let mut row = 0;
+    
+    while row < rows_a {
+        let mut col = 0;
+        
+        while col < cols_b {
+            let mut sum = 0;
+            let mut k = 0;
+            
+            while k < cols_a {
+                let a_index = row * cols_a + k;
+                let b_index = k * cols_b + col;
+                sum = sum + (a + a_index) * (b + b_index);
+                k = k + 1;
+            }
+            
+            let result_index = row * cols_b + col;
+            result + result_index = sum;
+            col = col + 1;
+        }
+        
+        row = row + 1;
+    }
+    
+    return result;
+}
+
+fn matrix_transpose(result: i32, matrix: i32, rows: i32, cols: i32) -> i32 {
+    let mut row = 0;
+    
+    while row < rows {
+        let mut col = 0;
+        
+        while col < cols {
+            let src_index = row * cols + col;
+            let dest_index = col * rows + row;
+            result + dest_index = matrix + src_index;
+            col = col + 1;
+        }
+        
+        row = row + 1;
+    }
+    
+    return result;
+}
+
+fn matrix_scalar_multiply(result: i32, matrix: i32, scalar: i32, rows: i32, cols: i32) -> i32 {
+    let mut row = 0;
+    
+    while row < rows {
+        let mut col = 0;
+        
+        while col < cols {
+            let index = row * cols + col;
+            result + index = (matrix + index) * scalar;
+            col = col + 1;
+        }
+        
+        row = row + 1;
+    }
+    
+    return result;
+}
+
+fn matrix_identity(matrix: i32, size: i32) -> i32 {
+    let mut row = 0;
+    
+    while row < size {
+        let mut col = 0;
+        
+        while col < size {
+            let index = row * size + col;
+            
+            if row == col {
+                matrix + index = 1;
+            } else {
+                matrix + index = 0;
+            }
+            
+            col = col + 1;
+        }
+        
+        row = row + 1;
+    }
+    
+    return matrix;
+}
+
+fn matrix_trace(matrix: i32, size: i32) -> i32 {
+    let mut trace = 0;
+    let mut index = 0;
+    
+    while index < size {
+        let diagonal_index = index * size + index;
+        trace = trace + (matrix + diagonal_index);
+        index = index + 1;
+    }
+    
+    return trace;
+}
+
+fn matrix_is_symmetric(matrix: i32, size: i32) -> bool {
+    let mut row = 0;
+    
+    while row < size {
+        let mut col = row + 1;
+        
+        while col < size {
+            let index1 = row * size + col;
+            let index2 = col * size + row;
+            
+            if (matrix + index1) != (matrix + index2) {
+                return false;
+            }
+            
+            col = col + 1;
+        }
+        
+        row = row + 1;
+    }
+    
+    return true;
+}
+
+fn main() {
+    let matrix_a = 1000;
+    let matrix_b = 2000;
+    let result_matrix = 3000;
+    let rows = 3;
+    let cols = 3;
+    
+    matrix_add(result_matrix, matrix_a, matrix_b, rows, cols);
+    matrix_multiply(result_matrix, matrix_a, matrix_b, rows, cols, cols);
+    matrix_transpose(result_matrix, matrix_a, rows, cols);
+    
+    let identity = matrix_identity(4000, 3);
+    let trace = matrix_trace(matrix_a, 3);
+    let is_sym = matrix_is_symmetric(matrix_a, 3);
+}

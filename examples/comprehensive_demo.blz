@@ -1,0 +1,190 @@
+fn calculate_statistics(data: i32, size: i32) -> i32 {
+    let mut sum = 0;
+    let mut min_value = data;
+    let mut max_value = data;
+    let mut index = 0;
+    
+    while index < size {
+        let current = data + index;
+        sum = sum + current;
+        
+        if current < min_value {
+            min_value = current;
+        }
+        
+        if current > max_value {
+            max_value = current;
+        }
+        
+        index = index + 1;
+    }
+    
+    let average = sum / size;
+    return average;
+}
+
+fn merge_sorted_arrays(arr1: i32, size1: i32, arr2: i32, size2: i32, result: i32) -> i32 {
+    let mut i = 0;
+    let mut j = 0;
+    let mut k = 0;
+    
+    while i < size1 {
+        if j >= size2 {
+            result + k = arr1 + i;
+            i = i + 1;
+            k = k + 1;
+        } else {
+            if (arr1 + i) <= (arr2 + j) {
+                result + k = arr1 + i;
+                i = i + 1;
+            } else {
+                result + k = arr2 + j;
+                j = j + 1;
+            }
+            k = k + 1;
+        }
+    }
+    
+    while j < size2 {
+        result + k = arr2 + j;
+        j = j + 1;
+        k = k + 1;
+    }
+    
+    return result;
+}
+
+fn quick_sort_partition(arr: i32, low: i32, high: i32) -> i32 {
+    let pivot = arr + high;
+    let mut i = low - 1;
+    let mut j = low;
+    
+    while j < high {
+        if (arr + j) < pivot {
+            i = i + 1;
+            
+            let temp = arr + i;
+            arr + i = arr + j;
+            arr + j = temp;
+        }
+        
+        j = j + 1;
+    }
+    
+    let temp = arr + i + 1;
+    arr + i + 1 = arr + high;
+    arr + high = temp;
+    
+    return i + 1;
+}
+
+fn quick_sort(arr: i32, low: i32, high: i32) -> i32 {
+    if low < high {
+        let pivot_index = quick_sort_partition(arr, low, high);
+        quick_sort(arr, low, pivot_index - 1);
+        quick_sort(arr, pivot_index + 1, high);
+    }
+    
+    return arr;
+}
+
+fn find_median(arr: i32, size: i32) -> i32 {
+    let sorted = quick_sort(arr, 0, size - 1);
+    let mid = size / 2;
+    
+    if size % 2 == 0 {
+        return (sorted + mid - 1 + sorted + mid) / 2;
+    }
+    
+    return sorted + mid;
+}
+
+fn remove_duplicates(arr: i32, size: i32) -> i32 {
+    if size == 0 {
+        return 0;
+    }
+    
+    let mut write_index = 1;
+    let mut read_index = 1;
+    
+    while read_index < size {
+        let mut is_duplicate = false;
+        let mut check_index = 0;
+        
+        while check_index < write_index {
+            if (arr + read_index) == (arr + check_index) {
+                is_duplicate = true;
+                break;
+            }
+            check_index = check_index + 1;
+        }
+        
+        if !is_duplicate {
+            arr + write_index = arr + read_index;
+            write_index = write_index + 1;
+        }
+        
+        read_index = read_index + 1;
+    }
+    
+    return write_index;
+}
+
+fn rotate_array(arr: i32, size: i32, positions: i32) -> i32 {
+    let actual_rotations = positions % size;
+    let mut count = 0;
+    
+    while count < actual_rotations {
+        let temp = arr + size - 1;
+        let mut index = size - 1;
+        
+        while index > 0 {
+            arr + index = arr + index - 1;
+            index = index - 1;
+        }
+        
+        arr = temp;
+        count = count + 1;
+    }
+    
+    return arr;
+}
+
+fn find_subarray_sum(arr: i32, size: i32, target: i32) -> bool {
+    let mut start = 0;
+    
+    while start < size {
+        let mut current_sum = 0;
+        let mut end = start;
+        
+        while end < size {
+            current_sum = current_sum + (arr + end);
+            
+            if current_sum == target {
+                return true;
+            }
+            
+            if current_sum > target {
+                break;
+            }
+            
+            end = end + 1;
+        }
+        
+        start = start + 1;
+    }
+    
+    return false;
+}
+
+fn main() {
+    let data_array = 1000;
+    let array_size = 10;
+    
+    let stats = calculate_statistics(data_array, array_size);
+    let sorted = quick_sort(data_array, 0, array_size - 1);
+    let median = find_median(data_array, array_size);
+    let unique_count = remove_duplicates(data_array, array_size);
+    let rotated = rotate_array(data_array, array_size, 3);
+    let has_subarray = find_subarray_sum(data_array, array_size, 42);
+}

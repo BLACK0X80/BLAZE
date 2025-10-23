@@ -13,10 +13,15 @@ name = "blaze_compiler"
 path = "src/lib.rs"
 
 [dependencies]
-# Absolutely minimal dependencies - only what we NEED
+inkwell = { version = "0.2", features = ["llvm15-0"] }
+anyhow = "1.0"
+dashmap = "5.5"
+parking_lot = "0.12"
+petgraph = "0.6"
+libc = "0.2"
 
 [dev-dependencies]
-# Testing only
+tempfile = "3.8"
 
 [profile.dev]
 opt-level = 0

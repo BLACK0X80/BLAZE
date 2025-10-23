@@ -87,7 +87,13 @@ impl Scanner {
                     TokenType::Ampersand
                 }
             }
-            '|' if self.match_char('|') => TokenType::Or,
+            '|' => {
+                if self.match_char('|') {
+                    TokenType::Or
+                } else {
+                    TokenType::Pipe
+                }
+            }
             '(' => TokenType::LeftParen,
             ')' => TokenType::RightParen,
             '{' => TokenType::LeftBrace,

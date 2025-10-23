@@ -1,0 +1,163 @@
+fn absolute_value(n: i32) -> i32 {
+    if n < 0 {
+        return -n;
+    }
+    return n;
+}
+
+fn min(a: i32, b: i32) -> i32 {
+    if a < b {
+        return a;
+    }
+    return b;
+}
+
+fn max(a: i32, b: i32) -> i32 {
+    if a > b {
+        return a;
+    }
+    return b;
+}
+
+fn clamp(value: i32, minimum: i32, maximum: i32) -> i32 {
+    if value < minimum {
+        return minimum;
+    }
+    if value > maximum {
+        return maximum;
+    }
+    return value;
+}
+
+fn square(n: i32) -> i32 {
+    return n * n;
+}
+
+fn cube(n: i32) -> i32 {
+    return n * n * n;
+}
+
+fn sum_of_squares(n: i32) -> i32 {
+    let mut total = 0;
+    let mut counter = 1;
+    
+    while counter <= n {
+        total = total + square(counter);
+        counter = counter + 1;
+    }
+    
+    return total;
+}
+
+fn sum_of_cubes(n: i32) -> i32 {
+    let mut total = 0;
+    let mut counter = 1;
+    
+    while counter <= n {
+        total = total + cube(counter);
+        counter = counter + 1;
+    }
+    
+    return total;
+}
+
+fn is_even(n: i32) -> bool {
+    return n % 2 == 0;
+}
+
+fn is_odd(n: i32) -> bool {
+    return n % 2 != 0;
+}
+
+fn sign(n: i32) -> i32 {
+    if n > 0 {
+        return 1;
+    }
+    if n < 0 {
+        return -1;
+    }
+    return 0;
+}
+
+fn digit_sum(n: i32) -> i32 {
+    let mut number = absolute_value(n);
+    let mut total = 0;
+    
+    while number > 0 {
+        total = total + number % 10;
+        number = number / 10;
+    }
+    
+    return total;
+}
+
+fn reverse_number(n: i32) -> i32 {
+    let mut number = absolute_value(n);
+    let mut reversed = 0;
+    
+    while number > 0 {
+        reversed = reversed * 10 + number % 10;
+        number = number / 10;
+    }
+    
+    if n < 0 {
+        return -reversed;
+    }
+    return reversed;
+}
+
+fn is_palindrome(n: i32) -> bool {
+    let original = absolute_value(n);
+    let reversed = reverse_number(original);
+    return original == reversed;
+}
+
+fn count_digits(n: i32) -> i32 {
+    if n == 0 {
+        return 1;
+    }
+    
+    let mut number = absolute_value(n);
+    let mut count = 0;
+    
+    while number > 0 {
+        count = count + 1;
+        number = number / 10;
+    }
+    
+    return count;
+}
+
+fn lcm(a: i32, b: i32) -> i32 {
+    let product = a * b;
+    let divisor = gcd(a, b);
+    return product / divisor;
+}
+
+fn gcd(a: i32, b: i32) -> i32 {
+    let mut x = absolute_value(a);
+    let mut y = absolute_value(b);
+    
+    while y != 0 {
+        let temp = y;
+        y = x % y;
+        x = temp;
+    }
+    
+    return x;
+}
+
+fn main() {
+    let abs_result = absolute_value(-42);
+    let min_result = min(10, 20);
+    let max_result = max(10, 20);
+    let clamped = clamp(150, 0, 100);
+    let squared = square(7);
+    let cubed = cube(3);
+    let sum_sq = sum_of_squares(5);
+    let digit_total = digit_sum(12345);
+    let reversed = reverse_number(12345);
+    let is_palin = is_palindrome(12321);
+    let digits = count_digits(98765);
+    let lcm_result = lcm(12, 18);
+}
