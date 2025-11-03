@@ -1,0 +1,133 @@
+pub enum Option<T> {
+    Some(T),
+    None,
+}
+
+impl<T> Option<T> {
+    pub fn is_some(&self) -> bool {
+        match self {
+            Some(_) => true,
+            None => false,
+        }
+    }
+    
+    pub fn is_none(&self) -> bool {
+        match self {
+            Some(_) => false,
+            None => true,
+        }
+    }
+    
+    pub fn unwrap(self) -> T {
+        match self {
+            Some(value) => value,
+            None => panic("called `Option::unwrap()` on a `None` value"),
+        }
+    }
+    
+    pub fn unwrap_or(self, default: T) -> T {
+        match self {
+            Some(value) => value,
+            None => default,
+        }
+    }
+    
+    pub fn unwrap_or_else<F>(self, f: F) -> T 
+    where
+        F: FnOnce() -> T,
+    {
+        match self {
+            Some(value) => value,
+            None => f(),
+        }
+    }
+    
+    pub fn expect(self, msg: &str) -> T {
+        match self {
+            Some(value) => value,
+            None => panic(msg),
+        }
+    }
+    
+    pub fn map<U, F>(self, f: F) -> Option<U>
+    where
+        F: FnOnce(T) -> U,
+    {
+        match self {
+            Some(value) => Some(f(value)),
+            None => None,
+        }
+    }
+    
+    pub fn and_then<U, F>(self, f: F) -> Option<U>
+    where
+        F: FnOnce(T) -> Option<U>,
+    {
+        match self {
+            Some(value) => f(value),
+            None => None,
+        }
+    }
+    
+    pub fn or(self, other: Option<T>) -> Option<T> {
+        match self {
+            Some(_) => self,
+            None => other,
+        }
+    }
+    
+    pub fn or_else<F>(self, f: F) -> Option<T>
+    where
+        F: FnOnce() -> Option<T>,
+    {
+        match self {
+            Some(_) => self,
+            None => f(),
+        }
+    }
+    
+    pub fn take(&mut self) -> Option<T> {
+        let mut temp = None;
+        swap(self, &mut temp);
+        temp
+    }
+    
+    pub fn replace(&mut self, value: T) -> Option<T> {
+        let old = self.take();
+        *self = Some(value);
+        old
+    }
+    
+    pub fn as_ref(&self) -> Option<&T> {
+        match self {
+            Some(ref value) => Some(value),
+            None => None,
+        }
+    }
+    
+    pub fn as_mut(&mut self) -> Option<&mut T> {
+        match self {
+            Some(ref mut value) => Some(value),
+            None => None,
+        }
+    }
+}
+
+impl<T: Clone> Clone for Option<T> {
+    fn clone(&self) -> Self {
+        match self {
+            Some(value) => Some(value.clone()),
+            None => None,
+        }
+    }
+}
+
+impl<T: PartialEq> PartialEq for Option<T> {
+    fn eq(&self, other: &Self) -> bool {
+        match (self, other) {
+            (Some(a), Some(b)) => a == b,
+            (None, None) => true,
+            _ => false,
+        }
+    }
+}

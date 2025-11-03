@@ -56,14 +56,14 @@ impl SymbolTable {
                     self.insert(name.clone(), ty.clone(), *mutable)?;
                 }
             }
-            Statement::If { then_block, else_block, .. } => {
+            Statement::If { then_body, else_body, .. } => {
                 self.enter_scope();
-                for stmt in then_block {
+                for stmt in then_body {
                     self.analyze_statement(stmt)?;
                 }
                 self.exit_scope();
                 
-                if let Some(else_stmts) = else_block {
+                if let Some(else_stmts) = else_body {
                     self.enter_scope();
                     for stmt in else_stmts {
                         self.analyze_statement(stmt)?;

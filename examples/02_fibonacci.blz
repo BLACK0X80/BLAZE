@@ -1,0 +1,34 @@
+fn fibonacci(n: i32) -> i32 {
+    if n <= 1 {
+        return n;
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+fn fibonacci_iterative(n: i32) -> i32 {
+    if n <= 1 {
+        return n;
+    }
+    
+    let mut a = 0;
+    let mut b = 1;
+    let mut i = 2;
+    
+    while i <= n {
+        let temp = a + b;
+        a = b;
+        b = temp;
+        i = i + 1;
+    }
+    
+    return b;
+}
+
+fn main() {
+    let n = 10;
+    let result_recursive = fibonacci(n);
+    let result_iterative = fibonacci_iterative(n);
+    
+    println("Fibonacci(", n, ") recursive: ", result_recursive);
+    println("Fibonacci(", n, ") iterative: ", result_iterative);
+}

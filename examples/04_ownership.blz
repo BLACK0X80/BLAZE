@@ -1,0 +1,34 @@
+fn take_ownership(s: String) {
+    println("Took ownership: ", s);
+}
+
+fn borrow_immutable(s: &String) {
+    println("Borrowed: ", s);
+}
+
+fn borrow_mutable(s: &mut String) {
+    s.push_str(" - modified");
+    println("Modified: ", s);
+}
+
+fn return_ownership() -> String {
+    let s = String::from("Created inside function");
+    return s;
+}
+
+fn main() {
+    let s1 = String::from("Hello");
+    borrow_immutable(&s1);
+    borrow_immutable(&s1);
+    println("Still have s1: ", s1);
+    
+    let mut s2 = String::from("World");
+    borrow_mutable(&mut s2);
+    println("s2 after modification: ", s2);
+    
+    let s3 = String::from("Goodbye");
+    take_ownership(s3);
+    
+    let s4 = return_ownership();
+    println("Returned: ", s4);
+}

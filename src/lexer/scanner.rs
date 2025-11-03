@@ -55,6 +55,8 @@ impl Scanner {
             '=' => {
                 if self.match_char('=') {
                     TokenType::EqualEqual
+                } else if self.match_char('>') {
+                    TokenType::FatArrow
                 } else {
                     TokenType::Equal
                 }
@@ -67,14 +69,18 @@ impl Scanner {
                 }
             }
             '<' => {
-                if self.match_char('=') {
+                if self.match_char('<') {
+                    TokenType::LeftShift
+                } else if self.match_char('=') {
                     TokenType::LessEqual
                 } else {
                     TokenType::Less
                 }
             }
             '>' => {
-                if self.match_char('=') {
+                if self.match_char('>') {
+                    TokenType::RightShift
+                } else if self.match_char('=') {
                     TokenType::GreaterEqual
                 } else {
                     TokenType::Greater
@@ -94,6 +100,7 @@ impl Scanner {
                     TokenType::Pipe
                 }
             }
+            '^' => TokenType::Caret,
             '(' => TokenType::LeftParen,
             ')' => TokenType::RightParen,
             '{' => TokenType::LeftBrace,
@@ -265,6 +272,12 @@ impl Scanner {
             "char" => TokenType::Char,
             "str" => TokenType::Str,
             "String" => TokenType::String,
+            "in" => TokenType::In,
+            "const" => TokenType::Const,
+            "static" => TokenType::Static,
+            "ref" => TokenType::Ref,
+            "Self" => TokenType::SelfType,
+            "self" => TokenType::SelfValue,
             _ => TokenType::Ident(value),
         }
     }

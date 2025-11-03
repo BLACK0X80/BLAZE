@@ -1,0 +1,231 @@
+pub fn spawn<F>(future: F) 
+where
+    F: Future<Output = ()> + Send + 'static,
+{
+    extern "C" fn blaze_spawn(task_ptr: *mut u8);
+    unsafe {
+        let boxed = Box::new(future);
+        blaze_spawn(Box::into_raw(boxed) as *mut u8);
+    }
+}
+
+pub async fn sleep(duration_ms: u64) {
+    extern "C" fn blaze_sleep(duration_ms: u64) -> *mut u8;
+    unsafe {
+        let future_ptr = blaze_sleep(duration_ms);
+        await_raw(future_ptr).await;
+    }
+}
+
+pub trait Future {
+    type Output;
+    
+    fn poll(&mut self, cx: &mut Context) -> Poll<Self::Output>;
+}
+
+pub enum Poll<T> {
+    Ready(T),
+    Pending,
+}
+
+pub struct Context {
+    waker: Waker,
+}
+
+impl Context {
+    pub fn waker(&self) -> &Waker {
+        &self.waker
+    }
+}
+
+pub struct Waker {
+    data: *const (),
+    vtable: &'static WakerVTable,
+}
+
+impl Waker {
+    pub fn wake(&self) {
+        (self.vtable.wake)(self.data);
+    }
+    
+    pub fn wake_by_ref(&self) {
+        (self.vtable.wake_by_ref)(self.data);
+    }
+}
+
+pub struct WakerVTable {
+    wake: fn(*const ()),
+    wake_by_ref: fn(*const ()),
+    drop: fn(*const ()),
+}
+
+pub struct JoinHandle<T> {
+    task_id: u64,
+}
+
+impl<T> JoinHandle<T> {
+    pub async fn await(self) -> T {
+        extern "C" fn blaze_join(task_id: u64) -> *mut u8;
+        unsafe {
+            let result_ptr = blaze_join(self.task_id);
+            *(result_ptr as *mut T)
+        }
+    }
+}
+
+pub struct Mutex<T> {
+    locked: AtomicBool,
+    data: UnsafeCell<T>,
+}
+
+impl<T> Mutex<T> {
+    pub fn new(data: T) -> Mutex<T> {
+        Mutex {
+            locked: AtomicBool::new(false),
+            data: UnsafeCell::new(data),
+        }
+    }
+    
+    pub async fn lock(&self) -> MutexGuard<T> {
+        loop {
+            if !self.locked.swap(true, Ordering::Acquire) {
+                break;
+            }
+            yield_now().await;
+        }
+        
+        MutexGuard {
+            mutex: self,
+        }
+    }
+}
+
+pub struct MutexGuard<'a, T> {
+    mutex: &'a Mutex<T>,
+}
+
+impl<'a, T> Deref for MutexGuard<'a, T> {
+    type Target = T;
+    
+    fn deref(&self) -> &T {
+        unsafe { &*self.mutex.data.get() }
+    }
+}
+
+impl<'a, T> DerefMut for MutexGuard<'a, T> {
+    fn deref_mut(&mut self) -> &mut T {
+        unsafe { &mut *self.mutex.data.get() }
+    }
+}
+
+impl<'a, T> Drop for MutexGuard<'a, T> {
+    fn drop(&mut self) {
+        self.mutex.locked.store(false, Ordering::Release);
+    }
+}
+
+pub struct RwLock<T> {
+    readers: AtomicUsize,
+    writer: AtomicBool,
+    data: UnsafeCell<T>,
+}
+
+impl<T> RwLock<T> {
+    pub fn new(data: T) -> RwLock<T> {
+        RwLock {
+            readers: AtomicUsize::new(0),
+            writer: AtomicBool::new(false),
+            data: UnsafeCell::new(data),
+        }
+    }
+    
+    pub async fn read(&self) -> RwLockReadGuard<T> {
+        loop {
+            if !self.writer.load(Ordering::Acquire) {
+                self.readers.fetch_add(1, Ordering::Acquire);
+                if !self.writer.load(Ordering::Acquire) {
+                    break;
+                }
+                self.readers.fetch_sub(1, Ordering::Release);
+            }
+            yield_now().await;
+        }
+        
+        RwLockReadGuard {
+            lock: self,
+        }
+    }
+    
+    pub async fn write(&self) -> RwLockWriteGuard<T> {
+        loop {
+            if !self.writer.swap(true, Ordering::Acquire) {
+                while self.readers.load(Ordering::Acquire) > 0 {
+                    yield_now().await;
+                }
+                break;
+            }
+            yield_now().await;
+        }
+        
+        RwLockWriteGuard {
+            lock: self,
+        }
+    }
+}
+
+pub struct RwLockReadGuard<'a, T> {
+    lock: &'a RwLock<T>,
+}
+
+impl<'a, T> Deref for RwLockReadGuard<'a, T> {
+    type Target = T;
+    
+    fn deref(&self) -> &T {
+        unsafe { &*self.lock.data.get() }
+    }
+}
+
+impl<'a, T> Drop for RwLockReadGuard<'a, T> {
+    fn drop(&mut self) {
+        self.lock.readers.fetch_sub(1, Ordering::Release);
+    }
+}
+
+pub struct RwLockWriteGuard<'a, T> {
+    lock: &'a RwLock<T>,
+}
+
+impl<'a, T> Deref for RwLockWriteGuard<'a, T> {
+    type Target = T;
+    
+    fn deref(&self) -> &T {
+        unsafe { &*self.lock.data.get() }
+    }
+}
+
+impl<'a, T> DerefMut for RwLockWriteGuard<'a, T> {
+    fn deref_mut(&mut self) -> &mut T {
+        unsafe { &mut *self.lock.data.get() }
+    }
+}
+
+impl<'a, T> Drop for RwLockWriteGuard<'a, T> {
+    fn drop(&mut self) {
+        self.lock.writer.store(false, Ordering::Release);
+    }
+}
+
+async fn yield_now() {
+    extern "C" fn blaze_yield() -> *mut u8;
+    unsafe {
+        let future_ptr = blaze_yield();
+        await_raw(future_ptr).await;
+    }
+}
+
+async fn await_raw(ptr: *mut u8) {
+    extern "C" fn blaze_await(ptr: *mut u8);
+    unsafe {
+        blaze_await(ptr);
+    }
+}

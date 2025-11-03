@@ -1,0 +1,321 @@
+enum JsonValue {
+    Null,
+    Bool(bool),
+    Number(f64),
+    String(String),
+    Array(Vec<JsonValue>),
+    Object(HashMap<String, JsonValue>),
+}
+
+impl JsonValue {
+    fn as_string(&self) -> Option<&String> {
+        match self {
+            JsonValue::String(s) => Some(s),
+            _ => None,
+        }
+    }
+    
+    fn as_number(&self) -> Option<f64> {
+        match self {
+            JsonValue::Number(n) => Some(*n),
+            _ => None,
+        }
+    }
+    
+    fn as_bool(&self) -> Option<bool> {
+        match self {
+            JsonValue::Bool(b) => Some(*b),
+            _ => None,
+        }
+    }
+    
+    fn as_array(&self) -> Option<&Vec<JsonValue>> {
+        match self {
+            JsonValue::Array(arr) => Some(arr),
+            _ => None,
+        }
+    }
+    
+    fn as_object(&self) -> Option<&HashMap<String, JsonValue>> {
+        match self {
+            JsonValue::Object(obj) => Some(obj),
+            _ => None,
+        }
+    }
+}
+
+struct JsonParser {
+    input: String,
+    position: i32,
+}
+
+impl JsonParser {
+    fn new(input: String) -> JsonParser {
+        JsonParser {
+            input,
+            position: 0,
+        }
+    }
+    
+    fn parse(&mut self) -> Result<JsonValue, String> {
+        self.skip_whitespace();
+        self.parse_value()
+    }
+    
+    fn parse_value(&mut self) -> Result<JsonValue, String> {
+        self.skip_whitespace();
+        
+        let ch = self.peek()?;
+        
+        if ch == '"' {
+            self.parse_string()
+        } else if ch == '{' {
+            self.parse_object()
+        } else if ch == '[' {
+            self.parse_array()
+        } else if ch == 't' || ch == 'f' {
+            self.parse_bool()
+        } else if ch == 'n' {
+            self.parse_null()
+        } else if ch.is_digit(10) || ch == '-' {
+            self.parse_number()
+        } else {
+            Err(format!("Unexpected character: {}", ch))
+        }
+    }
+    
+    fn parse_string(&mut self) -> Result<JsonValue, String> {
+        self.consume('"')?;
+        let mut result = String::new();
+        
+        loop {
+            let ch = self.next()?;
+            
+            if ch == '"' {
+                break;
+            } else if ch == '\\' {
+                let escaped = self.next()?;
+                match escaped {
+                    'n' => result.push('\n'),
+                    't' => result.push('\t'),
+                    'r' => result.push('\r'),
+                    '"' => result.push('"'),
+                    '\\' => result.push('\\'),
+                    _ => return Err(format!("Invalid escape: \\{}", escaped)),
+                }
+            } else {
+                result.push(ch);
+            }
+        }
+        
+        Ok(JsonValue::String(result))
+    }
+    
+    fn parse_number(&mut self) -> Result<JsonValue, String> {
+        let mut num_str = String::new();
+        
+        while !self.is_eof() {
+            let ch = self.peek()?;
+            
+            if ch.is_digit(10) || ch == '.' || ch == '-' || ch == 'e' || ch == 'E' {
+                num_str.push(ch);
+                self.position += 1;
+            } else {
+                break;
+            }
+        }
+        
+        match num_str.parse::<f64>() {
+            Ok(n) => Ok(JsonValue::Number(n)),
+            Err(_) => Err(format!("Invalid number: {}", num_str)),
+        }
+    }
+    
+    fn parse_bool(&mut self) -> Result<JsonValue, String> {
+        if self.consume_word("true") {
+            Ok(JsonValue::Bool(true))
+        } else if self.consume_word("false") {
+            Ok(JsonValue::Bool(false))
+        } else {
+            Err(String::from("Expected true or false"))
+        }
+    }
+    
+    fn parse_null(&mut self) -> Result<JsonValue, String> {
+        if self.consume_word("null") {
+            Ok(JsonValue::Null)
+        } else {
+            Err(String::from("Expected null"))
+        }
+    }
+    
+    fn parse_array(&mut self) -> Result<JsonValue, String> {
+        self.consume('[')?;
+        let mut elements = Vec::new();
+        
+        self.skip_whitespace();
+        
+        if self.peek()? == ']' {
+            self.position += 1;
+            return Ok(JsonValue::Array(elements));
+        }
+        
+        loop {
+            elements.push(self.parse_value()?);
+            
+            self.skip_whitespace();
+            
+            let ch = self.peek()?;
+            if ch == ']' {
+                self.position += 1;
+                break;
+            } else if ch == ',' {
+                self.position += 1;
+            } else {
+                return Err(format!("Expected , or ] but got {}", ch));
+            }
+        }
+        
+        Ok(JsonValue::Array(elements))
+    }
+    
+    fn parse_object(&mut self) -> Result<JsonValue, String> {
+        self.consume('{')?;
+        let mut map = HashMap::new();
+        
+        self.skip_whitespace();
+        
+        if self.peek()? == '}' {
+            self.position += 1;
+            return Ok(JsonValue::Object(map));
+        }
+        
+        loop {
+            self.skip_whitespace();
+            
+            let key = match self.parse_string()? {
+                JsonValue::String(s) => s,
+                _ => return Err(String::from("Expected string key")),
+            };
+            
+            self.skip_whitespace();
+            self.consume(':')?;
+            
+            let value = self.parse_value()?;
+            map.insert(key, value);
+            
+            self.skip_whitespace();
+            
+            let ch = self.peek()?;
+            if ch == '}' {
+                self.position += 1;
+                break;
+            } else if ch == ',' {
+                self.position += 1;
+            } else {
+                return Err(format!("Expected , or }} but got {}", ch));
+            }
+        }
+        
+        Ok(JsonValue::Object(map))
+    }
+    
+    fn skip_whitespace(&mut self) {
+        while !self.is_eof() {
+            let ch = self.input.chars().nth(self.position as usize).unwrap();
+            if ch.is_whitespace() {
+                self.position += 1;
+            } else {
+                break;
+            }
+        }
+    }
+    
+    fn peek(&self) -> Result<char, String> {
+        if self.is_eof() {
+            Err(String::from("Unexpected end of input"))
+        } else {
+            Ok(self.input.chars().nth(self.position as usize).unwrap())
+        }
+    }
+    
+    fn next(&mut self) -> Result<char, String> {
+        let ch = self.peek()?;
+        self.position += 1;
+        Ok(ch)
+    }
+    
+    fn consume(&mut self, expected: char) -> Result<(), String> {
+        let ch = self.next()?;
+        if ch == expected {
+            Ok(())
+        } else {
+            Err(format!("Expected {} but got {}", expected, ch))
+        }
+    }
+    
+    fn consume_word(&mut self, word: &str) -> bool {
+        let end = self.position + word.len() as i32;
+        
+        if end > self.input.len() as i32 {
+            return false;
+        }
+        
+        let slice = &self.input[self.position as usize..end as usize];
+        
+        if slice == word {
+            self.position = end;
+            true
+        } else {
+            false
+        }
+    }
+    
+    fn is_eof(&self) -> bool {
+        self.position >= self.input.len() as i32
+    }
+}
+
+fn main() {
+    let json = r#"
+    {
+        "name": "John Doe",
+        "age": 30,
+        "is_active": true,
+        "balance": 1234.56,
+        "tags": ["developer", "rust", "blaze"],
+        "address": {
+            "street": "123 Main St",
+            "city": "Anytown",
+            "zip": "12345"
+        },
+        "metadata": null
+    }
+    "#;
+    
+    let mut parser = JsonParser::new(String::from(json));
+    
+    match parser.parse() {
+        Ok(value) => {
+            println("Parsed successfully!");
+            
+            if let Some(obj) = value.as_object() {
+                if let Some(name) = obj.get("name") {
+                    println("Name: {}", name.as_string().unwrap());
+                }
+                
+                if let Some(age) = obj.get("age") {
+                    println("Age: {}", age.as_number().unwrap());
+                }
+                
+                if let Some(tags) = obj.get("tags") {
+                    println("Tags:");
+                    for tag in tags.as_array().unwrap() {
+                        println("  - {}", tag.as_string().unwrap());
+                    }
+                }
+            }
+        }
+        Err(e) => println("Parse error: {}", e),
+    }
+}

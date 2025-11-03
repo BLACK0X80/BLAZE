@@ -3,11 +3,10 @@ use anyhow::{Result, bail};
 use inkwell::context::Context;
 use inkwell::builder::Builder;
 use inkwell::module::Module as LLVMModule;
-use inkwell::values::{FunctionValue, BasicValueEnum, PointerValue};
-use inkwell::types::{BasicTypeEnum, BasicMetadataTypeEnum};
+use inkwell::values::{FunctionValue, BasicValueEnum, PointerValue, BasicMetadataValueEnum};
+use inkwell::types::{BasicTypeEnum, BasicMetadataTypeEnum, BasicType};
 use inkwell::basic_block::BasicBlock;
 use inkwell::IntPredicate;
-use inkwell::FloatPredicate;
 use inkwell::targets::{Target, TargetMachine, RelocMode, CodeModel, FileType, InitializationConfig};
 use inkwell::OptimizationLevel;
 use std::collections::HashMap;
@@ -73,12 +72,12 @@ impl<'ctx> LLVMCodegen<'ctx> {
         
         // Set optimization level
         let opt_level = match self.optimization_level {
-            0 => 0,
-            1 => 1,
-            2 => 2,
-            _ => 3,
+            0 => OptimizationLevel::None,
+            1 => OptimizationLevel::Less,
+            2 => OptimizationLevel::Default,
+            _ => OptimizationLevel::Aggressive,
         };
-        pass_manager_builder.set_optimization_level(OptimizationLevel::from(opt_level));
+        pass_manager_builder.set_optimization_level(opt_level);
 
         // Create function pass manager
         let fpm = PassManager::create(&self.module);
@@ -165,18 +164,18 @@ impl<'ctx> LLVMCodegen<'ctx> {
         match instruction {
             Instruction::Alloca { result, ty } => {
                 let llvm_type = self.get_llvm_type(ty);
-                let alloca = self.builder.build_alloca(llvm_type, result)?;
-                self.values.insert(result.clone(), alloca.into());
+                let alloca = self.builder.build_alloca(llvm_type, result).into();
+                self.values.insert(result.clone(), alloca);
             }
             Instruction::Store { value, ptr } => {
                 if let (Some(val), Some(BasicValueEnum::PointerValue(ptr_val))) = 
                     (self.get_value(value), self.values.get(ptr)) {
-                    self.builder.build_store(*ptr_val, val)?;
+                    self.builder.build_store(*ptr_val, val).into();
                 }
             }
             Instruction::Load { result, ptr } => {
                 if let Some(BasicValueEnum::PointerValue(ptr_val)) = self.values.get(ptr) {
-                    let loaded = self.builder.build_load(self.context.i32_type(), *ptr_val, result)?;
+                    let loaded = self.builder.build_load(self.context.i32_type(), *ptr_val, result).into();
                     self.values.insert(result.clone(), loaded);
                 }
             }
@@ -184,10 +183,10 @@ impl<'ctx> LLVMCodegen<'ctx> {
                 if let (Some(lhs), Some(rhs)) = (self.get_value(left), self.get_value(right)) {
                     let add_result = match (lhs, rhs) {
                         (BasicValueEnum::IntValue(l), BasicValueEnum::IntValue(r)) => {
-                            self.builder.build_int_add(l, r, result)?.into()
+                            self.builder.build_int_add(l, r, result).into()
                         }
                         (BasicValueEnum::FloatValue(l), BasicValueEnum::FloatValue(r)) => {
-                            self.builder.build_float_add(l, r, result)?.into()
+                            self.builder.build_float_add(l, r, result).into()
                         }
                         _ => bail!("Type mismatch in add instruction"),
                     };
@@ -198,10 +197,10 @@ impl<'ctx> LLVMCodegen<'ctx> {
                 if let (Some(lhs), Some(rhs)) = (self.get_value(left), self.get_value(right)) {
                     let sub_result = match (lhs, rhs) {
                         (BasicValueEnum::IntValue(l), BasicValueEnum::IntValue(r)) => {
-                            self.builder.build_int_sub(l, r, result)?.into()
+                            self.builder.build_int_sub(l, r, result).into()
                         }
                         (BasicValueEnum::FloatValue(l), BasicValueEnum::FloatValue(r)) => {
-                            self.builder.build_float_sub(l, r, result)?.into()
+                            self.builder.build_float_sub(l, r, result).into()
                         }
                         _ => bail!("Type mismatch in sub instruction"),
                     };
@@ -212,10 +211,10 @@ impl<'ctx> LLVMCodegen<'ctx> {
                 if let (Some(lhs), Some(rhs)) = (self.get_value(left), self.get_value(right)) {
                     let mul_result = match (lhs, rhs) {
                         (BasicValueEnum::IntValue(l), BasicValueEnum::IntValue(r)) => {
-                            self.builder.build_int_mul(l, r, result)?.into()
+                            self.builder.build_int_mul(l, r, result).into()
                         }
                         (BasicValueEnum::FloatValue(l), BasicValueEnum::FloatValue(r)) => {
-                            self.builder.build_float_mul(l, r, result)?.into()
+                            self.builder.build_float_mul(l, r, result).into()
                         }
                         _ => bail!("Type mismatch in mul instruction"),
                     };
@@ -226,10 +225,10 @@ impl<'ctx> LLVMCodegen<'ctx> {
                 if let (Some(lhs), Some(rhs)) = (self.get_value(left), self.get_value(right)) {
                     let div_result = match (lhs, rhs) {
                         (BasicValueEnum::IntValue(l), BasicValueEnum::IntValue(r)) => {
-                            self.builder.build_int_signed_div(l, r, result)?.into()
+                            self.builder.build_int_signed_div(l, r, result).into()
                         }
                         (BasicValueEnum::FloatValue(l), BasicValueEnum::FloatValue(r)) => {
-                            self.builder.build_float_div(l, r, result)?.into()
+                            self.builder.build_float_div(l, r, result).into()
                         }
                         _ => bail!("Type mismatch in div instruction"),
                     };
@@ -240,18 +239,18 @@ impl<'ctx> LLVMCodegen<'ctx> {
                 if let (Some(BasicValueEnum::IntValue(lhs)), Some(BasicValueEnum::IntValue(rhs))) = 
                     (self.get_value(left), self.get_value(right)) {
                     let predicate = self.get_int_predicate(condition);
-                    let cmp_result = self.builder.build_int_compare(predicate, lhs, rhs, result)?;
-                    self.values.insert(result.clone(), cmp_result.into());
+                    let cmp_result = self.builder.build_int_compare(predicate, lhs, rhs, result).into();
+                    self.values.insert(result.clone(), cmp_result);
                 }
             }
             Instruction::Call { result, func, args } => {
                 if let Some(function) = self.module.get_function(func) {
-                    let arg_values: Vec<BasicMetadataTypeEnum> = args.iter()
+                    let arg_values: Vec<BasicMetadataValueEnum> = args.iter()
                         .filter_map(|arg| self.get_value(arg))
                         .map(|v| v.into())
                         .collect();
                     
-                    let call_result = self.builder.build_call(function, &arg_values, "call")?;
+                    let call_result = self.builder.build_call(function, &arg_values, "call").into();
                     
                     if let Some(res_name) = result {
                         if let Some(val) = call_result.try_as_basic_value().left() {
@@ -269,17 +268,17 @@ impl<'ctx> LLVMCodegen<'ctx> {
         match terminator {
             Terminator::Ret { value: Some(val) } => {
                 if let Some(ret_val) = self.get_value(val) {
-                    self.builder.build_return(Some(&ret_val))?;
+                    self.builder.build_return(Some(&ret_val)).into();
                 } else {
                     bail!("Return value '{}' not found", val);
                 }
             }
             Terminator::Ret { value: None } => {
-                self.builder.build_return(None)?;
+                self.builder.build_return(None).into();
             }
             Terminator::Br { target } => {
                 if let Some(target_block) = self.blocks.get(target) {
-                    self.builder.build_unconditional_branch(*target_block)?;
+                    self.builder.build_unconditional_branch(*target_block).into();
                 } else {
                     bail!("Branch target '{}' not found", target);
                 }
@@ -295,13 +294,13 @@ impl<'ctx> LLVMCodegen<'ctx> {
                     .ok_or_else(|| anyhow::anyhow!("False branch target '{}' not found", false_target))?;
                 
                 if let BasicValueEnum::IntValue(cond_int) = cond_val {
-                    self.builder.build_conditional_branch(cond_int, *true_block, *false_block)?;
+                    self.builder.build_conditional_branch(cond_int, *true_block, *false_block).into();
                 } else {
                     bail!("Condition must be an integer value");
                 }
             }
             Terminator::Unreachable => {
-                self.builder.build_unreachable()?;
+                self.builder.build_unreachable().into();
             }
         }
         Ok(())

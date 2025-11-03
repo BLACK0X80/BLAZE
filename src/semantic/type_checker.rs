@@ -136,6 +136,79 @@ impl TypeChecker {
             Expression::Call { func, args } => {
                 self.check_function_call(func, args, symbol_table)
             }
+            Expression::Assignment { target, value } => {
+                let target_type = self.infer_expression(target, symbol_table)?;
+                let value_type = self.infer_expression(value, symbol_table)?;
+                self.unify(&target_type, &value_type)?;
+                Ok(value_type)
+            }
+            Expression::FieldAccess { object, field } => {
+                let _object_type = self.infer_expression(object, symbol_table)?;
+                Ok(Type::Custom(field.clone()))
+            }
+            Expression::MethodCall { object, method, args } => {
+                let _object_type = self.infer_expression(object, symbol_table)?;
+                for arg in args {
+                    self.infer_expression(arg, symbol_table)?;
+                }
+                Ok(Type::Custom(method.clone()))
+            }
+            Expression::Index { object, index } => {
+                let _object_type = self.infer_expression(object, symbol_table)?;
+                let _index_type = self.infer_expression(index, symbol_table)?;
+                Ok(Type::I32)
+            }
+            Expression::TupleLiteral(elements) => {
+                for elem in elements {
+                    self.infer_expression(elem, symbol_table)?;
+                }
+                Ok(Type::Custom("tuple".to_string()))
+            }
+            Expression::ArrayLiteral(elements) => {
+                for elem in elements {
+                    self.infer_expression(elem, symbol_table)?;
+                }
+                Ok(Type::Custom("array".to_string()))
+            }
+            Expression::StructLiteral { name, fields } => {
+                for field in fields {
+                    self.infer_expression(&field.value, symbol_table)?;
+                }
+                Ok(Type::Custom(name.clone()))
+            }
+            Expression::Block(statements) => {
+                for stmt in statements {
+                    self.check_statement(stmt, symbol_table)?;
+                }
+                Ok(Type::Custom("unit".to_string()))
+            }
+            Expression::If { condition, then_branch, else_branch } => {
+                let cond_type = self.infer_expression(condition, symbol_table)?;
+                self.unify(&Type::Bool, &cond_type)?;
+                let then_type = self.infer_expression(then_branch, symbol_table)?;
+                if let Some(else_expr) = else_branch {
+                    let else_type = self.infer_expression(else_expr, symbol_table)?;
+                    self.unify(&then_type, &else_type)?;
+                }
+                Ok(then_type)
+            }
+            Expression::Match { expression, arms } => {
+                let _expr_type = self.infer_expression(expression, symbol_table)?;
+                let mut result_type = None;
+                for arm in arms {
+                    let arm_type = self.infer_expression(&arm.body, symbol_table)?;
+                    if let Some(ref expected) = result_type {
+                        self.unify(expected, &arm_type)?;
+                    } else {
+                        result_type = Some(arm_type);
+                    }
+                }
+                Ok(result_type.unwrap_or(Type::Custom("unit".to_string())))
+            }
+            Expression::Closure { params, body } => {
+                let _body_type = self.infer_expression(body, symbol_table)?;
+                Ok(Type::Custom("closure".to_string()))
+            }
         }
     }
 

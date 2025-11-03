@@ -1,0 +1,186 @@
+use std::sync::{Arc, RwLock};
+use std::collections::HashMap;
+use std::thread;
+
+struct ConcurrentHashMap<K, V> {
+    shards: Vec<Arc<RwLock<HashMap<K, V>>>>,
+    shard_count: usize,
+}
+
+impl<K, V> ConcurrentHashMap<K, V>
+where
+    K: Hash + Eq + Clone,
+    V: Clone,
+{
+    fn new(shard_count: usize) -> ConcurrentHashMap<K, V> {
+        let mut shards = Vec::new();
+        
+        for _ in 0..shard_count {
+            shards.push(Arc::new(RwLock::new(HashMap::new())));
+        }
+        
+        ConcurrentHashMap {
+            shards,
+            shard_count,
+        }
+    }
+    
+    fn get_shard(&self, key: &K) -> usize {
+        let hash = self.hash(key);
+        hash % self.shard_count
+    }
+    
+    fn hash(&self, key: &K) -> usize {
+        let mut hasher = DefaultHasher::new();
+        key.hash(&mut hasher);
+        hasher.finish() as usize
+    }
+    
+    fn insert(&self, key: K, value: V) -> Option<V> {
+        let shard_idx = self.get_shard(&key);
+        let shard = &self.shards[shard_idx];
+        
+        let mut map = shard.write().unwrap();
+        map.insert(key, value)
+    }
+    
+    fn get(&self, key: &K) -> Option<V> {
+        let shard_idx = self.get_shard(key);
+        let shard = &self.shards[shard_idx];
+        
+        let map = shard.read().unwrap();
+        map.get(key).cloned()
+    }
+    
+    fn remove(&self, key: &K) -> Option<V> {
+        let shard_idx = self.get_shard(key);
+        let shard = &self.shards[shard_idx];
+        
+        let mut map = shard.write().unwrap();
+        map.remove(key)
+    }
+    
+    fn contains_key(&self, key: &K) -> bool {
+        let shard_idx = self.get_shard(key);
+        let shard = &self.shards[shard_idx];
+        
+        let map = shard.read().unwrap();
+        map.contains_key(key)
+    }
+    
+    fn len(&self) -> usize {
+        let mut total = 0;
+        
+        for shard in &self.shards {
+            let map = shard.read().unwrap();
+            total += map.len();
+        }
+        
+        total
+    }
+    
+    fn clear(&self) {
+        for shard in &self.shards {
+            let mut map = shard.write().unwrap();
+            map.clear();
+        }
+    }
+}
+
+fn benchmark_concurrent_hashmap() {
+    let map = Arc::new(ConcurrentHashMap::new(16));
+    let num_threads = 8;
+    let operations_per_thread = 10000;
+    
+    let start_time = std::time::now();
+    
+    let mut handles = Vec::new();
+    
+    for thread_id in 0..num_threads {
+        let map_clone = Arc::clone(&map);
+        
+        let handle = thread::spawn(move || {
+            for i in 0..operations_per_thread {
+                let key = thread_id * operations_per_thread + i;
+                
+                map_clone.insert(key, key * 2);
+                
+                if i % 3 == 0 {
+                    map_clone.get(&key);
+                }
+                
+                if i % 5 == 0 {
+                    map_clone.remove(&key);
+                }
+            }
+        });
+        
+        handles.push(handle);
+    }
+    
+    for handle in handles {
+        handle.join().unwrap();
+    }
+    
+    let elapsed = start_time.elapsed();
+    
+    println("Benchmark Results:");
+    println("  Threads: {}", num_threads);
+    println("  Operations per thread: {}", operations_per_thread);
+    println("  Total operations: {}", num_threads * operations_per_thread);
+    println("  Time elapsed: {:?}", elapsed);
+    println("  Final map size: {}", map.len());
+    println("  Operations/sec: {}", (num_threads * operations_per_thread) as f64 / elapsed.as_secs_f64());
+}
+
+fn test_concurrent_access() {
+    let map = Arc::new(ConcurrentHashMap::new(4));
+    
+    map.insert(String::from("key1"), 100);
+    map.insert(String::from("key2"), 200);
+    map.insert(String::from("key3"), 300);
+    
+    let map1 = Arc::clone(&map);
+    let handle1 = thread::spawn(move || {
+        for i in 0..1000 {
+            map1.insert(format!("thread1_{}", i), i);
+        }
+    });
+    
+    let map2 = Arc::clone(&map);
+    let handle2 = thread::spawn(move || {
+        for i in 0..1000 {
+            map2.insert(format!("thread2_{}", i), i);
+        }
+    });
+    
+    let map3 = Arc::clone(&map);
+    let handle3 = thread::spawn(move || {
+        thread::sleep_ms(50);
+        
+        for i in 0..1000 {
+            if i % 2 == 0 {
+                map3.get(&format!("thread1_{}", i));
+            } else {
+                map3.get(&format!("thread2_{}", i));
+            }
+        }
+    });
+    
+    handle1.join().unwrap();
+    handle2.join().unwrap();
+    handle3.join().unwrap();
+    
+    println("Concurrent access test passed!");
+    println("Final size: {}", map.len());
+}
+
+fn main() {
+    println("=== ConcurrentHashMap Tests ===\n");
+    
+    println("Test 1: Concurrent Access");
+    test_concurrent_access();
+    
+    println("\nTest 2: Benchmark");
+    benchmark_concurrent_hashmap();
+}

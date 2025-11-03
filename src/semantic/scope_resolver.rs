@@ -98,16 +98,16 @@ impl ScopeResolver {
                     self.add_binding(name.clone(), ty.clone(), *mutable)?;
                 }
             }
-            Statement::If { condition, then_block, else_block } => {
+            Statement::If { condition, then_body, else_body } => {
                 self.resolve_expression(condition)?;
                 
                 self.enter_scope();
-                for stmt in then_block {
+                for stmt in then_body {
                     self.resolve_statement(stmt)?;
                 }
                 self.exit_scope();
                 
-                if let Some(else_stmts) = else_block {
+                if let Some(else_stmts) = else_body {
                     self.enter_scope();
                     for stmt in else_stmts {
                         self.resolve_statement(stmt)?;

@@ -1,0 +1,159 @@
+use std::collections::{HashSet, VecDeque};
+use std::thread;
+use std::sync::{Arc, Mutex};
+use std::net::http::Client;
+
+struct WebCrawler {
+    visited: Arc<Mutex<HashSet<String>>>,
+    queue: Arc<Mutex<VecDeque<String>>>,
+    max_depth: i32,
+    num_threads: i32,
+}
+
+impl WebCrawler {
+    fn new(max_depth: i32, num_threads: i32) -> WebCrawler {
+        WebCrawler {
+            visited: Arc::new(Mutex::new(HashSet::new())),
+            queue: Arc::new(Mutex::new(VecDeque::new())),
+            max_depth,
+            num_threads,
+        }
+    }
+    
+    fn crawl(&self, start_url: String) {
+        {
+            let mut queue = self.queue.lock().unwrap();
+            queue.push_back((start_url, 0));
+        }
+        
+        let mut handles = Vec::new();
+        
+        for i in 0..self.num_threads {
+            let visited = Arc::clone(&self.visited);
+            let queue = Arc::clone(&self.queue);
+            let max_depth = self.max_depth;
+            
+            let handle = thread::spawn(move || {
+                loop {
+                    let task = {
+                        let mut q = queue.lock().unwrap();
+                        q.pop_front()
+                    };
+                    
+                    match task {
+                        Some((url, depth)) => {
+                            if depth >= max_depth {
+                                continue;
+                            }
+                            
+                            let should_visit = {
+                                let mut v = visited.lock().unwrap();
+                                v.insert(url.clone())
+                            };
+                            
+                            if should_visit {
+                                println("[Thread {}] Crawling: {}", i, url);
+                                
+                                match fetch_page(&url) {
+                                    Ok(html) => {
+                                        let links = extract_links(&html);
+                                        
+                                        let mut q = queue.lock().unwrap();
+                                        for link in links {
+                                            q.push_back((link, depth + 1));
+                                        }
+                                    }
+                                    Err(e) => {
+                                        println("[Thread {}] Error fetching {}: {}", i, url, e);
+                                    }
+                                }
+                            }
+                        }
+                        None => {
+                            thread::sleep_ms(100);
+                            
+                            let is_empty = {
+                                let q = queue.lock().unwrap();
+                                q.is_empty()
+                            };
+                            
+                            if is_empty {
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
+            
+            handles.push(handle);
+        }
+        
+        for handle in handles {
+            handle.join().unwrap();
+        }
+    }
+    
+    fn get_results(&self) -> Vec<String> {
+        let visited = self.visited.lock().unwrap();
+        visited.iter().map(|s| s.clone()).collect()
+    }
+}
+
+fn fetch_page(url: &str) -> Result<String, String> {
+    let client = Client::new();
+    
+    match client.get(url) {
+        Ok(response) => {
+            if response.status_code() == 200 {
+                Ok(response.body())
+            } else {
+                Err(format!("HTTP {}", response.status_code()))
+            }
+        }
+        Err(e) => Err(format!("Request failed: {}", e)),
+    }
+}
+
+fn extract_links(html: &str) -> Vec<String> {
+    let mut links = Vec::new();
+    let mut i = 0;
+    
+    while i < html.len() {
+        if html[i..].starts_with("<a href=\"") {
+            i += 9;
+            let start = i;
+            
+            while i < html.len() && html.chars().nth(i).unwrap() != '"' {
+                i += 1;
+            }
+            
+            if i < html.len() {
+                let link = String::from(&html[start..i]);
+                if link.starts_with("http") {
+                    links.push(link);
+                }
+            }
+        }
+        i += 1;
+    }
+    
+    links
+}
+
+fn main() {
+    println("Starting web crawler...");
+    
+    let crawler = WebCrawler::new(3, 4);
+    
+    crawler.crawl(String::from("https://example.com"));
+    
+    let results = crawler.get_results();
+    
+    println("\nCrawling complete!");
+    println("Total pages visited: {}", results.len());
+    
+    println("\nVisited URLs:");
+    for url in results {
+        println("  - {}", url);
+    }
+}

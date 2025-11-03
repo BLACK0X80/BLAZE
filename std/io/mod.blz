@@ -1,0 +1,140 @@
+pub fn print(s: &str) {
+    extern "C" fn blaze_print(ptr: *const u8, len: usize);
+    unsafe {
+        blaze_print(s.as_ptr(), s.len());
+    }
+}
+
+pub fn println(s: &str) {
+    print(s);
+    print("\n");
+}
+
+pub fn eprint(s: &str) {
+    extern "C" fn blaze_eprint(ptr: *const u8, len: usize);
+    unsafe {
+        blaze_eprint(s.as_ptr(), s.len());
+    }
+}
+
+pub fn eprintln(s: &str) {
+    eprint(s);
+    eprint("\n");
+}
+
+pub fn read_line() -> Result<String, IoError> {
+    let mut buffer = String::new();
+    
+    loop {
+        let ch = read_char()?;
+        if ch == '\n' {
+            break;
+        }
+        buffer.push(ch);
+    }
+    
+    Ok(buffer)
+}
+
+pub fn read_char() -> Result<char, IoError> {
+    extern "C" fn blaze_read_char() -> u32;
+    unsafe {
+        let code = blaze_read_char();
+        if code == 0xFFFFFFFF {
+            Err(IoError::new("Failed to read character"))
+        } else {
+            Ok(char_from_u32(code).unwrap())
+        }
+    }
+}
+
+pub struct File {
+    fd: i32,
+}
+
+impl File {
+    pub fn open(path: &str) -> Result<File, IoError> {
+        extern "C" fn blaze_file_open(ptr: *const u8, len: usize) -> i32;
+        unsafe {
+            let fd = blaze_file_open(path.as_ptr(), path.len());
+            if fd < 0 {
+                Err(IoError::new("Failed to open file"))
+            } else {
+                Ok(File { fd })
+            }
+        }
+    }
+    
+    pub fn create(path: &str) -> Result<File, IoError> {
+        extern "C" fn blaze_file_create(ptr: *const u8, len: usize) -> i32;
+        unsafe {
+            let fd = blaze_file_create(path.as_ptr(), path.len());
+            if fd < 0 {
+                Err(IoError::new("Failed to create file"))
+            } else {
+                Ok(File { fd })
+            }
+        }
+    }
+    
+    pub fn read(&mut self, buffer: &mut [u8]) -> Result<usize, IoError> {
+        extern "C" fn blaze_file_read(fd: i32, ptr: *mut u8, len: usize) -> isize;
+        unsafe {
+            let bytes_read = blaze_file_read(self.fd, buffer.as_mut_ptr(), buffer.len());
+            if bytes_read < 0 {
+                Err(IoError::new("Failed to read from file"))
+            } else {
+                Ok(bytes_read as usize)
+            }
+        }
+    }
+    
+    pub fn write(&mut self, data: &[u8]) -> Result<usize, IoError> {
+        extern "C" fn blaze_file_write(fd: i32, ptr: *const u8, len: usize) -> isize;
+        unsafe {
+            let bytes_written = blaze_file_write(self.fd, data.as_ptr(), data.len());
+            if bytes_written < 0 {
+                Err(IoError::new("Failed to write to file"))
+            } else {
+                Ok(bytes_written as usize)
+            }
+        }
+    }
+    
+    pub fn close(self) -> Result<(), IoError> {
+        extern "C" fn blaze_file_close(fd: i32) -> i32;
+        unsafe {
+            let result = blaze_file_close(self.fd);
+            if result < 0 {
+                Err(IoError::new("Failed to close file"))
+            } else {
+                Ok(())
+            }
+        }
+    }
+}
+
+impl Drop for File {
+    fn drop(&mut self) {
+        extern "C" fn blaze_file_close(fd: i32) -> i32;
+        unsafe {
+            blaze_file_close(self.fd);
+        }
+    }
+}
+
+pub struct IoError {
+    message: String,
+}
+
+impl IoError {
+    pub fn new(message: &str) -> IoError {
+        IoError {
+            message: String::from(message),
+        }
+    }
+    
+    pub fn message(&self) -> &str {
+        self.message.as_str()
+    }
+}

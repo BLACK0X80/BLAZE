@@ -1,0 +1,47 @@
+fn swap<T>(a: &mut T, b: &mut T) {
+    let temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+fn max<T: Ord>(a: T, b: T) -> T {
+    if a > b {
+        return a;
+    } else {
+        return b;
+    }
+}
+
+fn min<T: Ord>(a: T, b: T) -> T {
+    if a < b {
+        return a;
+    } else {
+        return b;
+    }
+}
+
+struct Pair<T> {
+    first: T,
+    second: T,
+}
+
+fn new_pair<T>(first: T, second: T) -> Pair<T> {
+    return Pair { first: first, second: second };
+}
+
+fn main() {
+    let mut x = 10;
+    let mut y = 20;
+    println("Before swap: x=", x, " y=", y);
+    swap(&mut x, &mut y);
+    println("After swap: x=", x, " y=", y);
+    
+    let max_val = max(15, 25);
+    println("Max of 15 and 25: ", max_val);
+    
+    let min_val = min(15, 25);
+    println("Min of 15 and 25: ", min_val);
+    
+    let pair = new_pair(100, 200);
+    println("Pair: (", pair.first, ", ", pair.second, ")");
+}

@@ -28,7 +28,7 @@ pub struct BasicBlock {
 #[derive(Debug, Clone)]
 pub struct ControlFlowEdge;
 
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct Loan {
     pub id: usize,
     pub location: String,
@@ -36,13 +36,13 @@ pub struct Loan {
     pub lifetime: Lifetime,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct Lifetime {
     pub id: usize,
     pub scope: Scope,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct Scope {
     pub start: usize,
     pub end: usize,

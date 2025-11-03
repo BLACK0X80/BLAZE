@@ -23,6 +23,7 @@
 //! ```
 
 /// LLVM backend for machine code generation
+#[cfg(feature = "llvm")]
 pub mod llvm_backend;
 
 /// Register allocation for efficient code generation
@@ -31,6 +32,7 @@ pub mod register_allocator;
 /// Platform-specific linker integration
 pub mod linker;
 
+#[cfg(feature = "llvm")]
 pub use llvm_backend::LLVMCodegen;
 pub use register_allocator::RegisterAllocator;
 pub use linker::Linker;
@@ -38,6 +40,8 @@ pub use linker::Linker;
 use crate::ir::Module;
 use std::path::PathBuf;
 use anyhow::{Result, Context as AnyhowContext};
+
+#[cfg(feature = "llvm")]
 use inkwell::context::Context;
 
 /// Code generator that orchestrates the complete code generation pipeline.
@@ -143,6 +147,7 @@ impl CodeGenerator {
     /// # Returns
     ///
     /// Returns the path to the generated object file on success.
+    #[cfg(feature = "llvm")]
     fn generate_object(&self, module: &Module, context: &Context, output: &PathBuf, optimization_level: u8) -> Result<PathBuf> {
         // Apply IR-level optimizations before code generation
         let mut optimized_module = module.clone();

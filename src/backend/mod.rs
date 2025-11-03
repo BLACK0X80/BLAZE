@@ -1,0 +1,25 @@
+pub mod llvm_wrapper;
+pub mod peephole;
+pub mod linker;
+pub mod instruction_scheduler;
+pub mod loop_optimizer;
+pub mod global_optimizer;
+pub mod alias_analysis;
+pub mod machine_code_gen;
+pub mod code_layout;
+pub mod ssa_optimizer;
+pub mod target_lowering;
+pub mod pgo;
+
+pub use llvm_wrapper::LLVMCodeGen;
+pub use peephole::PeepholeOptimizer;
+pub use linker::{Linker, LinkerOptions};
+pub use instruction_scheduler::InstructionScheduler;
+pub use loop_optimizer::{LoopOptimizer, LoopNestOptimizer};
+pub use global_optimizer::{GlobalOptimizer, LinkTimeOptimizer};
+pub use alias_analysis::{AliasAnalyzer, AliasResult};
+pub use machine_code_gen::{MachineCodeGenerator, TargetArchitecture};
+pub use code_layout::CodeLayoutOptimizer;
+pub use ssa_optimizer::SSAOptimizer;
+pub use target_lowering::{TargetLowering, TargetInfo};
+pub use pgo::{ProfileGuidedOptimizer, ProfileData};

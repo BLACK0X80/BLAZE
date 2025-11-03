@@ -1,0 +1,48 @@
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+struct Rectangle {
+    top_left: Point,
+    bottom_right: Point,
+}
+
+fn new_point(x: i32, y: i32) -> Point {
+    return Point { x: x, y: y };
+}
+
+fn distance_from_origin(p: &Point) -> f64 {
+    let x_squared = p.x * p.x;
+    let y_squared = p.y * p.y;
+    let sum = x_squared + y_squared;
+    return sqrt(sum);
+}
+
+fn area(rect: &Rectangle) -> i32 {
+    let width = rect.bottom_right.x - rect.top_left.x;
+    let height = rect.top_left.y - rect.bottom_right.y;
+    return width * height;
+}
+
+fn perimeter(rect: &Rectangle) -> i32 {
+    let width = rect.bottom_right.x - rect.top_left.x;
+    let height = rect.top_left.y - rect.bottom_right.y;
+    return 2 * (width + height);
+}
+
+fn main() {
+    let origin = new_point(0, 0);
+    let point = new_point(3, 4);
+    
+    let dist = distance_from_origin(&point);
+    println("Distance from origin: ", dist);
+    
+    let rect = Rectangle {
+        top_left: Point { x: 0, y: 10 },
+        bottom_right: Point { x: 10, y: 0 },
+    };
+    
+    println("Rectangle area: ", area(&rect));
+    println("Rectangle perimeter: ", perimeter(&rect));
+}

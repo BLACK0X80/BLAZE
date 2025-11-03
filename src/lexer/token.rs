@@ -2,6 +2,9 @@
 pub enum TokenType {
     Let, Mut, Fn, Return, If, Else, While, For, Loop, Break, Continue,
     Struct, Impl, Match, Enum, Pub, Mod, Use, True, False,
+    In, Const, Static, Ref, SelfType, SelfValue,
+    Trait, Async, Await, Unsafe, Where, Type, As, Dyn, Move,
+    Crate, Super, Extern, Box, Underscore,
     
     I32, I64, F32, F64, Bool, Char, Str, String,
     
@@ -15,13 +18,14 @@ pub enum TokenType {
     Equal, EqualEqual, BangEqual,
     Less, LessEqual, Greater, GreaterEqual,
     And, Or, Bang,
-    Ampersand, Pipe,
+    Ampersand, Pipe, Caret,
+    LeftShift, RightShift,
     
     LeftParen, RightParen,
     LeftBrace, RightBrace,
     LeftBracket, RightBracket,
     Semicolon, Colon, Comma, Dot,
-    Arrow,
+    Arrow, FatArrow,
     
     Eof,
 }

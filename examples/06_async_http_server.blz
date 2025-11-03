@@ -1,0 +1,89 @@
+use std::net::TcpListener;
+use std::io::{Read, Write};
+use std::thread;
+
+struct HttpRequest {
+    method: String,
+    path: String,
+    headers: HashMap<String, String>,
+}
+
+struct HttpResponse {
+    status: i32,
+    body: String,
+}
+
+impl HttpResponse {
+    fn new(status: i32, body: String) -> HttpResponse {
+        HttpResponse { status, body }
+    }
+    
+    fn to_string(&self) -> String {
+        let status_text = match self.status {
+            200 => "OK",
+            404 => "Not Found",
+            500 => "Internal Server Error",
+            _ => "Unknown",
+        };
+        
+        format!(
+            "HTTP/1.1 {} {}\r\nContent-Length: {}\r\n\r\n{}",
+            self.status,
+            status_text,
+            self.body.len(),
+            self.body
+        )
+    }
+}
+
+fn parse_request(request: String) -> HttpRequest {
+    let lines: Vec<&str> = request.split("\r\n").collect();
+    let first_line: Vec<&str> = lines[0].split(" ").collect();
+    
+    let method = String::from(first_line[0]);
+    let path = String::from(first_line[1]);
+    
+    HttpRequest {
+        method,
+        path,
+        headers: HashMap::new(),
+    }
+}
+
+fn handle_request(request: HttpRequest) -> HttpResponse {
+    if request.path == "/" {
+        HttpResponse::new(200, String::from("<h1>Welcome to BLAZE HTTP Server</h1>"))
+    } else if request.path == "/api/health" {
+        HttpResponse::new(200, String::from("{\"status\": \"healthy\"}"))
+    } else if request.path == "/api/users" {
+        HttpResponse::new(200, String::from("[{\"id\": 1, \"name\": \"Alice\"}]"))
+    } else {
+        HttpResponse::new(404, String::from("<h1>404 - Page Not Found</h1>"))
+    }
+}
+
+async fn handle_client(stream: TcpStream) {
+    let mut buffer = [0u8; 1024];
+    stream.read(&mut buffer);
+    
+    let request_str = String::from_utf8(&buffer);
+    let request = parse_request(request_str);
+    
+    let response = handle_request(request);
+    stream.write(response.to_string().as_bytes());
+}
+
+async fn main() {
+    let listener = TcpListener::bind("127.0.0.1:8080");
+    
+    println("Server listening on http://127.0.0.1:8080");
+    
+    loop {
+        let (stream, addr) = listener.accept();
+        println("New connection from: ", addr);
+        
+        spawn(async move {
+            handle_client(stream).await;
+        });
+    }
+}

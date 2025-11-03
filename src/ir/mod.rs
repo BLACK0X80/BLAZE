@@ -41,6 +41,17 @@ pub struct Module {
     pub types: Vec<TypeDefinition>,
 }
 
+impl Module {
+    pub fn new(name: &str) -> Self {
+        Self {
+            name: name.to_string(),
+            functions: Vec::new(),
+            globals: Vec::new(),
+            types: Vec::new(),
+        }
+    }
+}
+
 #[derive(Debug, Clone)]
 pub struct IRFunction {
     pub name: String,

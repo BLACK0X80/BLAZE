@@ -1,0 +1,145 @@
+pub enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+
+impl<T, E> Result<T, E> {
+    pub fn is_ok(&self) -> bool {
+        match self {
+            Ok(_) => true,
+            Err(_) => false,
+        }
+    }
+    
+    pub fn is_err(&self) -> bool {
+        match self {
+            Ok(_) => false,
+            Err(_) => true,
+        }
+    }
+    
+    pub fn ok(self) -> Option<T> {
+        match self {
+            Ok(value) => Some(value),
+            Err(_) => None,
+        }
+    }
+    
+    pub fn err(self) -> Option<E> {
+        match self {
+            Ok(_) => None,
+            Err(e) => Some(e),
+        }
+    }
+    
+    pub fn unwrap(self) -> T {
+        match self {
+            Ok(value) => value,
+            Err(_) => panic("called `Result::unwrap()` on an `Err` value"),
+        }
+    }
+    
+    pub fn unwrap_err(self) -> E {
+        match self {
+            Ok(_) => panic("called `Result::unwrap_err()` on an `Ok` value"),
+            Err(e) => e,
+        }
+    }
+    
+    pub fn unwrap_or(self, default: T) -> T {
+        match self {
+            Ok(value) => value,
+            Err(_) => default,
+        }
+    }
+    
+    pub fn unwrap_or_else<F>(self, f: F) -> T 
+    where
+        F: FnOnce(E) -> T,
+    {
+        match self {
+            Ok(value) => value,
+            Err(e) => f(e),
+        }
+    }
+    
+    pub fn expect(self, msg: &str) -> T {
+        match self {
+            Ok(value) => value,
+            Err(_) => panic(msg),
+        }
+    }
+    
+    pub fn map<U, F>(self, f: F) -> Result<U, E>
+    where
+        F: FnOnce(T) -> U,
+    {
+        match self {
+            Ok(value) => Ok(f(value)),
+            Err(e) => Err(e),
+        }
+    }
+    
+    pub fn map_err<F, O>(self, f: F) -> Result<T, O>
+    where
+        F: FnOnce(E) -> O,
+    {
+        match self {
+            Ok(value) => Ok(value),
+            Err(e) => Err(f(e)),
+        }
+    }
+    
+    pub fn and<U>(self, other: Result<U, E>) -> Result<U, E> {
+        match self {
+            Ok(_) => other,
+            Err(e) => Err(e),
+        }
+    }
+    
+    pub fn and_then<U, F>(self, f: F) -> Result<U, E>
+    where
+        F: FnOnce(T) -> Result<U, E>,
+    {
+        match self {
+            Ok(value) => f(value),
+            Err(e) => Err(e),
+        }
+    }
+    
+    pub fn or<F>(self, other: Result<T, F>) -> Result<T, F> {
+        match self {
+            Ok(value) => Ok(value),
+            Err(_) => other,
+        }
+    }
+    
+    pub fn or_else<F, O>(self, f: F) -> Result<T, O>
+    where
+        F: FnOnce(E) -> Result<T, O>,
+    {
+        match self {
+            Ok(value) => Ok(value),
+            Err(e) => f(e),
+        }
+    }
+}
+
+impl<T: Clone, E: Clone> Clone for Result<T, E> {
+    fn clone(&self) -> Self {
+        match self {
+            Ok(value) => Ok(value.clone()),
+            Err(e) => Err(e.clone()),
+        }
+    }
+}
+
+impl<T: PartialEq, E: PartialEq> PartialEq for Result<T, E> {
+    fn eq(&self, other: &Self) -> bool {
+        match (self, other) {
+            (Ok(a), Ok(b)) => a == b,
+            (Err(a), Err(b)) => a == b,
+            _ => false,
+        }
+    }
+}

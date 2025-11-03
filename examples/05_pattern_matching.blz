@@ -1,0 +1,44 @@
+enum Option<T> {
+    Some(T),
+    None,
+}
+
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+
+fn divide(a: i32, b: i32) -> Result<i32, String> {
+    if b == 0 {
+        return Result::Err(String::from("Division by zero"));
+    }
+    return Result::Ok(a / b);
+}
+
+fn unwrap_or<T>(opt: Option<T>, default: T) -> T {
+    match opt {
+        Option::Some(value) => return value,
+        Option::None => return default,
+    }
+}
+
+fn handle_result(res: Result<i32, String>) {
+    match res {
+        Result::Ok(value) => println("Success: ", value),
+        Result::Err(msg) => println("Error: ", msg),
+    }
+}
+
+fn main() {
+    let success = divide(10, 2);
+    handle_result(success);
+    
+    let failure = divide(10, 0);
+    handle_result(failure);
+    
+    let some_value = Option::Some(42);
+    let none_value = Option::None;
+    
+    println("Some unwrapped: ", unwrap_or(some_value, 0));
+    println("None unwrapped: ", unwrap_or(none_value, 99));
+}
