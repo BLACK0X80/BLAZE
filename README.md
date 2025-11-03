@@ -19,7 +19,7 @@
 [![Build](https://img.shields.io/badge/Build-Auto--Tested-32CD32?style=for-the-badge&logo=github-actions&logoColor=white)](https://github.com/BLACK0X80/BLAZE/actions)
 [![Coverage](https://img.shields.io/badge/Coverage-100%25-00D4FF?style=for-the-badge&logo=codecov&logoColor=black)](https://github.com/BLACK0X80/BLAZE)
 [![Performance](https://img.shields.io/badge/Speed-3x+Faster-FF6B35?style=for-the-badge&logo=rocket&logoColor=white)](https://github.com/BLACK0X80/BLAZE)
-[![LLVM](https://img.shields.io/badge/LLVM-15.0-00D4FF?style=for-the-badge&logo=llvm&logoColor=black)](https://llvm.org)
+[![LLVM](https://img.shields.io/badge/LLVM-18.0-00D4FF?style=for-the-badge&logo=llvm&logoColor=black)](https://llvm.org)
 
 <br/>
 

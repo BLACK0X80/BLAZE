@@ -58,12 +58,12 @@
 
 ### 1. **LLVM Dependency** (CRITICAL)
 
-**Issue**: The project requires LLVM 15.0 to be installed on the system.
+**Issue**: The project requires LLVM 18.0 to be installed on the system.
 
 **Error**:
 ```
 error: No suitable version of LLVM was found system-wide or pointed
-       to by LLVM_SYS_150_PREFIX.
+       to by LLVM_SYS_180_PREFIX.
 ```
 
 **Solutions**:
@@ -73,7 +73,7 @@ error: No suitable version of LLVM was found system-wide or pointed
 **Windows**:
 ```powershell
 # Using Chocolatey
-choco install llvm --version=15.0.0
+choco install llvm --version=18.1.8
 
 # Or download from: https://releases.llvm.org/15.0.0/LLVM-15.0.0-win64.exe
 # Set environment variable:
