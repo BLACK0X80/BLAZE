@@ -21,26 +21,19 @@
 //! analyzer.analyze(&program).expect("Semantic analysis failed");
 //! ```
 
-/// Type checking and type inference
 pub mod type_checker;
-
-/// Borrow checking for memory safety
 pub mod borrow_checker;
-
-/// Symbol table management
 pub mod symbol_table;
-
-/// Lifetime inference and validation
 pub mod lifetime_analyzer;
-
-/// Scope resolution and name binding
 pub mod scope_resolver;
+pub mod type_inference;
 
 pub use type_checker::TypeChecker;
 pub use borrow_checker::BorrowChecker;
 pub use symbol_table::SymbolTable;
 pub use lifetime_analyzer::LifetimeAnalyzer;
 pub use scope_resolver::ScopeResolver;
+pub use type_inference::TypeInference;
 
 use crate::parser::Program;
 use anyhow::Result;
@@ -64,6 +57,7 @@ pub struct SemanticAnalyzer {
     borrow_checker: BorrowChecker,
     lifetime_analyzer: LifetimeAnalyzer,
     scope_resolver: ScopeResolver,
+    type_inference: TypeInference,
 }
 
 impl SemanticAnalyzer {
@@ -83,6 +77,7 @@ impl SemanticAnalyzer {
             borrow_checker: BorrowChecker::new(),
             lifetime_analyzer: LifetimeAnalyzer::new(),
             scope_resolver: ScopeResolver::new(),
+            type_inference: TypeInference::new(),
         }
     }
 
@@ -133,6 +128,7 @@ impl SemanticAnalyzer {
     pub fn analyze(&mut self, program: &Program) -> Result<()> {
         self.symbol_table.analyze(program)?;
         self.scope_resolver.resolve(program)?;
+        self.type_inference.infer(program)?;
         self.lifetime_analyzer.analyze(program)?;
         self.type_checker.check(program, &self.symbol_table)?;
         self.borrow_checker.check(program, &self.symbol_table)?;

@@ -18,6 +18,8 @@ struct MemoryPool {
     block_size: usize,
 }
 
+unsafe impl Send for MemoryPool {}
+
 impl MemoryPool {
     fn new(block_size: usize) -> Self {
         Self {

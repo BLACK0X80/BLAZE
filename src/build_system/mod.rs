@@ -144,12 +144,6 @@ pub struct BuildResult {
     pub duration: std::time::Duration,
 }
 
-#[derive(Debug, Clone)]
-pub struct Artifact {
-    pub path: PathBuf,
-    pub artifact_type: TargetType,
-}
-
 pub struct DependencyResolver {
     dependencies: HashMap<String, Dependency>,
 }

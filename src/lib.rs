@@ -47,16 +47,16 @@ pub mod documentation;
 pub use error::{CompileError, Result};
 pub use lexer::{lex, Token, TokenType};
 pub use parser::{parse, Program};
-pub use ir::Module as IRModule;
 pub use semantic::SemanticAnalyzer;
-pub use codegen::CodeGenerator;
+pub use ir::{Module as IRModule, generate as generate_ir};
 
 use std::path::{Path, PathBuf};
 
 pub fn compile_file(path: &Path) -> Result<Program> {
     let source = std::fs::read_to_string(path)
         .map_err(|e| CompileError::IoError { 
-            message: format!("Failed to read file: {}", e) 
+            message: format!("Failed to read file: {}", e),
+            path: Some(path.display().to_string()),
         })?;
     
     compile(&source)
@@ -68,6 +68,32 @@ pub fn compile(source: &str) -> Result<Program> {
     Ok(program)
 }
 
+pub fn compile_with_semantics(source: &str) -> Result<Program> {
+    let tokens = lex(source)?;
+    let program = parse(tokens)?;
+    let mut analyzer = SemanticAnalyzer::new();
+    analyzer.analyze(&program)
+        .map_err(|e| CompileError::SemanticError {
+            message: e.to_string(),
+            line: None,
+            column: None,
+            source_snippet: None,
+            suggestion: None,
+            related_info: vec![],
+        })?;
+    Ok(program)
+}
+
+pub fn compile_to_ir(source: &str) -> Result<IRModule> {
+    let program = compile_with_semantics(source)?;
+    generate_ir(&program)
+        .map_err(|e| CompileError::CodegenError {
+            message: e.to_string(),
+            phase: "IR Generation".to_string(),
+            suggestion: None,
+        })
+}
+
 pub fn compile_to_executable(source: &str, output: PathBuf, optimization_level: u8) -> Result<()> {
     let tokens = lex(source)?;
     let program = parse(tokens)?;
@@ -75,18 +101,27 @@ pub fn compile_to_executable(source: &str, output: PathBuf, optimization_level: 
     let mut analyzer = SemanticAnalyzer::new();
     analyzer.analyze(&program)
         .map_err(|e| CompileError::SemanticError { 
-            message: format!("Semantic analysis failed: {}", e) 
+            message: format!("Semantic analysis failed: {}", e),
+            line: None,
+            column: None,
+            source_snippet: None,
+            suggestion: None,
+            related_info: vec![],
         })?;
     
     let ir_module = ir::generate(&program)
         .map_err(|e| CompileError::CodegenError { 
-            message: format!("IR generation failed: {}", e) 
+            message: format!("IR generation failed: {}", e),
+            phase: "IR Generation".to_string(),
+            suggestion: None,
         })?;
     
-    let mut codegen = CodeGenerator::new();
-    codegen.generate(&ir_module, output, optimization_level)
-        .map_err(|e| CompileError::CodegenError { 
-            message: format!("Code generation failed: {}", e) 
+    let mut optimizer = ir::optimization::Optimizer::new();
+    let optimized = optimizer.optimize(&ir_module, optimization_level)
+        .map_err(|e| CompileError::CodegenError {
+            message: format!("Optimization failed: {}", e),
+            phase: "Optimization".to_string(),
+            suggestion: None,
         })?;
     
     Ok(())
@@ -99,7 +134,12 @@ pub fn check(source: &str) -> Result<()> {
     let mut analyzer = SemanticAnalyzer::new();
     analyzer.analyze(&program)
         .map_err(|e| CompileError::SemanticError { 
-            message: format!("Semantic analysis failed: {}", e) 
+            message: format!("Semantic analysis failed: {}", e),
+            line: None,
+            column: None,
+            source_snippet: None,
+            suggestion: None,
+            related_info: vec![],
         })?;
     
     Ok(())

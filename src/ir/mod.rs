@@ -2,6 +2,7 @@ pub mod builder;
 pub mod instruction;
 pub mod optimization;
 pub mod validation;
+pub mod ssa;
 
 pub use instruction::{Instruction, Terminator, ICmpCondition, FCmpCondition};
 use std::fmt;

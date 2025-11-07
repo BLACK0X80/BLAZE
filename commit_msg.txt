@@ -1,0 +1,10 @@
+fix: Update to LLVM 18 for Ubuntu 24.04 compatibility
+
+Changes:
+- Update inkwell to version 0.4 with llvm18-0 feature
+- Update CI/CD workflow to install LLVM 18 on all platforms
+- Update README badge to show LLVM 18.0
+- Add comprehensive LLVM_18_UPDATE.md documentation
+
+This fixes the CI/CD failure on Ubuntu 24.04 (Noble) where
+LLVM 15 packages are not available.
